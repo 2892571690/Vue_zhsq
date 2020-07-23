@@ -1,26 +1,27 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../pages/Home.vue'
+import Index from '../pages/Index.vue'
 Vue.use(VueRouter)
-
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'Home',
-  //   component: Home
-  // },
-  // {
-  //   path: '/home',
-  //   name: 'home',
-  //   component: () => import(/* webpackChunkName: "Home" */ '../pages/Home.vue')
-  // }
   {
     path: '/',
     redirect: '/home'
   },
   {
     path: '/home',
-    component: Home
+    component: Home,
+    redirect: '/index',
+    children: [
+      {
+        path: '/index',
+        component: Index
+      }
+    ]
   }
 ]
 

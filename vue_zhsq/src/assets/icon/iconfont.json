@@ -1,0 +1,44 @@
+{
+  "id": "1961282",
+  "name": "智慧",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "705665",
+      "name": "房子",
+      "font_class": "fangzi",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "1013076",
+      "name": "人",
+      "font_class": "wo",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "9626971",
+      "name": "颜色",
+      "font_class": "yanse",
+      "unicode": "e886",
+      "unicode_decimal": 59526
+    },
+    {
+      "icon_id": "1362400",
+      "name": "放大",
+      "font_class": "fangda",
+      "unicode": "e826",
+      "unicode_decimal": 59430
+    },
+    {
+      "icon_id": "16035806",
+      "name": "list-check",
+      "font_class": "list-check",
+      "unicode": "e736",
+      "unicode_decimal": 59190
+    }
+  ]
+}

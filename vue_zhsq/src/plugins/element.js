@@ -8,7 +8,12 @@ import {
     MessageBox,
     Message,
     Dialog,
-    Slider
+    Slider,
+    Dropdown,
+    DropdownMenu,
+    DropdownItem,
+    Breadcrumb,
+    BreadcrumbItem
 } from 'element-ui'
 Vue.use(Button)
 Vue.use(Container)
@@ -17,5 +22,10 @@ Vue.use(Aside)
 Vue.use(Main)
 Vue.use(Dialog)
 Vue.use(Slider)
+Vue.use(Dropdown)
+Vue.use(DropdownMenu)
+Vue.use(DropdownItem)
+Vue.use(Breadcrumb)
+Vue.use(BreadcrumbItem)
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

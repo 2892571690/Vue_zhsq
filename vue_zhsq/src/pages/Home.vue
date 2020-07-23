@@ -3,7 +3,7 @@
     <!-- 布局 -->
     <el-container class="home_container">
       <!-- 头部区域 -->
-      <el-header class="home_hander">
+      <el-header class="home_hander" ref="handre">
         <div class="home_hander_img">
           <img src="../assets/loge.png" />
         </div>
@@ -13,56 +13,35 @@
       <!-- 内容区域 -->
       <el-container>
         <!-- 侧边栏区域 -->
-        <el-aside class="home_hander_aside">Aside</el-aside>
+        <el-aside class="home_hander_aside" ref="mian">
+          <div class="home_hander_index">
+            <div class="home_hander_index_img">
+              <img src="../assets/index.png" />
+            </div>
+            <div class="home_hander_index_title" ref="index">首页</div>
+          </div>
+        </el-aside>
         <!-- 主内容区域 -->
-        <el-main class="home_hander_main">Main</el-main>
+        <el-main class="home_hander_main">
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
-
-    <!-- 点击显示修改字体弹出框的显示 -->
-    <el-button type="text" @click="addFont = true">A</el-button>
-    <!-- 修改字体的弹出框 -->
-    <el-dialog title="修改字体" :visible.sync="addFont" width="30%" :before-close="handleClose">
-      <!-- 弹出框内容 -->
-      <span>
-        <!-- 滑块 -->
-        <div class="demonstration">
-          <el-slider v-model="value" show-input></el-slider>
-        </div>
-      </span>
-      <!-- 下面的取消和确定 -->
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="addFont = false">取 消</el-button>
-        <el-button type="primary" @click="determineFont">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 <script>
 export default {
-  data() {
-    return {
-      // 控制修改字体弹出框显示与隐藏
-      addFont: false,
-      //   滑块的值
-      value: 0
-    }
+  mounted() {
+    // 更改主题颜色
+    let self = this;
+    eventBus.$on('eventBusName', function(val) {
+      self.$refs.handre.$el.style.background = val[0]
+      self.$refs.mian.$el.style.background = val[1]
+      self.$refs.index.style.color = val[2]
+    })
   },
-  methods: {
-    // 点击修改字体弹出框x的事件
-    handleClose(done) {
-      this.$confirm('确认关闭？')
-        .then(_ => {
-          done()
-        })
-        .catch(_ => {})
-    },
-    // 点击确定按钮
-    determineFont() {
-      console.log(this.value)
-      document.querySelector('html').style.fontSize = `${this.value}px`
-      this.addFont = false
-    }
+  beforeDestroy() {
+    eventBus.$off('eventBusName')
   }
 }
 </script>
@@ -93,14 +72,30 @@ export default {
   .home_hander_aside {
     width: 210px !important;
     background-color: #243352;
+    .home_hander_index_img {
+      width: 22px;
+      height: 21px;
+    }
+    .home_hander_index {
+      width: 100%;
+      height: 53px;
+      color: #fff;
+      font-size: 14px;
+      // background-color: #192438;
+      display: flex;
+      align-items: center;
+      margin-top: 40px;
+      padding-left: 24px;
+      letter-spacing: 7px;
+      box-sizing: border-box;
+      .home_hander_index_img {
+        margin-right: 18px;
+      }
+    }
   }
   .home_hander_main {
     background-color: #fff;
-  }
-}
-.el-slider {
-  .el-slider__stop {
-    background: #ccc;
+    padding: 0;
   }
 }
 </style>
