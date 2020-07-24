@@ -137,7 +137,7 @@ export default {
     },
     // 点击确定按钮
     determineFont() {
-        console.log(this.value)
+        // console.log(this.value)
       document.querySelector('html').style.fontSize = `${this.value}px`
       this.addFont = false
     },
