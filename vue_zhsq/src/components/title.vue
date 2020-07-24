@@ -123,31 +123,31 @@ export default {
       //   控制修改颜色的对话框
       addColor: false,
       //   控制全屏跟小屏的切换
-      screen: 1
+      screen: 1,
     }
   },
   methods: {
     // 点击修改字体弹出框x的事件
     handleClose(done) {
       this.$confirm('确认关闭？')
-        .then(_ => {
+        .then((_) => {
           done()
         })
-        .catch(_ => {})
+        .catch((_) => {})
     },
     // 点击确定按钮
     determineFont() {
-        // console.log(this.value)
+      // console.log(this.value)
       document.querySelector('html').style.fontSize = `${this.value}px`
       this.addFont = false
     },
     // 点击更换主题弹出框x的事件
     handleColorClose(done) {
       this.$confirm('确认关闭？')
-        .then(_ => {
+        .then((_) => {
           done()
         })
-        .catch(_ => {})
+        .catch((_) => {})
     },
     // 点击更换主题弹出事件
     addColorHandle() {
@@ -186,7 +186,7 @@ export default {
       eventBus.$emit('eventBusName', [
         this.$refs.handerColor1.style.background,
         this.$refs.mianColor1.style.background,
-        this.$refs.colorColor1.style.background
+        this.$refs.colorColor1.style.background,
       ])
       this.addColor = false
     },
@@ -194,7 +194,7 @@ export default {
       eventBus.$emit('eventBusName', [
         this.$refs.handerColor2.style.background,
         this.$refs.mianColor2.style.background,
-        this.$refs.colorColor2.style.background
+        this.$refs.colorColor2.style.background,
       ])
       this.addColor = false
     },
@@ -202,7 +202,7 @@ export default {
       eventBus.$emit('eventBusName', [
         this.$refs.handerColor3.style.background,
         this.$refs.mianColor3.style.background,
-        this.$refs.colorColor3.style.background
+        this.$refs.colorColor3.style.background,
       ])
       this.addColor = false
     },
@@ -210,7 +210,7 @@ export default {
       eventBus.$emit('eventBusName', [
         this.$refs.handerColor4.style.background,
         this.$refs.mianColor4.style.background,
-        this.$refs.colorColor4.style.background
+        this.$refs.colorColor4.style.background,
       ])
       this.addColor = false
     },
@@ -218,7 +218,7 @@ export default {
       eventBus.$emit('eventBusName', [
         this.$refs.handerColor5.style.background,
         this.$refs.mianColor5.style.background,
-        this.$refs.colorColor5.style.background
+        this.$refs.colorColor5.style.background,
       ])
       this.addColor = false
     },
@@ -226,7 +226,7 @@ export default {
       eventBus.$emit('eventBusName', [
         this.$refs.handerColor6.style.background,
         this.$refs.mianColor6.style.background,
-        this.$refs.colorColor6.style.background
+        this.$refs.colorColor6.style.background,
       ])
       this.addColor = false
     },
@@ -234,7 +234,7 @@ export default {
       eventBus.$emit('eventBusName', [
         this.$refs.handerColor7.style.background,
         this.$refs.mianColor7.style.background,
-        this.$refs.colorColor7.style.background
+        this.$refs.colorColor7.style.background,
       ])
       this.addColor = false
     },
@@ -248,8 +248,8 @@ export default {
     handleColorReset() {
       eventBus.$emit('eventBusName', ['#192438', '#243352'])
       this.addColor = false
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -262,6 +262,7 @@ export default {
   .title_handre_iconTitle {
     float: left;
     .icon-list-check {
+      font-size: 11px;
       margin-left: 23px;
       margin-right: 28px;
     }
@@ -291,6 +292,7 @@ export default {
   .title_operation_wrap {
     float: right;
     .font_text {
+      border: 0;
       padding: 0;
       color: #5a6060;
       font-weight: 600;
@@ -310,6 +312,7 @@ export default {
       font-size: 13px;
     }
     .color_wrap {
+      border: 0;
       float: left;
       padding: 0;
       line-height: 58px;
@@ -338,12 +341,14 @@ export default {
       margin-right: 32px;
       .user_button {
         .icon-wo {
+          font-size: 14px;
           float: left;
           margin-right: 5px;
         }
         .user_name {
           float: left;
           margin-right: 5px;
+          font-size: 11px;
         }
         .el-icon-arrow-down {
           float: left;
