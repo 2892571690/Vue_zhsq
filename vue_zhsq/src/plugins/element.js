@@ -13,7 +13,12 @@ import {
     DropdownMenu,
     DropdownItem,
     Breadcrumb,
-    BreadcrumbItem
+    BreadcrumbItem,
+    Menu,
+    MenuItem,
+    MenuItemGroup,
+    Submenu,
+    Card
 } from 'element-ui'
 Vue.use(Button)
 Vue.use(Container)
@@ -27,5 +32,10 @@ Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
 Vue.use(Breadcrumb)
 Vue.use(BreadcrumbItem)
+Vue.use(Menu)
+Vue.use(MenuItem)
+Vue.use(MenuItemGroup)
+Vue.use(Submenu)
+Vue.use(Card)
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

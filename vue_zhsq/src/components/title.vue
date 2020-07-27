@@ -7,11 +7,11 @@
       </div>
       <!-- 面包屑 -->
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item class="title_imgTitle">
+        <el-breadcrumb-item class="title_imgTitle" v-for="item in breadcrumb" :key="item[0][2]">
           <div class="title_img">
-            <img src="../assets/index.png" />
+            <img :src="item[1]" />
           </div>
-          <div class="title_text">首页</div>
+          <div class="title_text">{{item[0]}}</div>
         </el-breadcrumb-item>
       </el-breadcrumb>
       <!-- 右边操作改变的 -->
@@ -124,7 +124,28 @@ export default {
       addColor: false,
       //   控制全屏跟小屏的切换
       screen: 1,
+      // 面包屑
+      breadcrumb: [],
     }
+  },
+  created() {
+
+  },
+  mounted() {
+    let self = this
+    let breadcrumb = window.sessionStorage.getItem('breadcrumb')
+    let breadcrumb1 = breadcrumb.split(',')[0]
+    let breadcrumb2 = `${breadcrumb.split(',')[1]},${breadcrumb.split(',')[2]}`
+    let breadcrumb3 = breadcrumb.split(',')[3]
+    let breadcrumb4 = [breadcrumb1, breadcrumb2, breadcrumb3]
+    let breadcrumb5 = breadcrumb.split(',')[4]
+    let breadcrumb6 = `${breadcrumb.split(',')[5]},${breadcrumb.split(',')[6]}`
+    let breadcrumb7 = breadcrumb.split(',')[7]
+    let breadcrumb8 = [breadcrumb5, breadcrumb6, breadcrumb8]
+    this.breadcrumb = [breadcrumb4, breadcrumb8]
+    eventBus.$on('breadcrumb', function (val) {
+      self.breadcrumb = val
+    })
   },
   methods: {
     // 点击修改字体弹出框x的事件
@@ -278,8 +299,8 @@ export default {
         margin-right: 5px;
         float: left;
         img {
-          background-color: #606166;
-          vertical-align: middle;
+          width: 100%;
+          height: 100%;
         }
       }
       .title_text {
