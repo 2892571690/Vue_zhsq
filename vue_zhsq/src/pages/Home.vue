@@ -100,7 +100,7 @@ export default {
       let res = await this.$http.get('/zhsq/navigation.do')
       // console.log(res.data.message)
       this.sidebarList = res.data.message
-      this.saveNavStart(this.sidebarList[0])
+      // this.saveNavStart(this.sidebarList[0])
     },
     // 保存链接的激活状态
     saveNavStart(activePath) {
@@ -122,20 +122,21 @@ export default {
         window.sessionStorage.setItem('breadcrumb', this.breadcrumb)
         eventBus.$emit('breadcrumb', this.breadcrumb)
       } else {
-        let breadcrumb1 = [activePath.mname, activePath.pidimg, activePath.m_id]
-        let breadcrumb2 = [
-          activePath.items[0].mname,
-          activePath.items[0].pidimg,
-          activePath.items[0].m_id,
-        ]
-        this.breadcrumb = [breadcrumb1, breadcrumb2]
-        window.sessionStorage.setItem('breadcrumb', this.breadcrumb)
-        window.sessionStorage.setItem(
-          'activePath',
-          `/${activePath.items[0].pathUrl}`
-        )
-        this.activePath = `/${activePath.items[0].pathUrl}`
+        // let breadcrumb1 = [activePath.mname, activePath.pidimg, activePath.m_id]
+        // let breadcrumb2 = [
+        //   activePath.items[0].mname,
+        //   activePath.items[0].pidimg,
+        //   activePath.items[0].m_id,
+        // ]
+        // this.breadcrumb = [breadcrumb1, breadcrumb2]
+        // window.sessionStorage.setItem('breadcrumb', this.breadcrumb)
+        // window.sessionStorage.setItem(
+        //   'activePath',
+        //   `/${activePath.items[0].pathUrl}`
+        // )
+        // this.activePath = `/${activePath.items[0].pathUrl}`
       }
+      location.reload();
     },
   },
   beforeDestroy() {

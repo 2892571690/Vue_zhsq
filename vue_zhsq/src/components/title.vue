@@ -271,6 +271,9 @@ export default {
       this.addColor = false
     },
   },
+  beforeDestroy() {
+    eventBus.$off('breadcrumb')
+  },
 }
 </script>
 

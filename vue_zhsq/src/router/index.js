@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../pages/Home.vue'
 import Index from '../pages/index/Index.vue'
+import xqxx from '../pages/Basics/xqxx.vue';
 Vue.use(VueRouter)
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push (location) {
@@ -20,6 +21,10 @@ const routes = [
       {
         path: '/index',
         component: Index
+      },
+      {
+        path: '/xqxx',
+        component: xqxx
       }
     ]
   }
