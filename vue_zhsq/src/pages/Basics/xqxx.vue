@@ -10,10 +10,7 @@
       <div class="breadcrumb_text">{{breadcrumb[0][0]}}</div>
       <div class="cha" @click="handleGoIndex">x</div>
     </div>
-    <div class="tou"></div>
-    <div class="tou_img">
-      <img src="../../assets/tou.png" />
-    </div>
+    <div class="tou" style="width:91%"></div>
     <!-- 小区信息 -->
     <div class="xqxx_wrap">
       <div class="xqxx_card">
@@ -36,9 +33,9 @@
         <!-- 功能键 -->
         <div class="left_button">
           <div class="left_button_wrap">
-            <el-button class="increase_but" type="primary" icon="el-icon-plus">增加</el-button>
-            <el-button class="uploadXQ">上传小区</el-button>
-            <el-button class="delent_but">删除</el-button>
+            <div class="increase_but el-icon-plus" type="primary" @click="handleAddxqxx">增加</div>
+            <div class="uploadXQ">上传小区</div>
+            <div class="delent_but" @click="handleDelete">删除</div>
           </div>
           <div class="center_text">{{tableList.length}}个中{{tableNum.length}}个被选</div>
           <div class="right_button">
@@ -77,8 +74,8 @@
           <el-table-column prop="ssqXzqhdm" label="省市区行政区划编码"></el-table-column>
           <el-table-column label="是否上传">
             <template slot-scope="scope">
-              <el-tag type="success" v-if="scope.row.isUpload == 1">已上传</el-tag>
-              <el-tag type="info" v-else>未上传</el-tag>
+              <div v-if="scope.row.isUpload == 1" style="color:green;">已上传</div>
+              <div v-else>未上传</div>
             </template>
           </el-table-column>
         </el-table>
@@ -154,13 +151,7 @@ export default {
       }`
       let breadcrumb3 = breadcrumb.split(',')[3]
       let breadcrumb4 = [breadcrumb1, breadcrumb2, breadcrumb3]
-      let breadcrumb5 = breadcrumb.split(',')[4]
-      let breadcrumb6 = `${breadcrumb.split(',')[5]},${
-        breadcrumb.split(',')[6]
-      }`
-      let breadcrumb7 = breadcrumb.split(',')[7]
-      let breadcrumb8 = [breadcrumb5, breadcrumb6, breadcrumb8]
-      let breadcrumb9 = [breadcrumb4, breadcrumb8]
+      let breadcrumb9 = [breadcrumb4]
       this.$router.push({ path: 'index', query: { breadcrumb: breadcrumb9 } })
       window.sessionStorage.setItem('breadcrumb', breadcrumb9)
       eventBus.$emit('breadcrumb', breadcrumb9)
@@ -168,7 +159,6 @@ export default {
     // 获取表格数据
     async handleTableList() {
       let res = await this.$http.get('/xq/xqxx.do', { params: this.queryInfo })
-      // console.log(res.data.totalCount)
       this.tableList = res.data.data
       this.tatal = res.data.totalCount
     },
@@ -182,13 +172,11 @@ export default {
     },
     // 监听 pagesize 改变的事件
     handleSizeChange(newSize) {
-      // console.log(newSize);
       this.queryInfo.pagesize = newSize
       this.handleTableList()
     },
     // 监听 页码值 改变的事件
     handleCurrentChange(newPage) {
-      // console.log(newPage);
       this.queryInfo.pagenum = newPage
       this.handleTableList()
     },
@@ -198,7 +186,7 @@ export default {
     },
     // 点击刷新
     handleShuxin() {
-      location.reload();
+      location.reload()
     },
     // 点击放大
     handleBig() {
@@ -217,6 +205,22 @@ export default {
         this.screen++
       }
     },
+    // 删除按钮
+    async handleDelete() {
+      let Arrid = []
+      for(var i = 0; i < this.tableNum.length; i++){
+        Arrid.push(this.tableNum[i].xqid)
+      }
+      Arrid = Arrid+''
+      let res = await this.$http.post(`/xq/scxq.do?Arrid=${Arrid}`)
+      console.log(res)
+      // if(res.data.)
+      this.handleTableList()
+    },
+    // 点击添加按钮
+    handleAddxqxx(){
+      this.$router.push({ path: 'xqxxtj' })
+    }
   },
 }
 </script>
@@ -300,19 +304,38 @@ export default {
       height: 60px;
       box-sizing: border-box;
       .left_button_wrap {
+        display: flex;
+        height: 40px;
+        align-items: center;
         .increase_but {
           height: 40px;
           width: 93px;
           margin-left: 30px;
+          line-height:40px ;
+          background: #409efe;
+          border-radius: 10px;
+          box-sizing: border-box;
+          text-align: center;
+          color: #fff;
         }
         .uploadXQ {
           width: 98px;
           height: 40px;
           margin: 0 14px 0 13px;
+          line-height:40px ;
+          border: 1px solid #dedee8;
+          border-radius: 10px;
+          box-sizing: border-box;
+          text-align: center;
         }
         .delent_but {
           width: 70px;
           height: 40px;
+          line-height:40px ;
+          border: 1px solid #dedee8;
+          border-radius: 10px;
+          box-sizing: border-box;
+          text-align: center;
         }
       }
       .center_text {
@@ -340,8 +363,8 @@ export default {
             border-radius: 0 10px 10px 0;
           }
           .right_but_img {
-            width: 12px;
-            height: 12px;
+            // width: 12px;
+            // height: 12px;
             .img {
               width: 100%;
               height: 100%;

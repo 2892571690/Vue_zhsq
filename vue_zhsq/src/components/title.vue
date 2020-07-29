@@ -6,14 +6,37 @@
         <div class="icon iconfont icon-list-check"></div>
       </div>
       <!-- 面包屑 -->
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item class="title_imgTitle" v-for="item in breadcrumb" :key="item[0][2]">
-          <div class="title_img">
-            <img :src="item[1]" />
-          </div>
-          <div class="title_text">{{item[0]}}</div>
-        </el-breadcrumb-item>
-      </el-breadcrumb>
+      <div v-if="breadcrumb.length == 1">
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item class="title_imgTitle">
+            <div class="title_img">
+              <img :src="breadcrumb[0][1]" />
+            </div>
+            <div class="title_text">{{breadcrumb[0][0]}}</div>
+          </el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
+      <div v-else-if="breadcrumb.length == 3">
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item class="title_imgTitle">
+            <div class="title_img">
+              <img :src="breadcrumb[1]" />
+            </div>
+            <div class="title_text">{{breadcrumb[0]}}</div>
+          </el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
+      <div v-else>
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item class="title_imgTitle" v-for="item in breadcrumb" :key="item[0][1]">
+            <div class="title_img">
+              <img :src="item[1]" />
+            </div>
+            <div class="title_text">{{item[0]}}</div>
+          </el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
+
       <!-- 右边操作改变的 -->
       <div class="title_operation_wrap">
         <!-- 点击显示修改字体弹出框的显示 -->
@@ -128,9 +151,7 @@ export default {
       breadcrumb: [],
     }
   },
-  created() {
-
-  },
+  created() {},
   mounted() {
     let self = this
     let breadcrumb = window.sessionStorage.getItem('breadcrumb')
@@ -143,6 +164,9 @@ export default {
     let breadcrumb7 = breadcrumb.split(',')[7]
     let breadcrumb8 = [breadcrumb5, breadcrumb6, breadcrumb8]
     this.breadcrumb = [breadcrumb4, breadcrumb8]
+    if (this.breadcrumb[1][0] == undefined) {
+      this.breadcrumb.splice(1, 1)
+    }
     eventBus.$on('breadcrumb', function (val) {
       self.breadcrumb = val
     })
@@ -158,7 +182,6 @@ export default {
     },
     // 点击确定按钮
     determineFont() {
-      // console.log(this.value)
       document.querySelector('html').style.fontSize = `${this.value}px`
       this.addFont = false
     },
@@ -196,7 +219,17 @@ export default {
     },
     // 点击返回首页
     handleGoHome() {
-      this.$router.push({ path: 'index' })
+      let breadcrumb = window.localStorage.getItem('breadcrumb')
+      let breadcrumb1 = breadcrumb.split(',')[0]
+      let breadcrumb2 = `${breadcrumb.split(',')[1]},${
+        breadcrumb.split(',')[2]
+      }`
+      let breadcrumb3 = breadcrumb.split(',')[3]
+      let breadcrumb4 = [breadcrumb1, breadcrumb2, breadcrumb3]
+      let breadcrumb9 = [breadcrumb4]
+      this.$router.push({ path: 'index', query: { breadcrumb: breadcrumb9 } })
+      window.sessionStorage.setItem('breadcrumb', breadcrumb9)
+      eventBus.$emit('breadcrumb', breadcrumb9)
     },
     // 点击更换主题颜色
     handleColor1() {

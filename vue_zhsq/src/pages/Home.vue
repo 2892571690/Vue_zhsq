@@ -29,6 +29,12 @@
             router
             :default-active="activePath"
           >
+            <div class="index_wrap" :style="{background:activeIndex?'#192438':''}" @click="handleIndex(indexList[0])">
+              <div class="index_img">
+                <img :src="indexList[0].pidimg" />
+              </div>
+              <div class="index_text">{{indexList[0].mname}}</div>
+            </div>
             <!-- 一级菜单 -->
             <el-submenu :index="item.m_id + ''" v-for="item in sidebarList" :key="item.m_id">
               <!-- 一级菜单模板区域 -->
@@ -78,7 +84,8 @@ export default {
       activePath: '',
       // 面包屑
       breadcrumb: [],
-      indexList: [],
+      indexList: {},
+      activeIndex:null
     }
   },
   created() {
@@ -93,50 +100,44 @@ export default {
       self.$refs.mian.$el.style.background = val[1]
       self.$refs.index.style.color = val[2]
     })
+    if(this.$route.path == '/index'){
+      this.activeIndex=true
+    }
   },
   methods: {
     // 获取侧边栏的数据
     async getSidebar() {
       let res = await this.$http.get('/zhsq/navigation.do')
-      // console.log(res.data.message)
+      let index = res.data.message.splice(0, 1)
+      this.indexList = index
       this.sidebarList = res.data.message
-      // this.saveNavStart(this.sidebarList[0])
     },
     // 保存链接的激活状态
     saveNavStart(activePath) {
-      // console.log(activePath)
-      if (activePath.length == 2) {
-        let breadcrumb1 = [
-          activePath[0].mname,
-          activePath[0].pidimg,
-          activePath[0].m_id,
-        ]
-        let breadcrumb2 = [
-          activePath[1].mname,
-          activePath[1].pidimg,
-          activePath[1].m_id,
-        ]
-        window.sessionStorage.setItem('activePath', `/${activePath[1].pathUrl}`)
-        this.activePath = `/${activePath[1].pathUrl}`
-        this.breadcrumb = [breadcrumb1, breadcrumb2]
-        window.sessionStorage.setItem('breadcrumb', this.breadcrumb)
-        eventBus.$emit('breadcrumb', this.breadcrumb)
-      } else {
-        // let breadcrumb1 = [activePath.mname, activePath.pidimg, activePath.m_id]
-        // let breadcrumb2 = [
-        //   activePath.items[0].mname,
-        //   activePath.items[0].pidimg,
-        //   activePath.items[0].m_id,
-        // ]
-        // this.breadcrumb = [breadcrumb1, breadcrumb2]
-        // window.sessionStorage.setItem('breadcrumb', this.breadcrumb)
-        // window.sessionStorage.setItem(
-        //   'activePath',
-        //   `/${activePath.items[0].pathUrl}`
-        // )
-        // this.activePath = `/${activePath.items[0].pathUrl}`
-      }
-      location.reload();
+      this.activeIndex = false
+      let breadcrumb1 = [
+        activePath[0].mname,
+        activePath[0].pidimg,
+        activePath[0].m_id,
+      ]
+      let breadcrumb2 = [
+        activePath[1].mname,
+        activePath[1].pidimg,
+        activePath[1].m_id,
+      ]
+      window.sessionStorage.setItem('activePath', `/${activePath[1].pathUrl}`)
+      this.activePath = `/${activePath[1].pathUrl}`
+      this.breadcrumb = [breadcrumb1, breadcrumb2]
+      window.sessionStorage.setItem('breadcrumb', this.breadcrumb)
+      eventBus.$emit('breadcrumb', this.breadcrumb)
+    },
+    handleIndex(index) {
+      this.activeIndex = true
+      let breadcrumb = [index.mname, index.pidimg, 1]
+      window.sessionStorage.setItem('breadcrumb', breadcrumb)
+      eventBus.$emit('breadcrumb', breadcrumb)
+      window.sessionStorage.setItem('activePath', `/index`)
+      this.$router.push({ path: 'index' })
     },
   },
   beforeDestroy() {
@@ -230,29 +231,29 @@ export default {
   border-right: none;
   margin-top: 61px;
 }
-// .index_wrap {
-//   &:hover{
-//     background: #192438;
-//   }
-//   width: 210px;
-//   height: 56px;
-//   padding-left: 19px;
-//   line-height:56px ;
-//   box-sizing: border-box;
-//   .index_img {
-//     width: 22px !important;
-//     height: 21px !important;
-//     float: left !important;
-//     margin-right: 18px;
-//     img {
-//       width: 100%;
-//       height: 100%;
-//       vertical-align: baseline !important;
-//     }
-//   }
-//   .index_text {
-//     font-size: 14px;
-//     color: #fff;
-//   }
-// }
+.index_wrap {
+  &:hover {
+    background: #192438;
+  }
+  width: 210px;
+  height: 56px;
+  padding-left: 19px;
+  line-height: 56px;
+  box-sizing: border-box;
+  .index_img {
+    width: 22px !important;
+    height: 21px !important;
+    float: left !important;
+    margin-right: 18px;
+    img {
+      width: 100%;
+      height: 100%;
+      vertical-align: baseline !important;
+    }
+  }
+  .index_text {
+    font-size: 14px;
+    color: #fff;
+  }
+}
 </style>

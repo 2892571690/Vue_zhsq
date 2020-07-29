@@ -3,12 +3,12 @@
     <!-- 操作栏区域 -->
     <Title :refDome="refDome"></Title>
     <!-- 导航栏区域 -->
-    <div v-if="breadcrumb.length == 3 || breadcrumb.length == 2">
+    <div v-if="breadcrumb.length == 1">
       <div class="breadcrumb_wrap">
         <div class="breadcrumb_img">
-          <img :src="breadcrumb[1]" />
+          <img :src="breadcrumb[0][1]" />
         </div>
-        <div class="breadcrumb_text">{{breadcrumb[0]}}</div>
+        <div class="breadcrumb_text">{{breadcrumb[0][0]}}</div>
         <div class="cha" @click="handleGoIndex">x</div>
       </div>
       <div class="tou"></div>
@@ -19,9 +19,9 @@
     <div v-else>
       <div class="breadcrumb_wrap">
         <div class="breadcrumb_img">
-          <img :src="breadcrumb[0][1]" />
+          <img :src="breadcrumb[1]" />
         </div>
-        <div class="breadcrumb_text">{{breadcrumb[0][0]}}</div>
+        <div class="breadcrumb_text">{{breadcrumb[0]}}</div>
         <div class="cha" @click="handleGoIndex">x</div>
       </div>
       <div class="tou"></div>
@@ -152,10 +152,10 @@ export default {
     // 获取快捷操作列表
     this.handleQuickList()
     if (this.$route.query.breadcrumb) {
-      if(this.$route.query.breadcrumb[1].length == 3){
-        this.breadcrumb = this.$route.query.breadcrumb[1]
+      if(this.$route.query.breadcrumb.length == 1){
+        this.breadcrumb = this.$route.query.breadcrumb
       }else{
-        let breadcrumb = this.$route.query.breadcrumb[1].split(',')
+        let breadcrumb = this.$route.query.breadcrumb.split(',')
         let breadcrumb5 = breadcrumb[0]
         let breadcrumb6 = breadcrumb[1]+','+breadcrumb[2]
         let breadcrumb7 = [breadcrumb5,breadcrumb6]
@@ -163,15 +163,14 @@ export default {
       }
     } else {
       let breadcrumb = window.sessionStorage.getItem('breadcrumb')
-      let breadcrumb5 = breadcrumb.split(',')[4]
-      let breadcrumb6 = `${breadcrumb.split(',')[5]},${
-        breadcrumb.split(',')[6]
+      let breadcrumb5 = breadcrumb.split(',')[0]
+      let breadcrumb6 = `${breadcrumb.split(',')[1]},${
+        breadcrumb.split(',')[2]
       }`
-      let breadcrumb7 = breadcrumb.split(',')[7]
+      let breadcrumb7 = breadcrumb.split(',')[3]
       let breadcrumb8 = [breadcrumb5, breadcrumb6, breadcrumb7]
       this.breadcrumb = [breadcrumb8]
     }
-    
   },
   mounted() {
     this.refDome = this.$refs.index
@@ -179,20 +178,17 @@ export default {
   methods: {
     //   点击面包屑的x事件
     handleGoIndex() {
-      // console.log(111)
       this.$router.push({ path: 'index' })
     },
     // 获取新闻列表
     async handleNewList() {
       let res = await this.$http.get('/sy/content.do')
-      // console.log(res.data)
       this.leftNewList = res.data.data
       this.rightNewsList = res.data.dataArray
     },
     // 获取快捷操作列表
     async handleQuickList() {
       let res = await this.$http.get('/sy/getshortcut.do')
-      // console.log(res)
       this.QuickList = res.data.message
     },
   },
