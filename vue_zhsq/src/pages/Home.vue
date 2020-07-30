@@ -7,7 +7,7 @@
         <div class="home_hander_img">
           <img src="../assets/loge.png" />
         </div>
-        <div class="home_hander_title">智能社区综合管理服务云平台</div>
+        <div class="home_hander_title">智慧社区综合管理服务云平台</div>
         <div class="home_hander_text">(安徽合肥市)</div>
       </el-header>
       <!-- 内容区域 -->

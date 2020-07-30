@@ -230,6 +230,8 @@ export default {
       this.$router.push({ path: 'index', query: { breadcrumb: breadcrumb9 } })
       window.sessionStorage.setItem('breadcrumb', breadcrumb9)
       eventBus.$emit('breadcrumb', breadcrumb9)
+      window.sessionStorage.setItem('activePath', `\index`)
+      location.reload();
     },
     // 点击更换主题颜色
     handleColor1() {

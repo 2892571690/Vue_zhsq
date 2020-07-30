@@ -1,5 +1,5 @@
 <template>
-  <div ref="xqxx">
+  <div ref="ldxx">
     <!-- 操作栏区域 -->
     <Title :refDome="refDome"></Title>
     <!-- 导航栏区域 -->
@@ -22,8 +22,8 @@
             <el-input
               clearable
               @blur="handleBlur"
-              v-model="queryInfo.xqmc"
-              placeholder="搜索小区名称,小区编码"
+              v-model="queryInfo.ldh"
+              placeholder="搜索楼栋号"
               class="input-with-select"
             ></el-input>
             <div class="search_but el-icon-search" @click="handleList">搜索</div>
@@ -34,8 +34,10 @@
         <div class="left_button">
           <div class="left_button_wrap">
             <div class="increase_but el-icon-plus" type="primary" @click="handleAddxqxx">增加</div>
-            <div class="uploadXQ">上传小区</div>
-            <div class="delent_but" @click="handleDelete">删除</div>
+            <div class="uploadXQ">上传楼栋</div>
+            <div class="uploadXQ">上传房屋</div>
+            <div class="delent_but" @click="handleDelete">删除楼栋</div>
+            <div class="uploadXQ" @click="handleplzj">批量增加</div>
           </div>
           <div class="center_text">{{tableList.length}}个中{{tableNum.length}}个被选</div>
           <div class="right_button">
@@ -67,11 +69,11 @@
           @selection-change="handleChange"
         >
           <el-table-column type="selection"></el-table-column>
+          <el-table-column prop="ldh" label="楼栋号"></el-table-column>
           <el-table-column prop="xqmc" label="小区名称"></el-table-column>
-          <el-table-column prop="xqbm" label="小区编码"></el-table-column>
-          <el-table-column prop="sqdm" label="社区代码"></el-table-column>
-          <el-table-column prop="xxdz" label="详细地址"></el-table-column>
-          <el-table-column prop="ssqXzqhdm" label="省市区行政区划编码"></el-table-column>
+          <el-table-column prop="dys" label="单元数"></el-table-column>
+          <el-table-column prop="lcs" label="楼层数"></el-table-column>
+          <el-table-column prop="hs" label="户数(每层房屋数量)"></el-table-column>
           <el-table-column label="是否上传">
             <template slot-scope="scope">
               <div v-if="scope.row.isUpload == 1" style="color:green;">已上传</div>
@@ -113,11 +115,11 @@ export default {
       tableNum: [],
       // 获取用户列表的参数对象
       queryInfo: {
-        xqmc: '',
+        ldh: '',
         // 当前的页数
-        pagenum: 1,
+        currPage: 1,
         // 当前每页显示多少条数据
-        pagesize: 5,
+        pageSize: 5,
       },
       tatal: 0,
       // 控制搜索框的显示与隐藏
@@ -134,12 +136,12 @@ export default {
     let breadcrumb7 = breadcrumb.split(',')[7]
     let breadcrumb8 = [breadcrumb5, breadcrumb6, breadcrumb7]
     this.breadcrumb = [breadcrumb8]
-    // 获取表格数据
+    // 获取楼栋信息
     this.handleTableList()
   },
   mounted() {
     // 放大
-    this.refDome = this.$refs.xqxx
+    this.refDome = this.$refs.xqxxtj
   },
   methods: {
     //   点击面包屑的x事件
@@ -160,9 +162,13 @@ export default {
     },
     // 获取表格数据
     async handleTableList() {
-      let res = await this.$http.get('/xq/xqxx.do', { params: this.queryInfo })
-      this.tableList = res.data.data
-      this.tatal = res.data.totalCount
+      let res = await this.$http.get('/ld/selLouDong.do', {
+        params: this.queryInfo,
+      })
+      let tatol = res.data[res.data.length - 1]
+      res.data.splice(res.data.length - 1, 1)
+      this.tableList = res.data
+      this.tatal = Number(tatol.totalCount)
     },
     // 表格选中的事件
     handleChange(value) {
@@ -174,12 +180,12 @@ export default {
     },
     // 监听 pagesize 改变的事件
     handleSizeChange(newSize) {
-      this.queryInfo.pagesize = newSize
+      this.queryInfo.pageSize = newSize
       this.handleTableList()
     },
     // 监听 页码值 改变的事件
     handleCurrentChange(newPage) {
-      this.queryInfo.pagenum = newPage
+      this.queryInfo.currPage = newPage
       this.handleTableList()
     },
     // 点击显示和隐藏
@@ -192,45 +198,56 @@ export default {
     },
     // 点击放大
     handleBig() {
-      console.log(this.$refs.xqxx)
+      //   console.log(this.$refs.ldxx)
       if (this.screen % 2 == 0) {
-        this.$refs.xqxx.style.position = 'static'
+        this.$refs.ldxx.style.position = 'static'
         this.screen++
       } else {
-        this.$refs.xqxx.style.width = '100%'
-        this.$refs.xqxx.style.height = '100%'
-        this.$refs.xqxx.style.position = 'absolute'
-        this.$refs.xqxx.style.top = '0'
-        this.$refs.xqxx.style.left = '0'
-        this.$refs.xqxx.style.zIndex = '10'
-        this.$refs.xqxx.style.background = '#fff'
+        this.$refs.ldxx.style.width = '100%'
+        this.$refs.ldxx.style.height = '100%'
+        this.$refs.ldxx.style.position = 'absolute'
+        this.$refs.ldxx.style.top = '0'
+        this.$refs.ldxx.style.left = '0'
+        this.$refs.ldxx.style.zIndex = '10'
+        this.$refs.ldxx.style.background = '#fff'
         this.screen++
       }
     },
     // 删除按钮
     async handleDelete() {
-      let Arrid = []
+      let ldidList = []
       for (var i = 0; i < this.tableNum.length; i++) {
-        Arrid.push(this.tableNum[i].xqid)
+        ldidList.push(this.tableNum[i].ldId)
       }
-      Arrid = Arrid + ''
-      let res = await this.$http.post(`/xq/scxq.do?Arrid=${Arrid}`)
-      console.log(res)
-      // if(res.data.)
-      this.handleTableList()
+      // console.log(ldidList.length)
+      if (ldidList.length > 1) {
+        ldidList = ldidList + ''
+        let res = await this.$http.post(`/ld/delLouDong.do?ldidList=${ldidList}`)
+        // console.log(res)
+        this.handleTableList()
+      } else {
+        ldidList = ldidList + ''
+        let res = await this.$http.post(`/ld/delLouDong.do?ldid=${ldidList}`)
+        this.handleTableList()
+      }
     },
     // 点击添加按钮
     handleAddxqxx() {
-      this.$router.push({ path: 'xqxxtj' })
+      this.$router.push({ path: 'lczj' })
+    },
+    // 点击批量增加
+    handleplzj() {
+      this.$router.push({ path: 'lcplzj' })
     },
     //点击搜索
-    handleList(){
+    handleList() {
       this.handleTableList()
-    }
+    },
   },
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
+// 面包屑的样式
 .breadcrumb_wrap {
   width: 9%;
   height: 39px;
@@ -278,6 +295,7 @@ export default {
   border: 1px solid #e4e7ec;
   border-left: 0;
 }
+// 面包屑到这
 .xqxx_wrap {
   width: 100%;
   background: #f1f1f1;
@@ -353,7 +371,7 @@ export default {
         letter-spacing: 2px;
       }
       .right_button {
-        margin-left: 1000px;
+        margin-left: 750px;
         .right_but {
           width: 54px;
           height: 38px;
@@ -391,4 +409,8 @@ export default {
 .el-button .el-button {
   padding: 0 !important;
 }
+// .xqxx_wrap .xqxx_card .xqxx_search[data-v-7159484e]{
+//     height: none;
+//     line-height: none;
+// }
 </style>

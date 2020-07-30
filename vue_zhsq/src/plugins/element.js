@@ -27,7 +27,8 @@ import {
     Form,
     FormItem,
     Select,
-    Option
+    Option,
+    Upload
 } from 'element-ui'
 Vue.use(Button)
 Vue.use(Container)
@@ -55,5 +56,6 @@ Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Upload)
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

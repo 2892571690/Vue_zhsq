@@ -4,6 +4,9 @@ import Home from '../pages/Home.vue'
 import Index from '../pages/index/Index.vue'
 import xqxx from '../pages/Basics/xqxx.vue'
 import xqxxtj from '../pages/Basics/xqxxzj.vue'
+import ldxx from '../pages/Basics/ldxx.vue'
+import lczj from '../pages/Basics/lczj.vue'
+import lcplzj from '../pages/Basics/lcplzj.vue'
 Vue.use(VueRouter)
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push (location) {
@@ -30,6 +33,18 @@ const routes = [
       {
         path: '/xqxxtj',
         component: xqxxtj
+      },
+      {
+        path: '/ldxx',
+        component: ldxx
+      },
+      {
+        path: '/lczj',
+        component: lczj
+      },
+      {
+        path: '/lcplzj',
+        component: lcplzj
       }
     ]
   }
