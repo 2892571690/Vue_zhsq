@@ -130,6 +130,10 @@ export default {
       this.breadcrumb = [breadcrumb1, breadcrumb2]
       window.sessionStorage.setItem('breadcrumb', this.breadcrumb)
       eventBus.$emit('breadcrumb', this.breadcrumb)
+      let ly = window.sessionStorage.getItem('activePath')
+      if(`/${activePath[1].pathUrl}` == '/fwxx'){
+        location.reload();
+      }
     },
     handleIndex(index) {
       this.activeIndex = true

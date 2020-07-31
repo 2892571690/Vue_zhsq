@@ -29,17 +29,17 @@
           <!-- 添加的from -->
           <div
             class="bitianFromldplzj"
-            v-for="(domain, index) in ruleForm.domains"
+            v-for="(domain, index) in ruleForm.ldinfo"
             :key="domain.key"
           >
             <!--小区名称  -->
             <div class="form_wrap_box">
               <el-form-item
                 label="小区名称:"
-                :prop="'domains.' + index + '.xqmc'"
+                :prop="'ldinfo.' + index + '.xqid'"
                 :rules="{required: true, message: '请选择小区名称', trigger: 'blur'}"
               >
-                <el-select v-model="ruleForm.domains[index].xqmc" placeholder="请选择小区名称">
+                <el-select v-model="ruleForm.ldinfo[index].xqid" placeholder="请选择小区名称">
                   <el-option
                     v-for="item in xqmcList"
                     :key="item.xq_id"
@@ -53,40 +53,40 @@
             <div class="form_wrap_box">
               <el-form-item
                 label="楼栋号:"
-                :prop="'domains.' + index + '.ldh'"
+                :prop="'ldinfo.' + index + '.ldh'"
                 :rules="[{required: true, message: '请输入楼栋号', trigger: 'blur'},{min: 1,max: 6,message: '长度在 1 到 6 个字符',trigger: 'blur',}]"
               >
-                <el-input placeholder="请填写楼栋号,范围1~999" v-model="ruleForm.domains[index].ldh"></el-input>
+                <el-input placeholder="请填写楼栋号,范围1~999" v-model="ruleForm.ldinfo[index].ldh"></el-input>
               </el-form-item>
             </div>
             <!-- 单元数 -->
             <div class="form_wrap_box">
               <el-form-item
                 label="单元数:"
-                :prop="'domains.' + index + '.dys'"
+                :prop="'ldinfo.' + index + '.dys'"
                 :rules="[{required: true, message: '请输入单元数', trigger: 'blur'},{min: 1,max: 127,message: '长度在 1 到 127 个字符',trigger: 'blur',}]"
               >
-                <el-input placeholder="实例：2" v-model="ruleForm.domains[index].dys"></el-input>
+                <el-input placeholder="实例：2" v-model="ruleForm.ldinfo[index].dys"></el-input>
               </el-form-item>
             </div>
             <!-- 楼层数 -->
             <div class="form_wrap_box">
               <el-form-item
                 label="楼层数:"
-                :prop="'domains.' + index + '.lcs'"
+                :prop="'ldinfo.' + index + '.lcs'"
                 :rules="[{required: true, message: '请输入楼层数', trigger: 'blur'},{min: 1,max: 127,message: '长度在 1 到 127 个字符',trigger: 'blur',}]"
               >
-                <el-input placeholder="实例：12" v-model="ruleForm.domains[index].lcs"></el-input>
+                <el-input placeholder="实例：12" v-model="ruleForm.ldinfo[index].lcs"></el-input>
               </el-form-item>
             </div>
             <!-- 楼层数 -->
             <div class="form_wrap_box">
               <el-form-item
                 label="每层房屋数量:"
-                :prop="'domains.' + index + '.hs'"
+                :prop="'ldinfo.' + index + '.hs'"
                 :rules="[{required: true, message: '请输入每层房屋数量', trigger: 'blur'},{min: 1,max: 127,message: '长度在 1 到 127 个字符',trigger: 'blur',}]"
               >
-                <el-input placeholder="实例：4" v-model="ruleForm.domains[index].hs"></el-input>
+                <el-input placeholder="实例：4" v-model="ruleForm.ldinfo[index].hs"></el-input>
               </el-form-item>
             </div>
           </div>
@@ -113,9 +113,9 @@ export default {
       //   小区名称列表
       xqmcList: [],
       ruleForm: {
-        domains: [
+        ldinfo: [
           {
-            xqmc: '',
+            xqid: '',
             key: Date.now(),
             ldh: '',
             key: Date.now(),
@@ -170,11 +170,11 @@ export default {
     },
     // 点击提交
     handleUpTo() {
-      console.log(this.ruleForm.domains)
+      console.log(this.ruleForm.ldinfo)
       this.$refs.RuleForm.validate(async (valid) => {
         console.log(valid)
         //   if (valid) {
-        //     let res = await this.$http.get('/ld/insLouDong.do', {
+        //     let res = await this.$http.get('/ld/insLouDongList.do', {
         //       params: this.ruleForm,
         //     })
         //     console.log(res)
@@ -187,11 +187,11 @@ export default {
     },
     // 添加from表单
     handleAddFrom() {
-      if (this.ruleForm.domains.length == 10) {
+      if (this.ruleForm.ldinfo.length == 5) {
         return
       } else {
-        this.ruleForm.domains.push({
-          xqmc: '',
+        this.ruleForm.ldinfo.push({
+          xqid: '',
           key: Date.now(),
           ldh: '',
           key: Date.now(),
@@ -206,10 +206,10 @@ export default {
     },
     // 删除表单
     handleDelteFrom() {
-      if (this.ruleForm.domains.length == 1) {
+      if (this.ruleForm.ldinfo.length == 1) {
         return
       } else {
-        this.ruleForm.domains.pop()
+        this.ruleForm.ldinfo.pop()
       }
     },
   },
@@ -283,7 +283,7 @@ export default {
     }
   }
   .ldpltj_wrap_conent {
-    height: 630px;
+    height: 395px;
     width: 100%;
   }
 }
@@ -345,7 +345,7 @@ export default {
   text-align: center;
   color: #fff;
   position: absolute;
-  top: 875px;
+  top: 620px;
   right: 1200px;
   border-radius: 10px;
 }
@@ -357,7 +357,7 @@ export default {
   text-align: center;
   color: #fff;
   position: absolute;
-  top: 875px;
+  top: 620px;
   right: 940px;
   border-radius: 10px;
 }

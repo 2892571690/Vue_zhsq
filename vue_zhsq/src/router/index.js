@@ -7,9 +7,13 @@ import xqxxtj from '../pages/Basics/xqxxzj.vue'
 import ldxx from '../pages/Basics/ldxx.vue'
 import lczj from '../pages/Basics/lczj.vue'
 import lcplzj from '../pages/Basics/lcplzj.vue'
+import fwxx from '../pages/Basics/fwxx.vue'
+import mphList from '../components/mphList.vue'
+import fwxxck from '../pages/Basics/fwxxck.vue'
+import fwxxbj from '../pages/Basics/fwxxbj.vue'
 Vue.use(VueRouter)
 const originalPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push (location) {
+VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
 const routes = [
@@ -45,7 +49,26 @@ const routes = [
       {
         path: '/lcplzj',
         component: lcplzj
-      }
+      },
+      {
+        path: '/fwxx',
+        component: fwxx,
+        // redirect: '/mphList',
+        children: [
+          {
+            path: '/mphList',
+            component: mphList
+          }
+        ]
+      },
+      {
+        path: '/fwxxck',
+        component: fwxxck
+      },
+      {
+        path: '/fwxxbj',
+        component: fwxxbj
+      },
     ]
   }
 ]
