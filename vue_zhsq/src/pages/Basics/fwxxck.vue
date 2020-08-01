@@ -20,31 +20,53 @@
         <div class="fwxxck_wrap_content_left">
           <div class="xqmc_wrap">
             <div class="xqmc_wrap_title">小区名称:</div>
-            <div class="xqmc_wrap_text">{{yzxx.xqmc}}</div>
+            <div v-if="yzxx.xqmc == 'null' || yzxx.xqmc == ''"></div>
+            <div v-else>
+              <div class="xqmc_wrap_text">{{yzxx.xqmc}}</div>
+            </div>
           </div>
           <div class="xqbm_wrap">
             <div class="xqbm_wrap_title">小区编码:</div>
-            <div class="xqbm_wrap_text">{{yzxx.xqbm}}</div>
+            <div v-if="yzxx.xqbm == 'null' || yzxx.xqbm == ''"></div>
+            <div v-else>
+              <div class="xqbm_wrap_text">{{yzxx.xqbm}}</div>
+            </div>
           </div>
           <div class="ldh_wrap">
             <div class="ldh_wrap_title">楼栋号:</div>
-            <div class="ldh_wrap_text">{{yzxx.ldh}}</div>
+            <div v-if="yzxx.ldh == 'null' || yzxx.ldh == ''"></div>
+            <div v-else>
+              <div class="ldh_wrap_text">{{yzxx.ldh}}</div>
+            </div>
           </div>
           <div class="dyh_wrap">
             <div class="dyh_wrap_title">单元号:</div>
-            <div class="dyh_wrap_text">{{yzxx.dyh}}</div>
+            <div v-if="yzxx.dyh == 'null' || yzxx.dyh == ''"></div>
+            <div v-else>
+              <div class="dyh_wrap_text">{{yzxx.dyh}}</div>
+            </div>
           </div>
           <div class="lch_wrap">
             <div class="lch_wrap_title">楼层号:</div>
-            <div class="lch_wrap_text">{{yzxx.lch}}</div>
+            <div v-if="yzxx.lch == 'null' || yzxx.lch == ''"></div>
+            <div v-else>
+              <div class="lch_wrap_text">{{yzxx.lch}}</div>
+            </div>
           </div>
           <div class="mph_wrap">
             <div class="mph_wrap_title">门牌号:</div>
-            <div class="mph_wrap_text">{{yzxx.mph}}</div>
+            <div v-if="yzxx.mph == 'null' || yzxx.mph == ''"></div>
+            <div v-else>
+              <div class="mph_wrap_text">{{yzxx.mph}}</div>
+            </div>
           </div>
           <div class="fwzt_wrap">
             <div class="fwzt_wrap_title">房屋状态:</div>
-            <div v-if="yzxx.fwztdm == 1">
+            <div v-if="yzxx.fwztdm == 'null' || yzxx.fwztdm == ''"></div>
+            <div v-else>
+              <div class="fwzt_wrap_text">{{yzxx.fwztdm}}</div>
+            </div>
+            <!-- <div v-if="yzxx.fwztdm == 1">
               <div class="fwzt_wrap_text">出租</div>
             </div>
             <div v-else-if="yzxx.fwztdm == 2">
@@ -55,60 +77,177 @@
             </div>
             <div v-else>
               <div class="fwzt_wrap_text">其他</div>
-            </div>
+            </div>-->
           </div>
           <div class="fcyt_wrap">
             <div class="fcyt_wrap_title">房产用途:</div>
-            <div class="fcyt_wrap_text">{{yzxx.fwytdm}}</div>
+            <div v-if="yzxx.fwytdm == 'null' || yzxx.fwytdm == ''"></div>
+            <div v-else>
+              <div class="fcyt_wrap_text">{{yzxx.fwytdm}}</div>
+            </div>
+            <!-- <div v-if="yzxx.fwytdm == 1">
+              <div class="fcyt_wrap_text">综合</div>
+            </div>
+            <div v-else-if="yzxx.fwytdm == 2">
+              <div class="fcyt_wrap_text">住宅</div>
+            </div>
+            <div v-else-if="yzxx.fwytdm == 3">
+              <div class="fcyt_wrap_text">商业</div>
+            </div>
+            <div v-else-if="yzxx.fwytdm == 4">
+              <div class="fcyt_wrap_text">厂房</div>
+            </div>
+            <div v-else-if="yzxx.fwytdm == 5">
+              <div class="fcyt_wrap_text">仓库</div>
+            </div>
+            <div v-else-if="yzxx.fwytdm == 6">
+              <div class="fcyt_wrap_text">办公</div>
+            </div>
+            <div v-else-if="yzxx.fwytdm == 7">
+              <div class="fcyt_wrap_text">临时建筑</div>
+            </div>
+            <div v-else-if="yzxx.fwytdm == 9">
+              <div class="fcyt_wrap_text">其他</div>
+            </div>-->
           </div>
           <div class="cqxz_wrap">
             <div class="cqxz_wrap_title">产权性质:</div>
-            <div class="cqxz_wrap_text">{{yzxx.cqxzdm}}</div>
+            <div v-if="yzxx.cqxzdm == 'null' || yzxx.cqxzdm == ''"></div>
+            <div v-else>
+              <div class="cqxz_wrap_text">{{yzxx.cqxzdm}}</div>
+            </div>
+            <!-- <div v-if="yzxx.cqxzdm == 10">
+              <div class="cqxz_wrap_text">国有房产</div>
+            </div>
+            <div v-else-if="yzxx.cqxzdm == 90">
+              <div class="cqxz_wrap_text">其他</div>
+            </div>
+            <div v-else-if="yzxx.cqxzdm == 20">
+              <div class="cqxz_wrap_text">集体所有房产</div>
+            </div>
+            <div v-else-if="yzxx.cqxzdm == 30">
+              <div class="cqxz_wrap_text">私有房产</div>
+            </div>
+            <div v-else-if="yzxx.cqxzdm == 40">
+              <div class="cqxz_wrap_text">联营企业房产</div>
+            </div>
+            <div v-else-if="yzxx.cqxzdm == 50">
+              <div class="cqxz_wrap_text">股份制企业房产</div>
+            </div>
+            <div v-else-if="yzxx.cqxzdm == 60">
+              <div class="cqxz_wrap_text">港,澳,台胞房产</div>
+            </div>
+            <div v-else-if="yzxx.cqxzdm == 70">
+              <div class="cqxz_wrap_text">涉外房产</div>
+            </div>-->
           </div>
           <div class="fwmj_wrap">
             <div class="fwmj_wrap_title">房屋面积:</div>
-            <div class="fwmj_wrap_text">{{yzxx.fwmj}}平方米</div>
+            <div v-if="yzxx.fwmj == 'null' || yzxx.fwmj == ''">0平方米</div>
+            <div v-else>
+              <div class="fwmj_wrap_text">{{yzxx.fwmj}}平方米</div>
+            </div>
           </div>
           <div class="bz_wrap">
             <div class="bz_wrap_title">备注:</div>
-            <div class="bz_wrap_text">{{yzxx.bz}}</div>
+            <div v-if="yzxx.bz == 'null' || yzxx.bz == ''"></div>
+            <div v-else>
+              <div class="bz_wrap_text">{{yzxx.bz}}</div>
+            </div>
           </div>
         </div>
         <div class="fwxxck_wrap_content_center">
           <div class="fzxm_wrap">
             <div class="fzxm_wrap_title">房主姓名:</div>
-            <div class="fzxm_wrap_text">{{yzxx.xm}}</div>
+            <div v-if="yzxx.xm == 'null' || yzxx.xm == ''"></div>
+            <div v-else>
+              <div class="fzxm_wrap_text">{{yzxx.xm}}</div>
+            </div>
             <div class="el-icon-s-fold"></div>
           </div>
           <div class="sfzhm_wrap">
             <div class="sfzhm_wrap_title">身份证号码:</div>
-            <div class="sfzhm_wrap_text">{{yzxx.zjhm}}</div>
+            <div v-if="yzxx.zjhm == 'null' || yzxx.zjhm == ''"></div>
+            <div v-else>
+              <div class="sfzhm_wrap_text">{{yzxx.zjhm}}</div>
+            </div>
           </div>
           <div class="sjhm_wrap">
             <div class="sjhm_wrap_title">手机号码:</div>
-            <div class="sjhm_wrap_text">{{yzxx.sjhm}}</div>
+            <div v-if="yzxx.sjhm == 'null' || yzxx.sjhm == ''"></div>
+            <div v-else>
+              <div class="sjhm_wrap_text">{{yzxx.sjhm}}</div>
+            </div>
           </div>
           <div class="jsrs_wrap">
             <div class="jsrs_wrap_title">家属人数:</div>
-            <div class="jsrs_wrap_text">{{yzxx.js}}</div>
+            <div v-if="yzxx.js == 'null' || yzxx.js == ''"></div>
+            <div v-else>
+              <div class="jsrs_wrap_text">{{yzxx.js}}</div>
+            </div>
           </div>
           <div class="zkrs_wrap">
             <div class="zkrs_wrap_title">租客人数:</div>
-            <div class="zkrs_wrap_text">{{yzxx.zk}}</div>
+            <div v-if="yzxx.zk == 'null' || yzxx.zk == ''"></div>
+            <div v-else>
+              <div class="zkrs_wrap_text">{{yzxx.zk}}</div>
+            </div>
           </div>
           <div class="rzrylb_wrap">
             <div class="rzrylb_wrap_title">入住人员列表:</div>
-            <div class="rzrylb_wrap_text" v-for="(item,index) in yzxx.rzrylb" :key="index">
-              <div class="rzrylb_wrap_text_ren1">{{index+1}}.</div>
-              <div class="rzrylb_wrap_text_ren2">{{item.xm}}，</div>
-              <div class="rzrylb_wrap_text_ren3">{{item.xbdm}}，</div>
-              <div class="rzrylb_wrap_text_ren4">{{item.zjhm}}，</div>
-              <div class="rzrylb_wrap_text_ren5">{{item.yhzgxdm}}</div>
+            <div v-if="yzxx.rzrylb == 'null' || yzxx.rzrylb == ''"></div>
+            <div v-else>
+              <div class="rzrylb_wrap_text" v-for="(item,index) in yzxx.rzrylb" :key="index">
+                <div class="rzrylb_wrap_text_ren1">{{index+1}}.</div>
+                <div class="rzrylb_wrap_text_ren2">{{item.xm}}，</div>
+                <div class="rzrylb_wrap_text_ren3">{{item.xbdm}}，</div>
+                <!-- <div v-if="item.xbdm == 1">
+                <div class="rzrylb_wrap_text_ren3">男，</div>
+              </div>
+              <div v-else>
+                <div class="rzrylb_wrap_text_ren3">女，</div>
+                </div>-->
+                <div class="rzrylb_wrap_text_ren4">{{item.zjhm}}，</div>
+                <div class="rzrylb_wrap_text_ren5">{{item.yhzgxdm}}</div>
+                <!-- <div v-if="item.yhzgxdm == 0">
+                <div class="rzrylb_wrap_text_ren5">房主</div>
+              </div>
+              <div v-else-if="item.yhzgxdm == 1">
+                <div class="rzrylb_wrap_text_ren5">配偶</div>
+              </div>
+              <div v-else-if="item.yhzgxdm == 2">
+                <div class="rzrylb_wrap_text_ren5">子</div>
+              </div>
+              <div v-else-if="item.yhzgxdm == 3">
+                <div class="rzrylb_wrap_text_ren5">女</div>
+              </div>
+              <div v-else-if="item.yhzgxdm == 4">
+                <div class="rzrylb_wrap_text_ren5">孙子、孙女,或外孙子、外孙女</div>
+              </div>
+              <div v-else-if="item.yhzgxdm == 5">
+                <div class="rzrylb_wrap_text_ren5">父母</div>
+              </div>
+              <div v-else-if="item.yhzgxdm == 6">
+                <div class="rzrylb_wrap_text_ren5">祖父母或外祖父母</div>
+              </div>
+              <div v-else-if="item.yhzgxdm == 7">
+                <div class="rzrylb_wrap_text_ren5">兄、弟、姐、妹</div>
+              </div>
+              <div v-else-if="item.yhzgxdm == 8">
+                <div class="rzrylb_wrap_text_ren5">其他亲属</div>
+              </div>
+              <div v-else-if="item.yhzgxdm == 99">
+                <div class="rzrylb_wrap_text_ren5">租客</div>
+                </div>-->
+              </div>
             </div>
           </div>
         </div>
-        <div class="fwxxck_wrap_content_img">
-          <img src="../../assets/logo.png"/>
+        <div v-if="yzxx.ryZp == 'null' || yzxx.ryZp == ''"></div>
+        <div v-else>
+          <div class="fwxxck_wrap_content_img">
+            <img :src="yzxx.ryZp" />
+          </div>
         </div>
       </div>
       <div class="fanhui" @click="handleGoBlack">返回</div>
@@ -127,8 +266,8 @@ export default {
       refDome: null,
       // 面包屑
       breadcrumb: [],
-      // 业主证件号码
-      yzzjhm: '',
+      // 房屋编码
+      fwbm: '',
       // 业主信息
       yzxx: {},
     }
@@ -141,8 +280,8 @@ export default {
     let breadcrumb7 = breadcrumb.split(',')[7]
     let breadcrumb8 = [breadcrumb5, breadcrumb6, breadcrumb7]
     this.breadcrumb = [breadcrumb8]
-    // console.log(this.$route.query.yzzjhm)
-    this.yzzjhm = this.$route.query.yzzjhm
+    console.log(this.$route.query.fwbm)
+    this.fwbm = this.$route.query.fwbm
     // 查看业主的信息
     this.handleckfwxx()
   },
@@ -169,15 +308,17 @@ export default {
     },
     // 查看信息
     async handleckfwxx() {
-      // let res = await this.$http.get(`/fw/selFangWo.do?zjhm=${this.yzzjhm}`)
-      let res = await this.$http.get('/fw/cxfwxx.do?zjhm=34040620010903383X')
+      // let res = await this.$http.get(`/fw/cxfwxx.do?fwbm=${this.fwbm}`)
+      let res = await this.$http.get(
+        '/fw/cxfwxx.do?fwbm=123'
+      )
       console.log(res)
       this.yzxx = res.data.data
     },
     // 点击返回
-    handleGoBlack(){
+    handleGoBlack() {
       this.$router.go(-1)
-    }
+    },
   },
 }
 </script>
@@ -394,7 +535,7 @@ export default {
       }
     }
     .fwxxck_wrap_content_center {
-      width: 390px;
+      // width: 390px;
       height: 571px;
       margin: 32px 0 0 0;
       .fzxm_wrap {
@@ -477,24 +618,31 @@ export default {
           font-size: 16px;
           color: #000000;
           line-height: 28px;
-          .rzrylb_wrap_text_ren1{
+          .rzrylb_wrap_text_ren1 {
             margin: 0 0 0 17px;
           }
-          .rzrylb_wrap_text_ren2{}
-          .rzrylb_wrap_text_ren3{}
-          .rzrylb_wrap_text_ren4{}
-          .rzrylb_wrap_text_ren5{}
+          .rzrylb_wrap_text_ren2 {
+          }
+          .rzrylb_wrap_text_ren3 {
+          }
+          .rzrylb_wrap_text_ren4 {
+          }
+          .rzrylb_wrap_text_ren5 {
+          }
         }
       }
     }
     .fwxxck_wrap_content_img {
       width: 151px;
       height: 193px;
-      margin: 32px 0 0 0;
+      // margin: 32px 0 0 0;
+      position: absolute;
+      top: 300px;
+      right: 400px;
     }
   }
 }
-.fanhui{
+.fanhui {
   width: 190px;
   height: 34px;
   background: #5bc0de;
@@ -503,7 +651,7 @@ export default {
   text-align: center;
   position: absolute;
   left: 955px;
-  bottom: 50px;
+  bottom: 35px;
   border-radius: 10px;
 }
 </style>

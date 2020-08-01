@@ -28,8 +28,8 @@
           <div class="mph_wrap_xz_zk">租客:{{item.zkNum}}人</div>
         </div>
         <div class="mph_wrap_gn">
-          <div class="mph_wrap_gn_ck" @click="handleGofwxxck(item.yzzjhm)">查看</div>
-          <div class="mph_wrap_gn_bj" @click="handleGofwxxbj">编辑</div>
+          <div class="mph_wrap_gn_ck" @click="handleGofwxxck(item.fwbm)">查看</div>
+          <div class="mph_wrap_gn_bj" @click="handleGofwxxbj(item.fwbm)">编辑</div>
           <div v-if="item.isupload == 1">
             <div class="mph_wrap_gn_zt">已上传</div>
           </div>
@@ -102,12 +102,13 @@ export default {
   },
   methods: {
     // 点击查看
-    handleGofwxxck(yzzjhm) {
-      this.$router.push({ path: 'fwxxck', query: { yzzjhm } })
+    handleGofwxxck(fwbm) {
+      this.$router.push({ path: 'fwxxck', query: { fwbm } })
     },
     // 点击编辑
-    handleGofwxxbj() {
-      this.$router.push({ path: 'fwxxbj' })
+    handleGofwxxbj(fwbm) {
+      // console.log(fwbm)
+      this.$router.push({ path: 'fwxxbj', query: { fwbm } })
     },
     // 获取门牌号列表信息
     async handleMPHList() {

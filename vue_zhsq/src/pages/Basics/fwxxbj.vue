@@ -1,3 +1,4 @@
+
 <template>
   <div ref="fwxxbj">
     <!-- 操作栏区域 -->
@@ -16,7 +17,223 @@
       <div class="fwxxbj_wrap_title">
         <div class="fwxxbj_wrap_title_text">房屋信息编辑</div>
       </div>
-      <div class="fwxxbj_wrap_content"></div>
+      <div class="fwxxbj_wrap_content">
+        <div class="fwxxbj_wrap_content_left">
+          <!-- 小区名称 -->
+          <div class="xqmc_input">
+            <div class="xqmc_input_text">小区名称：</div>
+            <div v-if="fwxxList.xqmc == '' || fwxxList.xqmc == 'null'">
+              <el-input placeholder :disabled="true"></el-input>
+            </div>
+            <div v-else>
+              <el-input :placeholder="fwxxList.xqmc" :disabled="true"></el-input>
+            </div>
+          </div>
+          <!-- 小区编码 -->
+          <div class="xqbm_input">
+            <div class="xqbm_input_text">小区编码：</div>
+            <div v-if="fwxxList.xqbm == '' || fwxxList.xqbm == 'null'">
+              <el-input placeholder :disabled="true"></el-input>
+            </div>
+            <div v-else>
+              <el-input :placeholder="fwxxList.xqbm" :disabled="true"></el-input>
+            </div>
+          </div>
+          <!-- 楼栋号 -->
+          <div class="ldh_input">
+            <div class="ldh_input_text">楼栋号：</div>
+            <div v-if="fwxxList.ldh == '' || fwxxList.ldh == 'null'">
+              <el-input placeholder :disabled="true"></el-input>
+            </div>
+            <div v-else>
+              <el-input :placeholder="fwxxList.ldh" :disabled="true"></el-input>
+            </div>
+          </div>
+          <!-- 单元号 -->
+          <div class="dyh_input">
+            <div class="dyh_input_text">单元号：</div>
+            <div v-if="fwxxList.dyh == '' || fwxxList.dyh == 'null'">
+              <el-input placeholder :disabled="true"></el-input>
+            </div>
+            <div v-else>
+              <el-input :placeholder="fwxxList.dyh" :disabled="true"></el-input>
+            </div>
+          </div>
+          <!-- 楼层号 -->
+          <div class="lch_input">
+            <div class="lch_input_text">楼层号：</div>
+            <div v-if="fwxxList.lch == '' || fwxxList.lch == 'null'">
+              <el-input placeholder :disabled="true"></el-input>
+            </div>
+            <div v-else>
+              <el-input :placeholder="fwxxList.lch" :disabled="true"></el-input>
+            </div>
+          </div>
+          <!-- 门牌号 -->
+          <div class="mph_input">
+            <div class="mph_input_text">门牌号：</div>
+            <div v-if="fwxxList.mph == '' || fwxxList.mph == 'null'">
+              <el-input placeholder :disabled="true"></el-input>
+            </div>
+            <div v-else>
+              <el-input :placeholder="fwxxList.mph" :disabled="true"></el-input>
+            </div>
+          </div>
+          <!-- 房屋状态 -->
+          <div class="fwzt_input">
+            <div class="fwzt_input_text">房屋状态：</div>
+            <div v-if="fwxxList.fwztdm == '' || fwxxList.fwztdm == 'null'">
+              <el-select v-model="from.fwztdm" placeholder="请选择"></el-select>
+            </div>
+            <div v-else>
+              <el-select v-model="from.fwztdm" placeholder="请选择">
+                <el-option label="出租" value="1"></el-option>
+                <el-option label="自住" value="2"></el-option>
+                <el-option label="空置" value="4"></el-option>
+                <el-option label="其他" value="9"></el-option>
+              </el-select>
+            </div>
+          </div>
+          <!-- 房屋用途 -->
+          <div class="fwyt_input">
+            <div class="fwyt_input_text">房屋用途：</div>
+            <div v-if="fwxxList.fwytdm == '' || fwxxList.fwytdm == 'null'">
+              <el-select v-model="from.fwytdm" placeholder="请选择"></el-select>
+            </div>
+            <div v-else>
+              <el-select v-model="from.fwytdm" placeholder="请选择">
+                <el-option label="综合" value="1"></el-option>
+                <el-option label="住宅" value="2"></el-option>
+                <el-option label="商业" value="3"></el-option>
+                <el-option label="厂房" value="4"></el-option>
+                <el-option label="仓库" value="5"></el-option>
+                <el-option label="办公" value="6"></el-option>
+                <el-option label="临时建筑" value="7"></el-option>
+                <el-option label="其他" value="9"></el-option>
+              </el-select>
+            </div>
+          </div>
+          <!-- 产权性质 -->
+          <div class="cqxz_input">
+            <div class="cqxz_input_text">产权性质：</div>
+            <div v-if="fwxxList.cqxzdm == '' || fwxxList.cqxzdm == 'null'">
+              <el-select v-model="from.cqxzdm" placeholder="请选择"></el-select>
+            </div>
+            <div v-else>
+              <el-select v-model="from.cqxzdm" placeholder="请选择">
+                <el-option label="国有房产" value="10"></el-option>
+                <el-option label="其他" value="90"></el-option>
+                <el-option label="集体所有房产" value="20"></el-option>
+                <el-option label="私有房产" value="30"></el-option>
+                <el-option label="联营企业房产" value="40"></el-option>
+                <el-option label="股份制企业房产" value="50"></el-option>
+                <el-option label="港、澳、台胞房产" value="60"></el-option>
+                <el-option label="涉外房产" value="70"></el-option>
+              </el-select>
+            </div>
+          </div>
+          <!-- 房屋面积 -->
+          <div class="fwmj_input">
+            <div class="fwmj_input_text">房屋面积：</div>
+            <div v-if="fwxxList.fwmj == '' || fwxxList.fwmj == 'null'">
+              <el-input placeholder v-model="from.fwmj"></el-input>
+            </div>
+            <div v-else>
+              <el-input v-model="from.fwmj" :placeholder="fwxxList.fwmj"></el-input>
+            </div>
+            <div class="fwmj_input_text1">平方米</div>
+          </div>
+          <!-- 备注 -->
+          <div class="bz_input">
+            <div class="bz_input_text">备注：</div>
+            <div v-if="fwxxList.bz == '' || fwxxList.bz == 'null'">
+              <el-input placeholder type="textarea" v-model="from.bz"></el-input>
+            </div>
+            <div v-else>
+              <el-input v-model="from.bz" :placeholder="fwxxList.mph" type="textarea"></el-input>
+            </div>
+          </div>
+        </div>
+        <div class="fwxxbj_wrap_content_center">
+          <!-- 房主姓名 -->
+          <div class="fzxm_input">
+            <div class="fzxm_input_text">房主姓名：</div>
+            <div v-if="fwxxList.xm == '' || fwxxList.xm == 'null'">
+              <el-input placeholder v-model="from.xm"></el-input>
+            </div>
+            <div v-else>
+              <el-input :placeholder="fwxxList.xm" v-model="from.xm"></el-input>
+            </div>
+          </div>
+          <!-- 身份证号码 -->
+          <div class="sfzhm_input">
+            <div class="sfzhm_input_text">身份证号码：</div>
+            <div v-if="fwxxList.zjhm == '' || fwxxList.zjhm == 'null'">
+              <el-input placeholder v-model="from.zjhm"></el-input>
+            </div>
+            <div v-else>
+              <el-input :placeholder="fwxxList.zjhm" v-model="from.zjhm"></el-input>
+            </div>
+          </div>
+          <!-- 手机号码 -->
+          <div class="sjhm_input">
+            <div class="sjhm_input_text">手机号码：</div>
+            <div v-if="fwxxList.sjhm == '' || fwxxList.sjhm == 'null'">
+              <el-input v-model="from.sjhm"></el-input>
+            </div>
+            <div v-else>
+              <el-input :placeholder="fwxxList.sjhm" v-model="from.sjhm"></el-input>
+            </div>
+          </div>
+          <!-- 家属人数 -->
+          <div class="jsrs_input">
+            <div class="jsrs_input_text">家属人数：</div>
+            <div v-if="fwxxList.js == '' || fwxxList.js == 'null'">
+              <el-input v-model="from.js"></el-input>
+            </div>
+            <div v-else>
+              <el-input :placeholder="fwxxList.js" v-model="from.js"></el-input>
+            </div>
+          </div>
+          <!-- 租客人数 -->
+          <div class="zkrs_input">
+            <div class="zkrs_input_text">租客人数：</div>
+            <div v-if="fwxxList.zk == '' || fwxxList.zk == 'null'">
+              <el-input v-model="from.zk"></el-input>
+            </div>
+            <div v-else>
+              <el-input :placeholder="fwxxList.zk" v-model="from.zk"></el-input>
+            </div>
+          </div>
+          <!-- 入住人员列表 -->
+          <div class="rzrylb_input">
+            <div class="rzrylb_input_text">入住人员列表：</div>
+
+            <el-input :placeholder="strry" type="textarea" :disabled="true"></el-input>
+          </div>
+        </div>
+        <div class="fwxxbj_wrap_content_right">
+          <div class="fwxxbj_wrap_content_right_title">身份证照片</div>
+          <div v-if="this.from.zjzp == ''">
+            <div class="fwxxbj_wrap_content_right_img">
+              <img src="../../assets/zjzp.png" />
+            </div>
+          </div>
+          <div v-else>
+            <div class="fwxxbj_wrap_content_right_img">
+              <img :src="this.from.zjzp" />
+            </div>
+          </div>
+          <div class="fwxxbj_wrap_content_right_but">
+            <div class="reading" @click="ReadCard">读卡</div>
+          </div>
+        </div>
+        <div class="black_xx_fwbj" @click="handleBliack">返回</div>
+        <div class="up_xx_fwbj" @click="handleUp">提交</div>
+        <div class="text1">请在IE浏览器使用</div>
+        <div class="text2">控件不可用，可能未正确安装控件及驱动,或者控件未启用</div>
+        <div class="text3" @click="handleText">点击此处查看文档</div>
+      </div>
     </div>
   </div>
 </template>
@@ -32,6 +249,24 @@ export default {
       refDome: null,
       // 面包屑
       breadcrumb: [],
+      // 房屋信息
+      fwxxList: [],
+      from: {
+        // 房屋编码
+        fwbm: '',
+        fwztdm: '',
+        fwytdm: '',
+        cqxzdm: '',
+        fwmj: '',
+        bz: '',
+        xm: '',
+        zjhm: '',
+        sjhm: '',
+        js: '',
+        zk: '',
+        zjzp: '',
+      },
+      strry: '',
     }
   },
   created() {
@@ -42,6 +277,8 @@ export default {
     let breadcrumb7 = breadcrumb.split(',')[7]
     let breadcrumb8 = [breadcrumb5, breadcrumb6, breadcrumb7]
     this.breadcrumb = [breadcrumb8]
+    this.from.fwbm = this.$route.query.fwbm
+    this.handleFWXXBM()
   },
   mounted() {
     // 放大
@@ -64,10 +301,64 @@ export default {
       eventBus.$emit('breadcrumb', breadcrumb9)
       location.reload()
     },
+    // 获取房屋信息
+    async handleFWXXBM() {
+      // let res = await this.$http.get(`/fw/cxfwxx.do?fwbm=${this.from.fwbm}`)
+      let res = await this.$http.get(`/fw/cxfwxx.do?fwbm=888999`)
+      // console.log(res.data)
+      this.fwxxList = res.data.data
+      let rzrylb = res.data.data.rzrylb
+      if (rzrylb.length == 0) {
+        return
+      } else {
+        let strry = ''
+        for (var i = 0; i < rzrylb.length; i++) {
+          strry += `${i + 1}.${rzrylb[i].xm}，${rzrylb[i].xbdm}，${
+            rzrylb[i].zjhm
+          }，${rzrylb[i].yhzgxdm}\n`
+        }
+        this.strry = strry
+      }
+    },
+    // 点击连接
+    handleConnect() {
+      console.log(111)
+    },
+    // 点击读卡
+    ReadCard() {
+      var ret = document.getElementById('CVR_IDCard').ReadCard()
+      if (ret == '0') {
+        console.log(document.getElementById('CVR_IDCard').Picture)
+        this.from.xm = document.getElementById('CVR_IDCard').Name
+        this.from.zjhm = document.getElementById('CVR_IDCard').CardNo
+        this.from.zjzp = `data:image/jpeg;base64,${
+          document.getElementById('CVR_IDCard').Picture
+        }`
+        return
+      }
+      this.$message.error('读卡错误，尝试重新放置')
+      return
+    },
+    // 点击断开
+    handleBreak() {
+      console.log(333)
+    },
+    // 点击返回
+    handleBliack() {
+      this.$router.go(-1)
+    },
+    // 点击提交
+    handleUp() {
+      console.log(111)
+    },
+    // 点击查看文档
+    handleText(){
+      console.log(222)
+    }
   },
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
 // 面包屑的样式
 .breadcrumb_wrap {
   width: 9%;
@@ -127,7 +418,7 @@ export default {
     width: 100%;
     height: 50px;
     background: #def0d8;
-    .fwxxbj_wrap_title_text{
+    .fwxxbj_wrap_title_text {
       font-size: 14px;
       color: #4a6844;
       margin: 0 0 0 45px;
@@ -135,6 +426,437 @@ export default {
     }
   }
   .fwxxbj_wrap_content {
+    width: 100%;
+    height: 685px;
+    display: flex;
+    .fwxxbj_wrap_content_left {
+      width: 350px;
+      height: 100%;
+      margin: 0 0 0 97px;
+      overflow: hidden;
+      .xqmc_input {
+        height: 34px;
+        display: flex;
+        margin: 25px 0 0 0;
+        .xqmc_input_text {
+          height: 34px;
+          text-align: right;
+          width: 80px;
+          font-size: 14px;
+          line-height: 34px;
+        }
+        .el-input {
+          width: 260px;
+          height: 34px;
+          .el-input__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .xqbm_input {
+        height: 34px;
+        display: flex;
+        margin: 12px 0 0 0;
+        .xqbm_input_text {
+          height: 34px;
+          text-align: right;
+          width: 80px;
+          font-size: 14px;
+          line-height: 34px;
+        }
+        .el-input {
+          width: 150px;
+          height: 34px;
+          .el-input__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .ldh_input {
+        height: 34px;
+        display: flex;
+        margin: 12px 0 0 0;
+        .ldh_input_text {
+          text-align: right;
+          height: 34px;
+          width: 80px;
+          font-size: 14px;
+          line-height: 34px;
+        }
+        .el-input {
+          width: 91px;
+          height: 34px;
+          .el-input__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .dyh_input {
+        height: 34px;
+        display: flex;
+        margin: 12px 0 0 0;
+        .dyh_input_text {
+          height: 34px;
+          width: 80px;
+          font-size: 14px;
+          line-height: 34px;
+          text-align: right;
+        }
+        .el-input {
+          width: 91px;
+          height: 34px;
+          .el-input__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .lch_input {
+        height: 34px;
+        display: flex;
+        margin: 12px 0 0 0;
+        .lch_input_text {
+          height: 34px;
+          width: 80px;
+          font-size: 14px;
+          line-height: 34px;
+          text-align: right;
+        }
+        .el-input {
+          width: 91px;
+          height: 34px;
+          .el-input__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .mph_input {
+        height: 34px;
+        display: flex;
+        margin: 12px 0 0 0;
+        .mph_input_text {
+          height: 34px;
+          width: 80px;
+          font-size: 14px;
+          line-height: 34px;
+          text-align: right;
+        }
+        .el-input {
+          width: 91px;
+          height: 34px;
+          .el-input__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .fwzt_input {
+        height: 34px;
+        display: flex;
+        margin: 12px 0 0 0;
+        .fwzt_input_text {
+          height: 34px;
+          width: 80px;
+          font-size: 14px;
+          line-height: 34px;
+          text-align: right;
+        }
+        .el-input {
+          width: 270px;
+          height: 34px;
+          .el-input__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .fwyt_input {
+        height: 34px;
+        display: flex;
+        margin: 12px 0 0 0;
+        .fwyt_input_text {
+          height: 34px;
+          width: 80px;
+          font-size: 14px;
+          line-height: 34px;
+          text-align: right;
+        }
+        .el-input {
+          width: 270px;
+          height: 34px;
+          .el-input__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .cqxz_input {
+        height: 34px;
+        display: flex;
+        margin: 12px 0 0 0;
+        .cqxz_input_text {
+          height: 34px;
+          width: 80px;
+          font-size: 14px;
+          line-height: 34px;
+          text-align: right;
+        }
+        .el-input {
+          width: 270px;
+          height: 34px;
+          .el-input__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .fwmj_input {
+        height: 34px;
+        display: flex;
+        margin: 12px 0 0 0;
+        .fwmj_input_text {
+          height: 34px;
+          width: 80px;
+          font-size: 14px;
+          line-height: 34px;
+          text-align: right;
+        }
+        .fwmj_input_text1 {
+          height: 34px;
+          width: 80px;
+          font-size: 14px;
+          line-height: 34px;
+          text-align: left;
+        }
+        .el-input {
+          width: 91px;
+          height: 34px;
+          .el-input__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .bz_input {
+        height: 34px;
+        display: flex;
+        margin: 12px 0 0 0;
+        .bz_input_text {
+          height: 34px;
+          width: 80px;
+          font-size: 14px;
+          line-height: 34px;
+          text-align: right;
+        }
+        .el-textarea {
+          width: 270px;
+          height: 70px;
+          .el-textarea__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+    .fwxxbj_wrap_content_center {
+      width: 425px;
+      height: 100%;
+      .fzxm_input {
+        height: 34px;
+        display: flex;
+        margin: 25px 0 0 0;
+        .fzxm_input_text {
+          height: 34px;
+          text-align: right;
+          width: 115px;
+          font-size: 14px;
+          line-height: 34px;
+        }
+        .el-input {
+          width: 260px;
+          height: 34px;
+          .el-input__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .sfzhm_input {
+        height: 34px;
+        display: flex;
+        margin: 12px 0 0 0;
+        .sfzhm_input_text {
+          height: 34px;
+          text-align: right;
+          width: 115px;
+          font-size: 14px;
+          line-height: 34px;
+        }
+        .el-input {
+          width: 260px;
+          height: 34px;
+          .el-input__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .sjhm_input {
+        height: 34px;
+        display: flex;
+        margin: 12px 0 0 0;
+        .sjhm_input_text {
+          height: 34px;
+          text-align: right;
+          width: 115px;
+          font-size: 14px;
+          line-height: 34px;
+        }
+        .el-input {
+          width: 260px;
+          height: 34px;
+          .el-input__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .jsrs_input {
+        height: 34px;
+        display: flex;
+        margin: 12px 0 0 0;
+        .jsrs_input_text {
+          height: 34px;
+          text-align: right;
+          width: 115px;
+          font-size: 14px;
+          line-height: 34px;
+        }
+        .el-input {
+          width: 90px;
+          height: 34px;
+          .el-input__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .zkrs_input {
+        height: 34px;
+        display: flex;
+        margin: 12px 0 0 0;
+        .zkrs_input_text {
+          height: 34px;
+          text-align: right;
+          width: 115px;
+          font-size: 14px;
+          line-height: 34px;
+        }
+        .el-input {
+          width: 90px;
+          height: 34px;
+          .el-input__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .rzrylb_input {
+        height: 34px;
+        margin: 12px 0 0 0;
+        .rzrylb_input_text {
+          height: 34px;
+          text-align: right;
+          width: 115px;
+          font-size: 14px;
+          line-height: 34px;
+        }
+        .el-textarea {
+          width: 393px;
+          height: 209px;
+          margin: 0 0 0 32px;
+          .el-textarea__inner {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+    .fwxxbj_wrap_content_right {
+      width: 253px;
+      height: 355px;
+      margin: 0 0 0 35px;
+      text-align: center;
+      .fwxxbj_wrap_content_right_title {
+        font-size: 14px;
+        margin: 21px 0 9px 0;
+      }
+      .fwxxbj_wrap_content_right_img {
+        width: 175px;
+        height: 271px;
+        margin: 0 auto;
+      }
+      .fwxxbj_wrap_content_right_but {
+        .reading {
+          width: 65px;
+          height: 35px;
+          line-height: 35px;
+          text-align: center;
+          background: #5bc0de;
+          color: #fff;
+          font-size: 15px;
+          border-radius: 5px;
+          margin: 15px 0 0 95px;
+        }
+      }
+    }
   }
+}
+.black_xx_fwbj {
+  width: 190px;
+  height: 34px;
+  color: #fff;
+  background: #5bc0de;
+  line-height: 34px;
+  text-align: center;
+  position: absolute;
+  bottom: 125px;
+  right: 790px;
+  border-radius: 10px;
+}
+.up_xx_fwbj {
+  width: 190px;
+  height: 34px;
+  color: #fff;
+  background: #d7534e;
+  line-height: 34px;
+  text-align: center;
+  position: absolute;
+  bottom: 125px;
+  right: 490px;
+  border-radius: 10px;
+}
+.text1 {
+  color: #f30a05;
+  position: absolute;
+  bottom: 100px;
+  left: 930px;
+
+}
+.text2 {
+  color: #f30a05;
+  position: absolute;
+  bottom: 80px;
+  left: 930px;
+}
+.text3 {
+  color: #2e79b2;
+  position: absolute;
+  bottom: 60px;
+  left: 930px;
 }
 </style>

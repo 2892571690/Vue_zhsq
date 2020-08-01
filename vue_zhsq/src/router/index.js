@@ -11,6 +11,8 @@ import fwxx from '../pages/Basics/fwxx.vue'
 import mphList from '../components/mphList.vue'
 import fwxxck from '../pages/Basics/fwxxck.vue'
 import fwxxbj from '../pages/Basics/fwxxbj.vue'
+import crkxx from '../pages/Basics/crkxx.vue';
+import crktj from '../pages/Basics/crktj.vue';
 Vue.use(VueRouter)
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
@@ -68,6 +70,14 @@ const routes = [
       {
         path: '/fwxxbj',
         component: fwxxbj
+      },
+      {
+        path: '/crkxx',
+        component: crkxx
+      },
+      {
+        path: '/crktj',
+        component: crktj
       },
     ]
   }

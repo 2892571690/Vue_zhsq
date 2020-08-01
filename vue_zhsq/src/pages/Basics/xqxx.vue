@@ -168,7 +168,7 @@ export default {
     handleChange(value) {
       this.tableNum = value
     },
-    // 搜索框市区焦点事件
+    // 搜索框失去焦点事件
     handleBlur() {
       this.handleTableList()
     },
