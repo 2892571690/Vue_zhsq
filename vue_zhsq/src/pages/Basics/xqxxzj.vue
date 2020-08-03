@@ -24,8 +24,8 @@
             <el-form class="demo_ruleForm" :rules="rules" :model="ruleForm" ref="RuleForm">
               <div class="bitianFrom">
                 <!-- 小区编码 -->
-                <el-form-item label="小区编码:" prop="xqbm">
-                  <el-input placeholder="请输入小区序号3位" v-model="ruleForm.xqbm"></el-input>
+                <el-form-item label="小区序号:" prop="xqbm">
+                  <el-input placeholder="请输入小区序号3位,案例001" v-model="ruleForm.xqbm"></el-input>
                 </el-form-item>
                 <!-- 小区名称 -->
                 <el-form-item label="小区名称:" prop="xqmc">
@@ -33,27 +33,56 @@
                 </el-form-item>
                 <!-- 省市区行政区划编码 -->
                 <el-form-item label="省市区行政区划编码:" prop="ssqXzqhdm">
-                  <el-select v-model="ruleForm.ssqXzqhdm" placeholder="请选择省市区行政区划编码">
+                  <el-select
+                    :filterable="true"
+                    :loading="SSQloading"
+                    :remote="true"
+                    :remote-method="SSQremoteMethod"
+                    v-model="ruleForm.ssqXzqhdm"
+                    placeholder="请输入省市区行政区划名称"
+                  >
                     <el-option
-                      v-for="item in ssqxzqhbmList"
+                      v-for="item in SSQoptions"
                       :key="item.zdid"
                       :label="item.zdid+':'+item.zdz"
-                      :value="item.zdid+':'+item.zdz"
+                      :value="item.zdid"
                     ></el-option>
                   </el-select>
                 </el-form-item>
                 <!-- 公安机关机构代码 -->
                 <el-form-item label="公安机关机构代码:" prop="gajgjgdm">
-                  <el-select v-model="ruleForm.gajgjgdm" placeholder="请选择公安机关机构代码">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
+                  <el-select
+                    filterable
+                    :loading="GAJGloading"
+                    remote
+                    :remote-method="GAJGremoteMethod"
+                    v-model="ruleForm.gajgjgdm"
+                    placeholder="请输入公安机关机构代码"
+                  >
+                    <el-option
+                      v-for="item in GAJGoptions"
+                      :key="item.zdid"
+                      :label="item.zdid+':'+item.zdz"
+                      :value="item.zdid"
+                    ></el-option>
                   </el-select>
                 </el-form-item>
                 <!-- 社区代码 -->
                 <el-form-item label="社区代码:" prop="sqdm">
-                  <el-select v-model="ruleForm.sqdm" placeholder="请选择社区代码">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
+                  <el-select
+                    filterable
+                    :loading="SQDMloading"
+                    remote
+                    v-model="ruleForm.sqdm"
+                    :remote-method="SQDMremoteMethod"
+                    placeholder="请输入社区名称"
+                  >
+                    <el-option
+                      v-for="item in SQDMoptions"
+                      :key="item.zdid"
+                      :label="item.zdid+':'+item.zdz"
+                      :value="item.zdid"
+                    ></el-option>
                   </el-select>
                 </el-form-item>
                 <!-- 详细地址 -->
@@ -61,8 +90,23 @@
                   <el-input placeholder="请填入小区详细地址" v-model="ruleForm.xxdz"></el-input>
                 </el-form-item>
                 <!-- 物业名称 -->
-                <el-form-item label="物业名称:" prop="wyid">
-                  <el-input placeholder="请填入小区物业名称" v-model="ruleForm.wyid"></el-input>
+                <el-form-item label="物业名称:" prop="wyno">
+                  <!-- <el-input placeholder="请填入小区物业名称" v-model="ruleForm.wyno"></el-input> -->
+                  <el-select
+                    filterable
+                    :loading="WYDMloading"
+                    remote
+                    v-model="ruleForm.wyno"
+                    :remote-method="WYDMremoteMethod"
+                    placeholder="请输入物业名称"
+                  >
+                    <el-option
+                      v-for="item in WYDMoptions"
+                      :key="item.wy_id"
+                      :label="item.wybm+':'+item.wymc"
+                      :value="item.wybm"
+                    ></el-option>
+                  </el-select>
                 </el-form-item>
                 <!-- 经度 -->
                 <el-form-item label="经度:" prop="jd">
@@ -132,20 +176,74 @@
 </template>
 <script>
 import Title from '../../components/title'
+import Qs from 'qs'
 export default {
   components: {
     Title,
   },
   data() {
+    // 经度纬度的验证规则
+    var checkLongitude = (rule, value, cb) => {
+      const regLongitude = /^[\d\.\,+-]*(\.\d{1,6})*$/g
+      if (regLongitude.test(value)) {
+        return cb()
+      }
+      cb(new Error('请输入合法的经度'))
+    }
+    // 纬度的验证规则
+    var checkwd = (rule, value, cb) => {
+      const regwd = /^[\d\.\,+-]*(\.\d{1,6})*$/g
+      if (regwd.test(value)) {
+        return cb()
+      }
+      cb(new Error('请输入合法的纬度'))
+    }
+    //地图坐标的验证规则
+    var checkMap = (rule, value, cb) => {
+      const regMap = /^[\d\.\,+-]*$/g
+      if (regMap.test(value)) {
+        return cb()
+      }
+      cb(new Error('请输入合法的地图坐标'))
+    }
+    //警员编号的验证规则
+    var checkPolice = (rule, value, cb) => {
+      const regPolice = /^[0-9]{1,100}$/g
+      if (regPolice.test(value)) {
+        return cb()
+      }
+      cb(new Error('请输入合法的地图坐标'))
+    }
+    //警员联系方式的验证规则
+    var checkPhone = (rule, value, cb) => {
+      const regPhone = /^1(3|4|5|6|7|8|9)\d{9}$/
+      if (regPhone.test(value)) {
+        return cb()
+      }
+      cb(new Error('请输入合法的联系方式'))
+    }
+    //占地面积的验证规则
+    var checkzd = (rule, value, cb) => {
+      const regzd = /^([\d\.]{1,10})*$/g
+      if (regzd.test(value)) {
+        return cb()
+      }
+      cb(new Error('请输入合法的占地面积'))
+    }
+    //建筑面积的验证规则
+    var checkjz = (rule, value, cb) => {
+      const regjz = /^([\d\.]{1,10})*$/g
+      if (regjz.test(value)) {
+        return cb()
+      }
+      cb(new Error('请输入合法的建筑面积'))
+    }
     return {
       // 放大
       refDome: null,
       // 面包屑
       breadcrumb: [],
-      //   省市区行政区划编码数据
-      ssqxzqhbmList: [],
       //   需要验证的字段
-      // actionUrl: 'http://192.168.1.248:8096/xq/xzxq.do',
       imgname: '',
       ruleForm: {
         xqbm: '',
@@ -154,7 +252,7 @@ export default {
         gajgjgdm: '',
         sqdm: '',
         xxdz: '',
-        wyid: '',
+        wyno: '',
         jd: '',
         wd: '',
         dtzbj: '',
@@ -170,8 +268,8 @@ export default {
           { required: true, message: '请输入小区编码', trigger: 'blur' },
           {
             min: 3,
-            max: 15,
-            message: '长度在 3 到 15 个字符',
+            max: 3,
+            message: '长度在 3 到 3 个字符',
             trigger: 'blur',
           },
         ],
@@ -214,7 +312,7 @@ export default {
             trigger: 'blur',
           },
         ],
-        wyid: [
+        wyno: [
           { required: true, message: '请填入小区物业名称', trigger: 'blur' },
           {
             min: 1,
@@ -223,25 +321,21 @@ export default {
             trigger: 'blur',
           },
         ],
-        jd: [{ required: true, message: '请填入经度', trigger: 'blur' }],
-        wd: [{ required: true, message: '请填入纬度', trigger: 'blur' }],
+        jd: [
+          { required: true, message: '请填入经度', trigger: 'blur' },
+          { validator: checkLongitude, trigger: 'blur' },
+        ],
+        wd: [
+          { required: true, message: '请填入纬度', trigger: 'blur' },
+          { validator: checkwd, trigger: 'blur' },
+        ],
         dtzbj: [
           { required: true, message: '请填入地图坐标集', trigger: 'blur' },
-          {
-            min: 1,
-            max: 60000,
-            message: '长度在 1 到 60000 个字符',
-            trigger: 'blur',
-          },
+          { validator: checkMap, trigger: 'blur' },
         ],
         jybh: [
           { required: true, message: '请填入警员编号', trigger: 'blur' },
-          {
-            min: 1,
-            max: 100,
-            message: '长度在 1 到 100 个字符',
-            trigger: 'blur',
-          },
+          { validator: checkPolice, trigger: 'blur' },
         ],
         jyxm: [
           { required: true, message: '请填入警员姓名', trigger: 'blur' },
@@ -254,14 +348,35 @@ export default {
         ],
         jylxfs: [
           { required: true, message: '请填入警员联系方式', trigger: 'blur' },
-          {
-            min: 1,
-            max: 11,
-            message: '长度在 1 到 11 个字符',
-            trigger: 'blur',
-          },
+          { validator: checkPhone, trigger: 'blur' },
         ],
+        zdmj: [{ validator: checkzd, trigger: 'blur' }],
+        jzmj: [{ validator: checkjz, trigger: 'blur' }],
       },
+      // 省市区行政区划编码数据
+      ssqxzqhbmList: [],
+      // 省市区行政区划编码的loading
+      SSQloading: false,
+      // 省市区行政区划编码的options
+      SSQoptions: [],
+      // 公安机关机构代码数据
+      gajgjgdmList: [],
+      // 公安机关机构代码的loading
+      GAJGloading: false,
+      // 公安机关机构代码的options
+      GAJGoptions: [],
+      // 社区代码数据
+      sqdmList: [],
+      // 社区代码的loading
+      SQDMloading: false,
+      // 社区代码的options
+      SQDMoptions: [],
+      // 物业代码数据
+      wydmList: [],
+      // 物业代码的loading
+      WYDMloading: false,
+      // 物业代码的options
+      WYDMoptions: [],
     }
   },
   async created() {
@@ -273,9 +388,13 @@ export default {
     let breadcrumb8 = [breadcrumb5, breadcrumb6, breadcrumb7]
     this.breadcrumb = [breadcrumb8]
     // 获取省市区行政区划编码列表
-    let res = await this.$http.get('/qh/ssqxzqhbm.do')
-    console.log(res.data.data)
-    this.ssqxzqhbmList = res.data.data
+    this.handleSSqList()
+    // 获取公安机关机构代码列表
+    this.handleGAJGList()
+    // 获取社区代码列表
+    this.handleSQDMList()
+    // 获取物业代码列表
+    this.handeWYBMList()
   },
   mounted() {
     // 放大
@@ -296,8 +415,33 @@ export default {
       window.sessionStorage.setItem('breadcrumb', breadcrumb9)
       window.sessionStorage.setItem('activePath', `/index`)
       eventBus.$emit('breadcrumb', breadcrumb9)
-      location.reload();
+      location.reload()
     },
+    // 获取省市区行政区划编码列表
+    async handleSSqList() {
+      let res = await this.$http.get('/qh/ssqxzqhbm.do')
+      // console.log(res.data.data)
+      this.ssqxzqhbmList = res.data.data
+    },
+    // 获取公安机关机构代码列表
+    async handleGAJGList() {
+      let res = await this.$http.get('/qh/selGajgjgdm.do')
+      // console.log(res.data.data)
+      this.gajgjgdmList = res.data.data
+    },
+    // 获取社区代码列表
+    async handleSQDMList() {
+      let res = await this.$http.get('/qh/selSqdm.do')
+      // console.log(res.data.data)
+      this.sqdmList = res.data.data
+    },
+    // 获取物业编码列表
+    async handeWYBMList() {
+      let res = await this.$http.get('/xq/selWY.do')
+      // console.log(res.data)
+      this.wydmList = res.data
+    },
+    // 图片转Base64
     getBase64(file) {
       let slef = this
       //把图片转成base64编码
@@ -317,6 +461,7 @@ export default {
         }
       })
     },
+    // 点击现在文件
     getFile(file, fileList) {
       //上传图片
       this.imgname = file.name
@@ -324,16 +469,35 @@ export default {
     },
     // 点击提交
     handleUpTo() {
-      let self = this;
-      console.log(this.ruleForm.xqbm)
+      let self = this
+      console.log(self.ruleForm)
+      let data = {
+        xqbm: self.ruleForm.xqbm,
+        xqmc: self.ruleForm.xqmc,
+        ssqXzqhdm: self.ruleForm.ssqXzqhdm,
+        gajgjgdm: self.ruleForm.gajgjgdm,
+        sqdm: self.ruleForm.sqdm,
+        xxdz: self.ruleForm.xxdz,
+        wyno: self.ruleForm.wyno,
+        jd: self.ruleForm.jd,
+        wd: self.ruleForm.wd,
+        dtzbj: self.ruleForm.dtzbj,
+        jybh: self.ruleForm.jybh,
+        jyxm: self.ruleForm.jyxm,
+        jylxfs: self.ruleForm.jylxfs,
+        zdmj: self.ruleForm.zdmj,
+        jzmj: self.ruleForm.jzmj,
+        tp: self.ruleForm.tp,
+      }
+      data = Qs.stringify(data)
       self.$refs.RuleForm.validate(async (valid) => {
         if (valid) {
-          let res = await self.$http.post('/xq/xzxq.do', {
-            params: self.ruleForm
-          })
-          if(res.data.massage.status == 200) {
+          let res = await self.$http.post('/xq/xzxq.do', data)
+          if (res.data.massage.status == 200) {
             self.$message.success('添加成功')
             self.$router.go(-1)
+          } else if(res.data.massage.status == 202){
+            self.$message.error('小区编码重复')
           }else{
             self.$message.error('添加失败')
           }
@@ -343,6 +507,62 @@ export default {
     // 点击返回
     handleBlackTo() {
       this.$router.go(-1)
+    },
+    // 省市区行政区划编码搜索
+    SSQremoteMethod(query) {
+      if (query !== '') {
+        this.SSQloading = true
+        setTimeout(() => {
+          this.SSQloading = false
+          this.SSQoptions = this.ssqxzqhbmList.filter((item) => {
+            return item.zdz.toLowerCase().indexOf(query.toLowerCase()) > -1
+          })
+        }, 200)
+      } else {
+        this.SSQoptions = []
+      }
+    },
+    // 公安机关机构代码搜索
+    GAJGremoteMethod(query) {
+      if (query !== '') {
+        this.GAJGloading = true
+        setTimeout(() => {
+          this.GAJGloading = false
+          this.GAJGoptions = this.gajgjgdmList.filter((item) => {
+            return item.zdz.toLowerCase().indexOf(query.toLowerCase()) > -1
+          })
+        }, 200)
+      } else {
+        this.SSQoptions = []
+      }
+    },
+    // 社区代码搜索
+    SQDMremoteMethod(query) {
+      if (query !== '') {
+        this.SQDMloading = true
+        setTimeout(() => {
+          this.SQDMloading = false
+          this.SQDMoptions = this.sqdmList.filter((item) => {
+            return item.zdz.toLowerCase().indexOf(query.toLowerCase()) > -1
+          })
+        }, 200)
+      } else {
+        this.SQDMoptions = []
+      }
+    },
+    // 物业代码搜索
+    WYDMremoteMethod(query) {
+      if (query !== '') {
+        this.WYDMloading = true
+        setTimeout(() => {
+          this.WYDMloading = false
+          this.WYDMoptions = this.wydmList.filter((item) => {
+            return item.wymc.toLowerCase().indexOf(query.toLowerCase()) > -1
+          })
+        }, 200)
+      } else {
+        this.WYDMoptions = []
+      }
     },
   },
 }
@@ -546,7 +766,7 @@ export default {
 .el-upload__tip {
   margin: 10px 0 0 100px;
 }
-.el-upload-list__item-name{
+.el-upload-list__item-name {
   margin: 0 0 0 100px;
 }
 </style>

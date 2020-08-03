@@ -57,7 +57,7 @@
           <div class="from_img_wrap_upLiadImg">
             <el-upload
               class="avatar-uploader"
-              action="/admin/xq/xztp.do"
+              action=""
               :on-change="getFile"
               :limit="1"
             >
@@ -75,6 +75,7 @@
 </template>
 <script>
 import Title from '../../components/title'
+import Qs from 'qs'
 export default {
   components: {
     Title,
@@ -185,12 +186,29 @@ export default {
     // 提交
     handleUp() {
       let self = this
+      console.log(self.ruleForm)
+      let data = {
+        xqbm: self.ruleForm.xqbm,
+        crkbm: self.ruleForm.crkbm,
+        crkmc: self.ruleForm.crkmc,
+        lx: self.ruleForm.lx,
+        crkzp: self.ruleForm.crkzp,
+      }
+      data = Qs.stringify(data)
       //   console.log(this.ruleForm)
       this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
-        //   console.log(self.ruleForm)
-          let res = await self.$http.get(`/crk/xzcrk.do?xqbm=${self.ruleForm.xqbm}&crkbm=${self.ruleForm.crkbm}&crkmc=${self.ruleForm.crkmc}&lx=${self.ruleForm.lx}&crkzp=${self.ruleForm.crkzp}`)
-          console.log(res)
+          //   console.log(self.ruleForm)
+          let res = await self.$http.post('/crk/xzcrk.do', data)
+          // console.log(res)
+          if (res.data.massage.status == 200) {
+            self.$message.success('添加成功')
+            self.$router.go(-1)
+          } else if (res.data.massage.status == 202) {
+            self.$message.error('出入口编码重复')
+          } else {
+            self.$message.error('添加失败')
+          }
         }
       })
     },

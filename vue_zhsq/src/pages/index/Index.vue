@@ -183,6 +183,7 @@ export default {
     // 获取新闻列表
     async handleNewList() {
       let res = await this.$http.get('/sy/content.do')
+      // console.log(res)
       this.leftNewList = res.data.data
       this.rightNewsList = res.data.dataArray
     },

@@ -14,12 +14,6 @@
       <el-container>
         <!-- 侧边栏区域 -->
         <el-aside class="home_hander_aside" ref="mian">
-          <!-- <div class="index_wrap">
-            <div class="index_img">
-              <img :src="index.pidimg" />
-            </div>
-            <div class="index_text">{{index.mname}}</div>
-          </div>-->
           <!-- 侧边栏菜单区域 -->
           <el-menu
             background-color="#243352"
@@ -114,6 +108,7 @@ export default {
     },
     // 保存链接的激活状态
     saveNavStart(activePath) {
+      // console.log(activePath)
       this.activeIndex = false
       let breadcrumb1 = [
         activePath[0].mname,
@@ -136,12 +131,14 @@ export default {
       }
     },
     handleIndex(index) {
+      console.log(index)
       this.activeIndex = true
       let breadcrumb = [index.mname, index.pidimg, 1]
       window.sessionStorage.setItem('breadcrumb', breadcrumb)
       eventBus.$emit('breadcrumb', breadcrumb)
       window.sessionStorage.setItem('activePath', `/index`)
       this.$router.push({ path: 'index' })
+      location.reload();
     },
   },
   beforeDestroy() {

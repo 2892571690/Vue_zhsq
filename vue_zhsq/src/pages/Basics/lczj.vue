@@ -27,9 +27,9 @@
         >
           <div class="bitianFrom">
             <!-- 小区名称 -->
-            <el-form-item label="小区名称:" prop="xqmc">
-              <el-select v-model="ruleForm.xqmc" placeholder="请选择小区名称">
-                <el-option v-for="item in xqmcList" :key="item.xq_id" :label="item.xqmc" :value="item.xq_id"></el-option>
+            <el-form-item label="小区:" prop="xqbm">
+              <el-select v-model="ruleForm.xqbm" placeholder="请选择小区名称">
+                <el-option v-for="item in xqmcList" :key="item.xq_id" :label="item.xqbm +':'+ item.xqmc" :value="item.xqbm"></el-option>
               </el-select>
             </el-form-item>
             <!-- 楼栋号 -->
@@ -71,14 +71,14 @@ export default {
       //   小区名称列表
       xqmcList: [],
       ruleForm: {
-        xqmc: '',
+        xqbm: '',
         ldh: '',
         dys: '',
         lcs: '',
         hs: '',
       },
       rules: {
-        xqmc: [
+        xqbm: [
           {
             required: true,
             message: '请选择小区名称',
@@ -159,11 +159,12 @@ export default {
     // 获取小区名称
     async handleXQMC() {
       let res = await this.$http.get('/xq/selXQ.do')
-    //   console.log(res.data)
+      console.log(res.data)
       this.xqmcList = res.data
     },
     // 点击提交
     handleUpTo() {
+      // console.log(this.ruleForm.xqbm)
       this.$refs.RuleForm.validate(async (valid) => {
         if (valid) {
           let res = await this.$http.get('/ld/insLouDong.do', {

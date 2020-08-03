@@ -211,12 +211,36 @@ export default {
     async handleDelete() {
       let Arrid = []
       for (var i = 0; i < this.tableNum.length; i++) {
-        Arrid.push(this.tableNum[i].xqid)
+        Arrid.push(this.tableNum[i].xqbm)
       }
       Arrid = Arrid + ''
       let res = await this.$http.post(`/xq/scxq.do?Arrid=${Arrid}`)
-      console.log(res)
-      // if(res.data.)
+      let self = this
+      if (res.data.data.length > 1) {
+        for (var i = 0; i < res.data.data.length; i++) {
+          let index = this.tableNum.findIndex(
+            (v) => v.xqbm == res.data.data[i].xqbm
+          )
+          if (res.data.data[i].sel == '该小区还存在楼栋,不可删除') {
+            await this.$message.warning(
+              `${self.tableNum[index].xqmc}：小区楼栋内有住户导致删除失败`
+            )
+          } else {
+            await this.$message.success(
+              `${self.tableNum[index].xqmc}：删除成功`
+            )
+          }
+        }
+      } else {
+        let index = this.tableNum.findIndex((v) => v.xqbm == res.data.data.xqbm)
+        if (res.data.data.sel == '该小区还存在楼栋,不可删除') {
+          await this.$message.warning(
+            `${self.tableNum[index].xqmc}：小区楼栋内有住户导致删除失败`
+          )
+        } else {
+          await this.$message.success( `${self.tableNum[index].xqmc}：删除成功`)
+        }
+      }
       this.handleTableList()
     },
     // 点击添加按钮
@@ -224,13 +248,13 @@ export default {
       this.$router.push({ path: 'xqxxtj' })
     },
     //点击搜索
-    handleList(){
+    handleList() {
       this.handleTableList()
-    }
+    },
   },
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
 .breadcrumb_wrap {
   width: 9%;
   height: 39px;
