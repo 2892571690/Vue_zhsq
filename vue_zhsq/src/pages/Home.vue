@@ -174,6 +174,7 @@ export default {
     width: 210px !important;
     background-color: #243352;
     font-size: 14px;
+    height: 103.4%;
     .home_hander_index_img {
       width: 22px;
       height: 21px;
@@ -196,6 +197,7 @@ export default {
     }
   }
   .home_hander_main {
+    height: 103.4%;
     background-color: #fff;
     padding: 0;
   }

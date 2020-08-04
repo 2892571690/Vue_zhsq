@@ -35,16 +35,16 @@
             <!--小区名称  -->
             <div class="form_wrap_box">
               <el-form-item
-                label="小区名称:"
-                :prop="'ldinfo.' + index + '.xqid'"
+                label="小区:"
+                :prop="'ldinfo.' + index + '.xqbm'"
                 :rules="{required: true, message: '请选择小区名称', trigger: 'blur'}"
               >
-                <el-select v-model="ruleForm.ldinfo[index].xqid" placeholder="请选择小区名称">
+                <el-select v-model="ruleForm.ldinfo[index].xqbm" placeholder="请选择小区名称">
                   <el-option
                     v-for="item in xqmcList"
                     :key="item.xq_id"
-                    :label="item.xqmc"
-                    :value="item.xq_id"
+                    :label="item.xqbm +':'+ item.xqmc"
+                    :value="item.xqbm"
                   ></el-option>
                 </el-select>
               </el-form-item>
@@ -54,9 +54,9 @@
               <el-form-item
                 label="楼栋号:"
                 :prop="'ldinfo.' + index + '.ldh'"
-                :rules="[{required: true, message: '请输入楼栋号', trigger: 'blur'},{min: 1,max: 6,message: '长度在 1 到 6 个字符',trigger: 'blur',}]"
+                :rules="[{required: true, message: '请输入楼栋号', trigger: 'blur'},{min: 3,max: 3,message: '长度在 3 到 3 个字符',trigger: 'blur',}]"
               >
-                <el-input placeholder="请填写楼栋号,范围1~999" v-model="ruleForm.ldinfo[index].ldh"></el-input>
+                <el-input placeholder="请填写楼栋号,示范001" v-model="ruleForm.ldinfo[index].ldh"></el-input>
               </el-form-item>
             </div>
             <!-- 单元数 -->
@@ -64,7 +64,7 @@
               <el-form-item
                 label="单元数:"
                 :prop="'ldinfo.' + index + '.dys'"
-                :rules="[{required: true, message: '请输入单元数', trigger: 'blur'},{min: 1,max: 127,message: '长度在 1 到 127 个字符',trigger: 'blur',}]"
+                :rules="[{required: true, message: '请输入单元数', trigger: 'blur'},{min: 1,max: 2,message: '长度在 1 到 2 个字符',trigger: 'blur',}]"
               >
                 <el-input placeholder="实例：2" v-model="ruleForm.ldinfo[index].dys"></el-input>
               </el-form-item>
@@ -74,7 +74,7 @@
               <el-form-item
                 label="楼层数:"
                 :prop="'ldinfo.' + index + '.lcs'"
-                :rules="[{required: true, message: '请输入楼层数', trigger: 'blur'},{min: 1,max: 127,message: '长度在 1 到 127 个字符',trigger: 'blur',}]"
+                :rules="[{required: true, message: '请输入楼层数', trigger: 'blur'},{min: 1,max: 2,message: '长度在 1 到 2 个字符',trigger: 'blur',}]"
               >
                 <el-input placeholder="实例：12" v-model="ruleForm.ldinfo[index].lcs"></el-input>
               </el-form-item>
@@ -84,7 +84,7 @@
               <el-form-item
                 label="每层房屋数量:"
                 :prop="'ldinfo.' + index + '.hs'"
-                :rules="[{required: true, message: '请输入每层房屋数量', trigger: 'blur'},{min: 1,max: 127,message: '长度在 1 到 127 个字符',trigger: 'blur',}]"
+                :rules="[{required: true, message: '请输入每层房屋数量', trigger: 'blur'},{min: 1,max: 2,message: '长度在 1 到 2 个字符',trigger: 'blur',}]"
               >
                 <el-input placeholder="实例：4" v-model="ruleForm.ldinfo[index].hs"></el-input>
               </el-form-item>
@@ -100,6 +100,7 @@
 </template>
 <script>
 import Title from '../../components/title'
+import Qs from 'qs'
 export default {
   components: {
     Title,
@@ -115,7 +116,7 @@ export default {
       ruleForm: {
         ldinfo: [
           {
-            xqid: '',
+            xqbm: '',
             key: Date.now(),
             ldh: '',
             key: Date.now(),
@@ -170,15 +171,33 @@ export default {
     },
     // 点击提交
     handleUpTo() {
-      console.log(this.ruleForm.ldinfo)
-      this.$refs.RuleForm.validate(async (valid) => {
-        console.log(valid)
-        //   if (valid) {
-        //     let res = await this.$http.get('/ld/insLouDongList.do', {
-        //       params: this.ruleForm,
-        //     })
-        //     console.log(res)
-        //   }
+      let ldinfo = this.ruleForm.ldinfo
+      let self = this
+      Qs.stringify({ ldinfo: ldinfo }, { arrayFormat: 'repeat' })
+      self.$refs.RuleForm.validate(async (valid) => {
+        if (valid) {
+          let res = await self.$http.post('/ld/insLouDongList.do', ldinfo)
+          // console.log(res.data.msg)
+          for (var i = 0; i < res.data.msg.length; i++) {
+            let ldh = res.data.msg[i].ldbm.substr(-3)
+            let xqbm = res.data.msg[i].ldbm.substr(0, 15)
+            let index = self.xqmcList.findIndex((v) => v.xqbm == xqbm)
+            if (res.data.msg[i].mes == '200') {
+              await self.$message.success(
+                `${self.xqmcList[index].xqmc}小区${ldh}号楼添加成功`
+              )
+            } else if (res.data.msg[i].mes == '202') {
+              await self.$message.warning(
+                `${self.xqmcList[index].xqmc}小区${ldh}号楼已经存在导致添加失败`
+              )
+            } else {
+              await self.$message.error(
+                `${self.xqmcList[index].xqmc}小区${ldh}号楼添加失败`
+              )
+            }
+          }
+          self.$router.go(-1)
+        }
       })
     },
     // 点击返回
@@ -191,7 +210,7 @@ export default {
         return
       } else {
         this.ruleForm.ldinfo.push({
-          xqid: '',
+          xqbm: '',
           key: Date.now(),
           ldh: '',
           key: Date.now(),

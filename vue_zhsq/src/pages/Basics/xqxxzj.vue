@@ -470,7 +470,7 @@ export default {
     // 点击提交
     handleUpTo() {
       let self = this
-      console.log(self.ruleForm)
+      // console.log(self.ruleForm.tp)
       let data = {
         xqbm: self.ruleForm.xqbm,
         xqmc: self.ruleForm.xqmc,

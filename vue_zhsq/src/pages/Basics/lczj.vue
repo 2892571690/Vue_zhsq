@@ -34,7 +34,7 @@
             </el-form-item>
             <!-- 楼栋号 -->
             <el-form-item label="楼栋号:" prop="ldh">
-              <el-input placeholder="请填写楼栋号,范围1~999" v-model="ruleForm.ldh"></el-input>
+              <el-input placeholder="请填写楼栋号,示范001" v-model="ruleForm.ldh"></el-input>
             </el-form-item>
             <!-- 单元数 -->
             <el-form-item label="单元数:" prop="dys">
@@ -88,9 +88,9 @@ export default {
         ldh: [
           { required: true, message: '请输入楼栋号', trigger: 'blur' },
           {
-            min: 1,
-            max: 6,
-            message: '长度在 1 到 6 个字符',
+            min: 3,
+            max: 3,
+            message: '长度在 3 到 3 个字符',
             trigger: 'blur',
           },
         ],
@@ -98,8 +98,8 @@ export default {
           { required: true, message: '请输入单元数', trigger: 'blur' },
           {
             min: 1,
-            max: 127,
-            message: '长度在 1 到 127 个字符',
+            max: 2,
+            message: '长度在 1 到 2 个字符',
             trigger: 'blur',
           },
         ],
@@ -107,8 +107,8 @@ export default {
           { required: true, message: '请输入楼层数', trigger: 'blur' },
           {
             min: 1,
-            max: 127,
-            message: '长度在 1 到 127 个字符',
+            max: 2,
+            message: '长度在 1 到 2 个字符',
             trigger: 'blur',
           },
         ],
@@ -116,8 +116,8 @@ export default {
           { required: true, message: '请输入每层房屋数量', trigger: 'blur' },
           {
             min: 1,
-            max: 127,
-            message: '长度在 1 到 127 个字符',
+            max: 2,
+            message: '长度在 1 到 2 个字符',
             trigger: 'blur',
           },
         ],
@@ -159,23 +159,23 @@ export default {
     // 获取小区名称
     async handleXQMC() {
       let res = await this.$http.get('/xq/selXQ.do')
-      console.log(res.data)
+      // console.log(res.data)
       this.xqmcList = res.data
     },
     // 点击提交
     handleUpTo() {
-      // console.log(this.ruleForm.xqbm)
-      this.$refs.RuleForm.validate(async (valid) => {
+      let self = this
+      self.$refs.RuleForm.validate(async valid => {
         if (valid) {
-          let res = await this.$http.get('/ld/insLouDong.do', {
-            params: this.ruleForm,
+          let res = await self.$http.get('/ld/insLouDong.do', {
+            params: self.ruleForm,
           })
-          console.log(res.data.msg == 200)
+          // console.log(res)
           if(res.data.msg == 200){
               this.$message.success('添加成功')
               this.$router.go(-1)
           }else{
-              this.$message.error('添加成功')
+              this.$message.error('小区已经存在该楼栋，添加失败')
           }
         }
       })

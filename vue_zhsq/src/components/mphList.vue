@@ -103,6 +103,7 @@ export default {
   methods: {
     // 点击查看
     handleGofwxxck(fwbm) {
+      // console.log(fwbm)
       this.$router.push({ path: 'fwxxck', query: { fwbm } })
     },
     // 点击编辑
@@ -112,8 +113,9 @@ export default {
     },
     // 获取门牌号列表信息
     async handleMPHList() {
+      // console.log(this.bm)
       let res = await this.$http.get('/fw/selFangWo.do', { params: this.bm })
-      console.log(res)
+      // console.log(res)
       this.mphList = res.data
     },
   },
@@ -122,7 +124,7 @@ export default {
 <style lang="less" scoped>
 .mph_wrap {
   line-height: 1;
-  width: 217px;
+  width: 260px;
   height: 136px;
   background: #e2e4e1;
   margin: 18px 6px;
@@ -137,48 +139,49 @@ export default {
   }
   .mph_wrap_content {
     height: 109px;
-    width: 216px;
+    width: 100%;
     background: #fff;
     margin: 0 0 0 1px;
     .mph_wrap_xx {
       display: flex;
+      justify-content: space-around;
       .mph_wrap_xx_ldh {
-        width: 37px;
+        width: 50px;
         height: 22px;
-        font-size: 14px;
+        // font-size: 14px;
         color: #fff;
         background: #1f819e;
         text-align: center;
         line-height: 22px;
-        margin: 8px 9px 11px 4px;
+        margin: 8px 0 11px 0;
       }
 
       .mph_wrap_xx_dyh {
-        width: 46px;
+        width: 50px;
         height: 22px;
-        font-size: 14px;
+        // font-size: 14px;
         color: #fff;
         background: #1f819e;
         text-align: center;
         line-height: 22px;
-        margin: 8px 8px 11px 0;
+        margin: 8px 0 11px 0;
       }
 
       .mph_wrap_xx_lch {
         width: 42px;
         height: 22px;
-        font-size: 14px;
+        // font-size: 14px;
         color: #fff;
         background: #1f819e;
         text-align: center;
         line-height: 22px;
-        margin: 8px 8px 11px 0;
+        margin: 8px 0 11px 0;
       }
 
       .mph_wrap_xx_size {
         width: 58px;
         height: 22px;
-        font-size: 14px;
+        // font-size: 14px;
         color: #fff;
         background: #1f819e;
         text-align: center;

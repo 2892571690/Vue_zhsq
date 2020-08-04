@@ -97,6 +97,7 @@
 </template>
 <script>
 import Title from '../../components/title'
+import Qs from 'qs'
 export default {
   components: {
     Title,
@@ -165,6 +166,7 @@ export default {
       let res = await this.$http.get('/ld/selLouDong.do', {
         params: this.queryInfo,
       })
+      // console.log(res)
       let tatol = res.data[res.data.length - 1]
       res.data.splice(res.data.length - 1, 1)
       this.tableList = res.data
@@ -217,19 +219,41 @@ export default {
     async handleDelete() {
       let ldidList = []
       for (var i = 0; i < this.tableNum.length; i++) {
-        ldidList.push(this.tableNum[i].ldId)
+        ldidList.push(this.tableNum[i].ldbm)
       }
-      // console.log(ldidList.length)
-      if (ldidList.length > 1) {
-        ldidList = ldidList + ''
-        let res = await this.$http.post(`/ld/delLouDong.do?ldidList=${ldidList}`)
-        // console.log(res)
-        this.handleTableList()
-      } else {
-        ldidList = ldidList + ''
-        let res = await this.$http.post(`/ld/delLouDong.do?ldid=${ldidList}`)
-        this.handleTableList()
-      }
+      Qs.stringify({ ldidList: ldidList }, { arrayFormat: 'repeat' })
+      let res = await this.$http.post('/ld/delLouDong.do?', ldidList)
+      console.log(res)
+      let self = this
+      // if (res.data.msg.length > 1) {
+        for (var i = 0; i < res.data.msg.length; i++) {
+          let index = self.tableNum.findIndex(
+            (v) => v.ldbm == res.data.msg[i].ldbm
+          )
+          if (res.data.msg[i].mes == '200') {
+            await self.$message.success(
+              `${self.tableNum[index].xqmc}小区${self.tableNum[index].ldh}楼栋号删除成功`
+            )
+          } else {
+            await self.$message.warning(
+              `${self.tableNum[index].xqmc}小区${self.tableNum[index].ldh}楼栋号内有住户导致删除失败`
+            )
+          }
+        }
+      // } else {
+      //   let index = self.tableNum.findIndex(v => v.ldbm == res.data.msg[0].ldbm)
+      //   console.log(res)
+      //   if (res.data.msg.mes == '200') {
+      //     await self.$message.success(
+      //       `${self.tableNum[index].xqmc}小区${self.tableNum[index].ldh}楼栋号删除成功`
+      //     )
+      //   } else {
+      //     await self.$message.warning(
+      //       `${self.tableNum[index].xqmc}小区${self.tableNum[index].ldh}楼栋号内有住户导致删除失败`
+      //     )
+      //   }
+      // }
+      this.handleTableList()
     },
     // 点击添加按钮
     handleAddxqxx() {

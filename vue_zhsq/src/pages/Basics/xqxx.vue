@@ -215,13 +215,14 @@ export default {
       }
       Arrid = Arrid + ''
       let res = await this.$http.post(`/xq/scxq.do?Arrid=${Arrid}`)
+      console.log(res)
       let self = this
       if (res.data.data.length > 1) {
         for (var i = 0; i < res.data.data.length; i++) {
           let index = this.tableNum.findIndex(
             (v) => v.xqbm == res.data.data[i].xqbm
           )
-          if (res.data.data[i].sel == '该小区还存在楼栋,不可删除') {
+          if (res.data.data[i].msg == '该小区还存在楼栋,不可删除') {
             await this.$message.warning(
               `${self.tableNum[index].xqmc}：小区楼栋内有住户导致删除失败`
             )
@@ -233,7 +234,7 @@ export default {
         }
       } else {
         let index = this.tableNum.findIndex((v) => v.xqbm == res.data.data.xqbm)
-        if (res.data.data.sel == '该小区还存在楼栋,不可删除') {
+        if (res.data.data.msg == '该小区还存在楼栋,不可删除') {
           await this.$message.warning(
             `${self.tableNum[index].xqmc}：小区楼栋内有住户导致删除失败`
           )

@@ -280,7 +280,7 @@ export default {
     let breadcrumb7 = breadcrumb.split(',')[7]
     let breadcrumb8 = [breadcrumb5, breadcrumb6, breadcrumb7]
     this.breadcrumb = [breadcrumb8]
-    console.log(this.$route.query.fwbm)
+    // console.log(this.$route.query.fwbm)
     this.fwbm = this.$route.query.fwbm
     // 查看业主的信息
     this.handleckfwxx()
@@ -308,11 +308,11 @@ export default {
     },
     // 查看信息
     async handleckfwxx() {
-      // let res = await this.$http.get(`/fw/cxfwxx.do?fwbm=${this.fwbm}`)
-      let res = await this.$http.get(
-        '/fw/cxfwxx.do?fwbm=123'
-      )
-      console.log(res)
+      let res = await this.$http.get(`/fw/cxfwxx.do?fwbm=${this.fwbm}`)
+      // let res = await this.$http.get(
+      //   '/fw/cxfwxx.do?fwbm=123'
+      // )
+      // console.log(res)
       this.yzxx = res.data.data
     },
     // 点击返回

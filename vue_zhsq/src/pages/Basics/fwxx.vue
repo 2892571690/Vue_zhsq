@@ -119,7 +119,7 @@ export default {
       },
     }
   },
-  created() {
+  async created() {
     // 面包屑的
     let breadcrumb = window.sessionStorage.getItem('breadcrumb')
     let breadcrumb5 = breadcrumb.split(',')[4]
@@ -128,9 +128,9 @@ export default {
     let breadcrumb8 = [breadcrumb5, breadcrumb6, breadcrumb7]
     this.breadcrumb = [breadcrumb8]
     // 获取下拉小区列表
-    this.handleXQList()
+    await this.handleXQList()
     // 获取楼栋信息
-    this.handleLD()
+    await this.handleLD()
   },
   mounted() {
     // 放大
@@ -156,23 +156,34 @@ export default {
     // 获取小区下拉框的
     async handleXQList() {
       let res = await this.$http.get('/xq/selXQ.do')
-      //   console.log(res.data)
+      // console.log(res.data)
       this.xqList = res.data
       this.form.xqbm = res.data[0].xqbm
       this.mrxqmc = res.data[0].xqmc
     },
     // 获取楼栋数据
     async handleLD() {
+      // console.log(this.form.xqbm)
+      // console.log(this.mrldbm)
       let res = await this.$http.get(
         `/fw/selLouDongHao.do?xqbm=${this.form.xqbm}`
       )
-    //   console.log(res.data)
-      this.mrldbm = res.data[0].ldbm
-      this.ldxxList = res.data
-      this.$router.push({
-        path: 'mphList',
-        query: { bm: [this.form.xqbm, this.mrldbm] },
-      })
+      // console.log(res.data.length)
+      if (res.data.length == 0) {
+        this.mrldbm = ''
+        this.ldxxList = ''
+        this.$router.push({
+          path: 'mphList',
+          query: { bm: [this.form.xqbm, this.mrldbm] },
+        })
+      } else {
+        this.mrldbm = res.data[0].ldbm
+        this.ldxxList = res.data
+        this.$router.push({
+          path: 'mphList',
+          query: { bm: [this.form.xqbm, this.mrldbm] },
+        })
+      }
     },
     // 点击下拉触发的事件
     handleOption(xqmc) {
@@ -184,14 +195,25 @@ export default {
     },
     // 点击搜索
     async handleFWXX() {
-    //   console.log(this.form.ldh)
-      let index = this.ldxxList.findIndex(v => Number(v.ldh) == Number(this.form.ldh))
-    //   console.log(index)
+      //   console.log(this.form.ldh)
+      let index = this.ldxxList.findIndex(
+        (v) => Number(v.ldh) == Number(this.form.ldh)
+      )
+      //   console.log(index)
       this.isActive = index
       this.mrldbm = this.ldxxList[index].ldbm
       this.$router.push({
         path: 'mphList',
-        query: { bm: [this.form.xqbm, this.mrldbm,this.form.ldh,this.form.mph,this.form.isupload,this.form.order] },
+        query: {
+          bm: [
+            this.form.xqbm,
+            this.mrldbm,
+            this.form.ldh,
+            this.form.mph,
+            this.form.isupload,
+            this.form.order,
+          ],
+        },
       })
     },
     // 点击楼栋
@@ -260,11 +282,11 @@ export default {
 }
 // 面包屑到这
 .fwxx_wrap {
-  height: 900px;
+  // height: 900px;
   width: 1666px;
   //   background: pink;
   margin: 42px 25px 0 25px;
-  overflow: hidden;
+  // overflow: hidden;
   .fwxx_title_from {
     width: 100%;
     height: 36px;
@@ -391,7 +413,7 @@ export default {
   }
   .fwxx_title_content {
     width: 1666px;
-    height: 643px;
+    // height: 670px;
     border: 1px solid #d5e9c6;
     border-radius: 10px;
     .fwxx_title_content_title {

@@ -106,7 +106,7 @@
               <div class="Official_website_text">访问官网</div>
             </div>
           </div>
-          <div class="Official_website" style="margin-bottom:53px;">
+          <div class="Official_website">
             <div class="Official_website_wrap">
               <div class="Official_website_img">
                 <img src="../../assets/label.png" />
@@ -337,13 +337,13 @@ export default {
   width: 1250px;
   margin-top: 21px;
   margin-left: 10px;
-  margin-bottom: 34px;
+  margin-bottom: 3px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   .quick_wrap {
     width: 1261px;
     .quick_title_wrap {
       width: 100%;
-      height: 54px;
+      height: 40px;
       display: flex;
       align-items: center;
       border-bottom: 1px solid #eeecf9;
@@ -369,7 +369,7 @@ export default {
         width: 104px;
         height: 99px;
         margin-right: 28px;
-        margin-bottom: 17px;
+        margin-bottom: 2px;
         box-sizing: border-box;
         padding: 5px;
         .quick_content_box_img {
@@ -385,7 +385,7 @@ export default {
 
         .quick_content_box_text {
           height: 24px;
-          font-size: 16px;
+          font-size: 14px;
           color: #676767;
           display: flex;
           align-items: center;
@@ -398,7 +398,7 @@ export default {
 .edition_box {
   float: left;
   width: 406px;
-  margin: 21px 0 34px 15px;
+  margin: 21px 0 3px 15px;
   .edition_card {
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     width: 100%;
@@ -507,7 +507,7 @@ export default {
     .thrtect_wrap_img {
       width: 172px;
       height: 42px;
-      margin: 48px 0 35px 91px;
+      margin: 28px 0 20px 91px;
       img {
         width: 100%;
         height: 100%;

@@ -199,7 +199,7 @@ export default {
           let index = this.crkxxListNum.findIndex(
             (v) => v.crk_id == res.data.data[i].crk_id
           )
-          if (res.data.data[i].del == '该小区删除成功') {
+          if (res.data.data[i].msg == '该小区删除成功') {
             await this.$message.warning(
               `${self.crkxxListNum[index].crkmc}：删除成功`
             )
@@ -213,12 +213,12 @@ export default {
         let index = this.crkxxListNum.findIndex(
           (v) => v.crk_id == res.data.data.crk_id
         )
-        if (res.data.data.del == '该小区删除成功') {
-          await this.$message.warning(
+        if (res.data.data.msg == '该小区删除成功') {
+          await this.$message.success(
             `${self.crkxxListNum[index].crkmc}：删除成功`
           )
         } else {
-          await this.$message.success(
+          await this.$message.warning(
             `${self.crkxxListNum[index].crkmc}：删除失败`
           )
         }
