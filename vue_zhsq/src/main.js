@@ -8,6 +8,7 @@ import 'lib-flexible'
 import './assets/icon/iconfont.css'
 import axios from 'axios'
 axios.defaults.baseURL = '/admin'
+// axios.defaults.baseURL = 'http://i.threetop.net/iCommunity'
 Vue.prototype.$http=axios
 Vue.config.productionTip = false
 window.eventBus = new Vue();

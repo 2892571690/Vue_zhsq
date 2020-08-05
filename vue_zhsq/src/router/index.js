@@ -13,6 +13,7 @@ import fwxxck from '../pages/Basics/fwxxck.vue'
 import fwxxbj from '../pages/Basics/fwxxbj.vue'
 import crkxx from '../pages/Basics/crkxx.vue';
 import crktj from '../pages/Basics/crktj.vue';
+import zhxx from '../pages/Personnel/zhxx.vue';
 Vue.use(VueRouter)
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
@@ -78,6 +79,10 @@ const routes = [
       {
         path: '/crktj',
         component: crktj
+      },
+      {
+        path: '/zhxx',
+        component: zhxx
       },
     ]
   }

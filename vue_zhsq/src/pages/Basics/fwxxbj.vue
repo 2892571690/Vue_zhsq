@@ -366,7 +366,7 @@ export default {
     async handleFWXXBM() {
       let res = await this.$http.get(`/fw/cxfwxx.do?fwbm=${this.from.fwbm}`)
       // let res = await this.$http.get(`/fw/cxfwxx.do?fwbm=888999`)
-      console.log(res.data)
+      // console.log(res.data)
       this.fwxxList = res.data.data
       this.from.zjzp = res.data.data.ryZp
       let rzrylb = res.data.data.rzrylb
@@ -408,7 +408,7 @@ export default {
     ReadCard() {
       var ret = document.getElementById('CVR_IDCard').ReadCard()
       if (ret == '0') {
-        console.log(document.getElementById('CVR_IDCard').Picture)
+        // console.log(document.getElementById('CVR_IDCard').Picture)
         this.from.xm = document.getElementById('CVR_IDCard').Name
         this.from.zjhm = document.getElementById('CVR_IDCard').CardNo
         this.from.zjzp = `data:image/jpeg;base64,${
@@ -444,7 +444,7 @@ export default {
       self.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
           let res = await self.$http.post('/fw/xgfwxx.do', data)
-          console.log(res)
+          // console.log(res)
           if (res.data.massage.status == 200) {
             this.$message.success('编辑成功')
             this.$router.go(-1)
@@ -459,7 +459,7 @@ export default {
       let res = await this.$http.get('/qh/download.do', {
         responseType: 'blob', // 设置响应数据类型
       })
-      console.log(res)
+      // console.log(res)
       const data = res.data
       let url = window.URL.createObjectURL(data) // 将二进制文件转化为可访问的url
       var a = document.createElement('a')

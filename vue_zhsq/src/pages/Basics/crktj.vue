@@ -186,7 +186,7 @@ export default {
     // 提交
     handleUp() {
       let self = this
-      console.log(self.ruleForm)
+      // console.log(self.ruleForm)
       let data = {
         xqbm: self.ruleForm.xqbm,
         crkbm: self.ruleForm.crkbm,

@@ -163,12 +163,9 @@ export default {
     },
     // 获取楼栋数据
     async handleLD() {
-      // console.log(this.form.xqbm)
-      // console.log(this.mrldbm)
       let res = await this.$http.get(
         `/fw/selLouDongHao.do?xqbm=${this.form.xqbm}`
       )
-      // console.log(res.data.length)
       if (res.data.length == 0) {
         this.mrldbm = ''
         this.ldxxList = ''
@@ -286,7 +283,7 @@ export default {
   width: 1666px;
   //   background: pink;
   margin: 42px 25px 0 25px;
-  // overflow: hidden;
+  overflow: hidden;
   .fwxx_title_from {
     width: 100%;
     height: 36px;

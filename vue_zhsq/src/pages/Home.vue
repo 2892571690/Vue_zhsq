@@ -131,7 +131,7 @@ export default {
       }
     },
     handleIndex(index) {
-      console.log(index)
+      // console.log(index)
       this.activeIndex = true
       let breadcrumb = [index.mname, index.pidimg, 1]
       window.sessionStorage.setItem('breadcrumb', breadcrumb)

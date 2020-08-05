@@ -192,7 +192,7 @@ export default {
     },
     // 点击放大
     handleBig() {
-      console.log(this.$refs.xqxx)
+      // console.log(this.$refs.xqxx)
       if (this.screen % 2 == 0) {
         this.$refs.xqxx.style.position = 'static'
         this.screen++
@@ -215,7 +215,7 @@ export default {
       }
       Arrid = Arrid + ''
       let res = await this.$http.post(`/xq/scxq.do?Arrid=${Arrid}`)
-      console.log(res)
+      // console.log(res)
       let self = this
       if (res.data.data.length > 1) {
         for (var i = 0; i < res.data.data.length; i++) {

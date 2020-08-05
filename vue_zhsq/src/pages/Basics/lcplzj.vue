@@ -166,12 +166,13 @@ export default {
     // 获取小区名称
     async handleXQMC() {
       let res = await this.$http.get('/xq/selXQ.do')
-      console.log(res.data)
+      // console.log(res.data)
       this.xqmcList = res.data
     },
     // 点击提交
     handleUpTo() {
       let ldinfo = this.ruleForm.ldinfo
+      // console.log(ldinfo)
       let self = this
       Qs.stringify({ ldinfo: ldinfo }, { arrayFormat: 'repeat' })
       self.$refs.RuleForm.validate(async (valid) => {
