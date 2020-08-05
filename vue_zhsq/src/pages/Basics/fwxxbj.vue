@@ -200,7 +200,7 @@
         </el-form>
         <div class="fwxxbj_wrap_content_right">
           <div class="fwxxbj_wrap_content_right_title">身份证照片</div>
-          <div v-if="this.from.zjzp == ''">
+          <div v-if="this.from.zjzp == '' || this.from.zjzp == 'null'">
             <div class="fwxxbj_wrap_content_right_img">
               <img src="../../assets/zjzp.png" />
             </div>
