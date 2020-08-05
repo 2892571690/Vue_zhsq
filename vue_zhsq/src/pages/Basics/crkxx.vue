@@ -191,8 +191,8 @@ export default {
       }
       Arrid = Arrid + ''
       let res = await this.$http.post(`/crk/sccrk.do?Arrid=${Arrid}`)
-      console.log(res)
-      console.log(this.crkxxListNum)
+      // console.log(res)
+      // console.log(this.crkxxListNum)
       let self = this
       if (res.data.data.length > 1) {
         for (var i = 0; i < res.data.data.length; i++) {
@@ -200,11 +200,11 @@ export default {
             (v) => v.crk_id == res.data.data[i].crk_id
           )
           if (res.data.data[i].msg == '该小区删除成功') {
-            await this.$message.warning(
+            await this.$message.success(
               `${self.crkxxListNum[index].crkmc}：删除成功`
             )
           } else {
-            await this.$message.success(
+            await this.$message.warning(
               `${self.crkxxListNum[index].crkmc}：删除失败`
             )
           }
