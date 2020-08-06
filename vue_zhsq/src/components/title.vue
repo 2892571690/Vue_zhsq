@@ -231,7 +231,7 @@ export default {
       window.sessionStorage.setItem('breadcrumb', breadcrumb9)
       eventBus.$emit('breadcrumb', breadcrumb9)
       window.sessionStorage.setItem('activePath', `\index`)
-      location.reload();
+      location.reload()
     },
     // 点击更换主题颜色
     handleColor1() {
@@ -329,9 +329,11 @@ export default {
   .el-breadcrumb {
     float: left;
     .title_imgTitle {
+      cursor: pointer;
       float: left;
       line-height: 58px;
       .title_img {
+        cursor: pointer;
         width: 16px;
         height: 13px;
         margin-right: 5px;
@@ -342,6 +344,7 @@ export default {
         }
       }
       .title_text {
+        cursor: pointer;
         float: left;
         font-size: 14px;
       }
@@ -361,6 +364,7 @@ export default {
       font-size: 13px;
     }
     .icon-fangda {
+      cursor: pointer;
       float: left;
       margin-right: 43px;
       font-size: 13px;
@@ -369,6 +373,7 @@ export default {
       float: left;
       margin-right: 43px;
       font-size: 13px;
+      cursor: pointer;
     }
     .color_wrap {
       border: 0;
@@ -398,6 +403,7 @@ export default {
     .user_wrap {
       float: left;
       margin-right: 32px;
+      cursor: pointer;
       .user_button {
         .icon-wo {
           font-size: 14px;

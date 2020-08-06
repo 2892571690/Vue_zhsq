@@ -44,7 +44,7 @@
                     <el-option
                       v-for="item in SSQoptions"
                       :key="item.zdid"
-                      :label="item.zdid+':'+item.zdz"
+                      :label="item.zdz"
                       :value="item.zdid"
                     ></el-option>
                   </el-select>
@@ -62,7 +62,7 @@
                     <el-option
                       v-for="item in GAJGoptions"
                       :key="item.zdid"
-                      :label="item.zdid+':'+item.zdz"
+                      :label="item.zdz"
                       :value="item.zdid"
                     ></el-option>
                   </el-select>
@@ -80,7 +80,7 @@
                     <el-option
                       v-for="item in SQDMoptions"
                       :key="item.zdid"
-                      :label="item.zdid+':'+item.zdz"
+                      :label="item.zdz"
                       :value="item.zdid"
                     ></el-option>
                   </el-select>
@@ -103,7 +103,7 @@
                     <el-option
                       v-for="item in WYDMoptions"
                       :key="item.wy_id"
-                      :label="item.wybm+':'+item.wymc"
+                      :label="item.wymc"
                       :value="item.wybm"
                     ></el-option>
                   </el-select>
@@ -133,7 +133,7 @@
                 </el-form-item>
                 <!-- 警员联系方式 -->
                 <el-form-item label="警员联系方式:" prop="jylxfs">
-                  <el-input placeholder="请填入手机号" v-model="ruleForm.jylxfs"></el-input>
+                  <el-input maxlength='11' placeholder="请填入手机号" v-model="ruleForm.jylxfs"></el-input>
                 </el-form-item>
               </div>
               <div class="From_text">
@@ -212,7 +212,7 @@ export default {
       if (regPolice.test(value)) {
         return cb()
       }
-      cb(new Error('请输入合法的地图坐标'))
+      cb(new Error('请输入合法的警员编号'))
     }
     //警员联系方式的验证规则
     var checkPhone = (rule, value, cb) => {
@@ -267,9 +267,9 @@ export default {
         xqbm: [
           { required: true, message: '请输入小区编码', trigger: 'blur' },
           {
-            min: 3,
+            min: 1,
             max: 3,
-            message: '长度在 3 到 3 个字符',
+            message: '长度在 1 到 3 个字符',
             trigger: 'blur',
           },
         ],
@@ -496,9 +496,9 @@ export default {
           if (res.data.massage.status == 200) {
             self.$message.success('添加成功')
             self.$router.go(-1)
-          } else if(res.data.massage.status == 202){
+          } else if (res.data.massage.status == 202) {
             self.$message.error('小区编码重复')
-          }else{
+          } else {
             self.$message.error('添加失败')
           }
         }
@@ -637,6 +637,10 @@ export default {
   }
   //   表单的样式
   .demo_ruleForm {
+    & ::placeholder {
+        color: rgb(134, 130, 130);
+        font-size: 12px;
+      }
     .el-form-item__label {
       width: 182px;
       padding: 0;
@@ -644,12 +648,14 @@ export default {
       font-size: 14px;
       line-height: 34px;
       margin: 30px 0 0 0;
+      
     }
     .el-input__inner {
       float: left;
       width: 434px;
       height: 32px;
       line-height: 32px;
+      
     }
     .el-form-item__content {
       width: 693px;
@@ -665,7 +671,7 @@ export default {
       margin: 0;
     }
     .el-form-item__error {
-      margin: 24px 0 0 220px;
+      margin: 30px 0 0 220px;
     }
   }
   .el-select .el-input .el-select__caret {
@@ -750,6 +756,7 @@ export default {
   top: 500px;
   right: 538px;
   border-radius: 10px;
+  cursor: pointer;
 }
 .upto {
   height: 34px;
@@ -762,6 +769,7 @@ export default {
   top: 500px;
   right: 358px;
   border-radius: 10px;
+  cursor: pointer;
 }
 .el-upload__tip {
   margin: 10px 0 0 100px;

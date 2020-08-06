@@ -64,7 +64,7 @@
           :data="tableList"
           style="width: 100%"
           stripe
-          :header-cell-style="{color:'#44a0f7'}"
+          :header-cell-style="{color:'#44a0f7' ,background:'#f6f6f6'}"
           border
           @selection-change="handleChange"
         >

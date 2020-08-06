@@ -29,7 +29,12 @@
             <!-- 小区名称 -->
             <el-form-item label="小区:" prop="xqbm">
               <el-select v-model="ruleForm.xqbm" placeholder="请选择小区名称">
-                <el-option v-for="item in xqmcList" :key="item.xq_id" :label="item.xqbm +':'+ item.xqmc" :value="item.xqbm"></el-option>
+                <el-option
+                  v-for="item in xqmcList"
+                  :key="item.xq_id"
+                  :label="item.xqmc"
+                  :value="item.xqbm"
+                ></el-option>
               </el-select>
             </el-form-item>
             <!-- 楼栋号 -->
@@ -88,9 +93,9 @@ export default {
         ldh: [
           { required: true, message: '请输入楼栋号', trigger: 'blur' },
           {
-            min: 3,
+            min: 1,
             max: 3,
-            message: '长度在 3 到 3 个字符',
+            message: '长度在 1 到 3 个字符',
             trigger: 'blur',
           },
         ],
@@ -165,17 +170,17 @@ export default {
     // 点击提交
     handleUpTo() {
       let self = this
-      self.$refs.RuleForm.validate(async valid => {
+      self.$refs.RuleForm.validate(async (valid) => {
         if (valid) {
           let res = await self.$http.get('/ld/insLouDong.do', {
             params: self.ruleForm,
           })
           // console.log(res)
-          if(res.data.msg == 200){
-              this.$message.success('添加成功')
-              this.$router.go(-1)
-          }else{
-              this.$message.error('小区已经存在该楼栋，添加失败')
+          if (res.data.msg == 200) {
+            this.$message.success('添加成功')
+            this.$router.go(-1)
+          } else {
+            this.$message.error('小区已经存在该楼栋，添加失败')
           }
         }
       })
@@ -276,6 +281,10 @@ export default {
     line-height: 32px;
   }
   .el-form-item__content {
+    & ::placeholder {
+      color: rgb(134, 130, 130);
+      font-size: 12px;
+    }
     width: 693px;
     height: 34px;
     line-height: 34px;
@@ -289,7 +298,7 @@ export default {
     margin: 0;
   }
   .el-form-item__error {
-    margin: 24px 0 0 220px;
+    margin: 30px 0 0 220px;
   }
 }
 .el-select .el-input .el-select__caret {
@@ -321,6 +330,7 @@ export default {
   top: 640px;
   right: 1200px;
   border-radius: 10px;
+  cursor: pointer;
 }
 .uptoldtj {
   height: 34px;
@@ -333,5 +343,6 @@ export default {
   top: 640px;
   right: 940px;
   border-radius: 10px;
+  cursor: pointer;
 }
 </style>

@@ -233,6 +233,7 @@ export default {
 .el-menu {
   border-right: none;
   margin-top: 61px;
+  cursor:pointer;
 }
 .index_wrap {
   &:hover {

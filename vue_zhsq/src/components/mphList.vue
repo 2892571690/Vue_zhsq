@@ -215,12 +215,14 @@ export default {
       display: flex;
       margin: 0 0 0 8px;
       .mph_wrap_gn_ck {
+        cursor: pointer;
         color: #e7360a;
         font-size: 12px;
         margin: 0 13px 0 0;
       }
 
       .mph_wrap_gn_bj {
+        cursor: pointer;
         color: #e7360a;
         font-size: 12px;
         margin: 0 13px 0 0;

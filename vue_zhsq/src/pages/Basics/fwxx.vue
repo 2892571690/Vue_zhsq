@@ -399,6 +399,7 @@ export default {
       }
     }
     .search_fwxx {
+      cursor: pointer;
       width: 70px;
       height: 36px;
       background: #409efe;
@@ -430,6 +431,7 @@ export default {
         height: 358px;
         margin: 19px 0 0 11px;
         .ld_num_wrap {
+          cursor: pointer;
           width: 76px;
           height: 42px;
           background: #3b78af;
@@ -443,7 +445,6 @@ export default {
       }
       .left_ldh_mpl {
         width: 1382px;
-        height: 509px;
       }
     }
   }

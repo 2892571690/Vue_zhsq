@@ -50,12 +50,12 @@
         <div class="zhxx_content_content">
           <div class="zhxx_content_content_but">
             <div class="but_wrap">
-              <div class="el-icon-plus addBut">增加</div>
-              <div class="el-icon-delete deleteBut">删除</div>
-              <div class="zhuceBut">注册照片或重新授权</div>
+              <div class="el-icon-plus addBut" @click="handleAddZH">增加</div>
+              <div class="el-icon-delete deleteBut" @click="handleDeleteZH">删除</div>
+              <div class="zhuceBut" @click="handleAddPic">注册照片或重新授权</div>
               <div class="putBut">上传人员</div>
-              <div class="jihuoBut">激活/注销人员</div>
-              <div class="txBut">提醒/正常</div>
+              <div class="jihuoBut" @click="handleJHZH">激活/注销人员</div>
+              <div class="txBut" @click="handleTXZH">提醒/正常</div>
               <div class="xz_wrap">{{zhxxList.length}}个中{{tableNum.length}}个被选</div>
             </div>
             <div class="right_button">
@@ -193,7 +193,219 @@
       class="Personal_diao"
     >
       <span class="Personal_span">
-          1111
+        <div class="Personal_span_left">
+          <!-- 姓名 -->
+          <div class="Personal_span_xm_wrap">
+            <div class="Personal_span_xm_wrap_title">姓名：</div>
+            <div
+              class="Personal_span_xm_wrap_text"
+            >{{PersonalObj.xm == '' || PersonalObj.xm == 'null' ? '' : PersonalObj.xm}}</div>
+          </div>
+          <!-- 英文性 -->
+          <div class="Personal_span_ywx_wrap">
+            <div class="Personal_span_ywx_wrap_title">英文性：</div>
+            <div
+              class="Personal_span_ywx_wrap_text"
+            >{{PersonalObj.ywx == '' || PersonalObj.ywx == 'null' ? '' : PersonalObj.ywx}}</div>
+          </div>
+          <!-- 英文名 -->
+          <div class="Personal_span_ywm_wrap">
+            <div class="Personal_span_ywm_wrap_title">英文名：</div>
+            <div
+              class="Personal_span_ywm_wrap_text"
+            >{{PersonalObj.ywm == '' || PersonalObj.ywm == 'null' ? '' : PersonalObj.ywm}}</div>
+          </div>
+          <!-- 性别 -->
+          <div class="Personal_span_xb_wrap">
+            <div class="Personal_span_xb_wrap_title">姓别：</div>
+            <div
+              class="Personal_span_xb_wrap_text"
+            >{{PersonalObj.xbdm == '' || PersonalObj.xbdm == 'null' ? '' : PersonalObj.xbdm}}</div>
+          </div>
+          <!-- 手机号码 -->
+          <div class="Personal_span_sjhm_wrap">
+            <div class="Personal_span_sjhm_wrap_title">手机号码：</div>
+            <div
+              class="Personal_span_sjhm_wrap_text"
+            >{{PersonalObj.sjhm == '' || PersonalObj.sjhm == 'null' ? '' : PersonalObj.sjhm}}</div>
+          </div>
+          <!-- 编号 -->
+          <div class="Personal_span_bh_wrap">
+            <div class="Personal_span_bh_wrap_title">编号：</div>
+            <div
+              class="Personal_span_bh_wrap_text"
+            >{{PersonalObj.pp_id == '' || PersonalObj.pp_id == 'null' ? '' : PersonalObj.pp_id}}</div>
+          </div>
+          <!-- 小区编码 -->
+          <div class="Personal_span_xqbm_wrap">
+            <div class="Personal_span_xqbm_wrap_title">小区编码：</div>
+            <div
+              class="Personal_span_xqbm_wrap_text"
+            >{{PersonalObj.xqbm == '' || PersonalObj.xqbm == 'null' ? '' : PersonalObj.xqbm}}</div>
+          </div>
+          <!-- 房屋编码 -->
+          <div class="Personal_span_fwbm_wrap">
+            <div class="Personal_span_fwbm_wrap_title">房屋编码：</div>
+            <div
+              class="Personal_span_fwbm_wrap_text"
+            >{{PersonalObj.fwbm == '' || PersonalObj.fwbm == 'null' ? '' : PersonalObj.fwbm}}</div>
+          </div>
+          <!-- 证件号码 -->
+          <div class="Personal_span_zjhm_wrap">
+            <div class="Personal_span_zjhm_title">证件号码：</div>
+            <div
+              class="Personal_span_zjhm_text"
+            >{{PersonalObj.zjhm == '' || PersonalObj.zjhm == 'null' ? '' : PersonalObj.zjhm}}</div>
+          </div>
+          <!-- 证件类型 -->
+          <div class="Personal_span_zjlx_wrap">
+            <div class="Personal_span_zjlx_title">证件类型：</div>
+            <div
+              class="Personal_span_zjlx_text"
+            >{{PersonalObj.zjlxbm == '' || PersonalObj.zjlxbm == 'null' ? '' : PersonalObj.zjlxbm}}</div>
+          </div>
+          <!-- 人口类型 -->
+          <div class="Personal_span_rklx_wrap">
+            <div class="Personal_span_rklx_title">人口类型：</div>
+            <div
+              class="Personal_span_rklx_text"
+            >{{PersonalObj.rklxbm == '' || PersonalObj.rklxbm == 'null' ? '' : PersonalObj.rklxbm}}</div>
+          </div>
+          <!-- 出生日期 -->
+          <div class="Personal_span_csrq_wrap">
+            <div class="Personal_span_csrq_title">出生日期：</div>
+            <div
+              class="Personal_span_csrq_text"
+            >{{PersonalObj.csrq == '' || PersonalObj.csrq == 'null' ? '' : PersonalObj.csrq}}</div>
+          </div>
+          <!-- 籍贯 -->
+          <div class="Personal_span_jg_wrap">
+            <div class="Personal_span_jg_wrap_title">籍贯：</div>
+            <div
+              class="Personal_span_jg_wrap_text"
+            >{{PersonalObj.jgdm == '' || PersonalObj.jgdm == 'null' ? '' : PersonalObj.jgdm}}</div>
+          </div>
+          <!-- 名族 -->
+          <div class="Personal_span_mzdm_wrap">
+            <div class="Personal_span_mzdm_wrap_title">名族：</div>
+            <div
+              class="Personal_span_mzdm_wrap_text"
+            >{{PersonalObj.mzdm == '' || PersonalObj.mzdm == 'null' ? '' : PersonalObj.mzdm}}</div>
+          </div>
+          <!-- 户籍地详细地址 -->
+          <div class="Personal_span_hjdxz_wrap">
+            <div class="Personal_span_hjdxz_wrap_title">户籍地详细地址：</div>
+            <div
+              class="Personal_span_hjdxz_wrap_text"
+            >{{PersonalObj.hjdxz == '' || PersonalObj.hjdxz == 'null' ? '' : PersonalObj.hjdxz}}</div>
+          </div>
+          <!-- 证件地详细地址 -->
+          <div class="Personal_span_zjdxz_wrap">
+            <div class="Personal_span_zjdxz_wrap_title">证件地详细地址：</div>
+            <div
+              class="Personal_span_zjdxz_wrap_text"
+            >{{PersonalObj.zjdxz == '' || PersonalObj.zjdxz == 'null' ? '' : PersonalObj.zjdxz}}</div>
+          </div>
+        </div>
+        <div class="Personal_span_right">
+          <!-- 国籍 -->
+          <div class="Personal_span_gjdm_wrap">
+            <div class="Personal_span_gjdm_wrap_title">国籍：</div>
+            <div
+              class="Personal_span_gjdm_wrap_text"
+            >{{PersonalObj.gjdm == '' || PersonalObj.gjdm == 'null' ? '' : PersonalObj.gjdm}}</div>
+          </div>
+          <!-- 宗教信仰 -->
+          <div class="Personal_span_zjxy_wrap">
+            <div class="Personal_span_zjxy_wrap_title">宗教信仰：</div>
+            <div
+              class="Personal_span_zjxy_wrap_text"
+            >{{PersonalObj.zjxydm == '' || PersonalObj.zjxydm == 'null' ? '' : PersonalObj.zjxydm}}</div>
+          </div>
+          <!-- 文化程度 -->
+          <div class="Personal_span_whcddm_wrap">
+            <div class="Personal_span_whcddm_wrap_title">文化程度：</div>
+            <div
+              class="Personal_span_whcddm_wrap_text"
+            >{{PersonalObj.whcddm == '' || PersonalObj.whcddm == 'null' ? '' : PersonalObj.whcddm}}</div>
+          </div>
+          <!-- 婚姻状况 -->
+          <div class="Personal_span_hyzkdm_wrap">
+            <div class="Personal_span_hyzkdm_wrap_title">婚姻状况：</div>
+            <div
+              class="Personal_span_hyzkdm_wrap_text"
+            >{{PersonalObj.hyzkdm == '' || PersonalObj.hyzkdm == 'null' ? '' : PersonalObj.hyzkdm}}</div>
+          </div>
+          <!-- 兵役状况 -->
+          <div class="Personal_span_byzkdm_wrap">
+            <div class="Personal_span_byzkdm_wrap_title">兵役状况：</div>
+            <div
+              class="Personal_span_byzkdm_wrap_text"
+            >{{PersonalObj.byzkdm == '' || PersonalObj.byzkdm == 'null' ? '' : PersonalObj.byzkdm}}</div>
+          </div>
+          <!-- 政治面貌 -->
+          <div class="Personal_span_zzmmdm_wrap">
+            <div class="Personal_span_zzmmdm_wrap_title">政治面貌：</div>
+            <div
+              class="Personal_span_zzmmdm_wrap_text"
+            >{{PersonalObj.zzmmdm == '' || PersonalObj.zzmmdm == 'null' ? '' : PersonalObj.zzmmdm}}</div>
+          </div>
+          <!-- 与房主关系 -->
+          <div class="Personal_span_yhzgxdm_wrap">
+            <div class="Personal_span_yhzgxdm_wrap_title">与房主关系：</div>
+            <div
+              class="Personal_span_yhzgxdm_wrap_text"
+            >{{PersonalObj.yhzgxdm == '' || PersonalObj.yhzgxdm == 'null' ? '' : PersonalObj.yhzgxdm}}</div>
+          </div>
+          <!-- 创建日期 -->
+          <div class="Personal_span_addTime_wrap">
+            <div class="Personal_span_addTime_wrap_title">创建日期：</div>
+            <div
+              class="Personal_span_addTime_wrap_text"
+            >{{PersonalObj.addTime == '' || PersonalObj.addTime == 'null' ? '' : PersonalObj.addTime}}</div>
+          </div>
+          <!-- 更新日期 -->
+          <div class="Personal_span_updateTime_wrap">
+            <div class="Personal_span_updateTime_wrap_title">更新日期：</div>
+            <div
+              class="Personal_span_updateTime_wrap_text"
+            >{{PersonalObj.updateTime == '' || PersonalObj.updateTime == 'null' ? '' : PersonalObj.updateTime}}</div>
+          </div>
+          <!-- 有效期起始时间 -->
+          <div class="Personal_span_yxqqsrq_wrap">
+            <div class="Personal_span_yxqqsrq_wrap_title">有效期起始时间：</div>
+            <div
+              class="Personal_span_yxqqsrq_wrap_text"
+            >{{PersonalObj.yxqqsrq == '' || PersonalObj.yxqqsrq == 'null' ? '' : PersonalObj.yxqqsrq}}</div>
+          </div>
+          <!-- 有效期截止时间 -->
+          <div class="Personal_span_yxqjzrq_wrap">
+            <div class="Personal_span_yxqjzrq_wrap_title">有效期截止时间：</div>
+            <div
+              class="Personal_span_yxqjzrq_wrap_text"
+            >{{PersonalObj.yxqjzrq == '' || PersonalObj.yxqjzrq == 'null' ? '' : PersonalObj.yxqjzrq}}</div>
+          </div>
+          <!-- 用户状态 -->
+          <div class="Personal_span_yhzt_wrap">
+            <div class="Personal_span_yhzt_wrap_title">用户状态：</div>
+            <div
+              class="Personal_span_yhzt_wrap_text"
+            >{{PersonalObj.yhzt == '' || PersonalObj.yhzt == 'null' ? '' : PersonalObj.yhzt}}</div>
+          </div>
+          <!-- 备注 -->
+          <div class="Personal_span_bz_wrap">
+            <div class="Personal_span_bz_wrap_title">备注：</div>
+            <div
+              class="Personal_span_bz_wrap_text"
+            >{{PersonalObj.bz == '' || PersonalObj.bz == 'null' ? '' : PersonalObj.bz}}</div>
+          </div>
+        </div>
+        <div class="Personal_span_Image">
+          <div class="Personal_span_Image_title">证件照片：</div>
+          <div class="Personal_span_Image_text">
+            <img :src="PersonalObj.zjzp" />
+          </div>
+        </div>
       </span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="PersonalDialogVisible = false">取 消</el-button>
@@ -240,7 +452,7 @@ export default {
       //   控制个人资料弹出框
       PersonalDialogVisible: false,
       //   点击查看的个人资料
-      PersonalObj:{}
+      PersonalObj: {},
     }
   },
   async created() {
@@ -315,7 +527,7 @@ export default {
     // 获取住户信息列表
     async handleZHXXList() {
       let res = await this.$http.get('ryxx/cxryxx.do', { params: this.form })
-      console.log(res)
+      // console.log(res)
       this.zhxxList = res.data.data
       this.tatal = res.data.totalCount
     },
@@ -371,6 +583,46 @@ export default {
         })
         .catch((_) => {})
     },
+    // 点击个人资料的x
+    PersonalHandleClose(done) {
+      this.$confirm('确认关闭？')
+        .then((_) => {
+          done()
+        })
+        .catch((_) => {})
+    },
+    // 点击添加
+    handleAddZH() {
+      this.$router.push({ path: 'zhtj' })
+    },
+    // 点击删除
+    async handleDeleteZH(){
+      let pp_id = []
+      for(var i = 0; i < this.tableNum.length; i++){
+        pp_id.push(this.tableNum[i].pp_id)
+      }
+      pp_id = pp_id + ''
+      let res = await this.$http.get(`ryxx/scryxx.do?pp_id=${pp_id}`)
+      // console.log(res.data.message.status)
+      if(res.data.message.status == 200){
+        this.$message.success('删除成功')
+      }else{
+        this.$message.error('删除成功')
+      }
+      this.handleZHXXList()
+    },
+    // 点击注册照片
+    handleAddPic(){
+      console.log(333)
+    },
+    // 点击激活
+    handleJHZH(){
+      console.log(444)
+    },
+    // 点击提醒
+    handleTXZH(){
+      console.log(555)
+    }
   },
 }
 </script>
@@ -401,6 +653,7 @@ export default {
     margin-left: 10px;
     margin-top: -4px;
     font-size: 13px;
+    cursor: pointer;
   }
 }
 .tou {
@@ -538,6 +791,7 @@ export default {
             line-height: 40px;
             border-radius: 5px;
             margin: 25px 15px 10px 25px;
+            cursor: pointer;
           }
           .deleteBut {
             width: 93px;
@@ -547,6 +801,7 @@ export default {
             line-height: 40px;
             border-radius: 5px;
             margin: 25px 15px 10px 0;
+            cursor: pointer;
           }
           .zhuceBut {
             width: 200px;
@@ -556,6 +811,7 @@ export default {
             border: 1px solid #e0dfe4;
             border-radius: 5px;
             margin: 25px 15px 10px 0;
+            cursor: pointer;
           }
           .putBut {
             width: 120px;
@@ -565,6 +821,7 @@ export default {
             border: 1px solid #e0dfe4;
             border-radius: 5px;
             margin: 25px 15px 10px 0;
+            cursor: pointer;
           }
           .jihuoBut {
             width: 150px;
@@ -574,6 +831,7 @@ export default {
             border: 1px solid #e0dfe4;
             border-radius: 5px;
             margin: 25px 15px 10px 0;
+            cursor: pointer;
           }
           .txBut {
             width: 100px;
@@ -583,6 +841,7 @@ export default {
             border: 1px solid #e0dfe4;
             border-radius: 5px;
             margin: 25px 15px 10px 0;
+            cursor: pointer;
           }
           .xz_wrap {
             line-height: 40px;
@@ -632,6 +891,7 @@ export default {
   font-size: 12px;
   background: #53b3dd;
   border-radius: 10px;
+  cursor: pointer;
 }
 .Pic_diao {
   .el-dialog {
@@ -662,6 +922,380 @@ export default {
         width: 100%;
         height: 100%;
         display: block;
+        display: flex;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+        .Personal_span_left {
+          width: 33%;
+          height: 100%;
+          // background: pink;
+          .Personal_span_xm_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_xm_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_xm_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_ywx_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_ywx_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_ywx_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_ywm_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_ywm_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_ywm_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_xb_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_xb_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_xb_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_sjhm_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_sjhm_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_sjhm_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_bh_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_bh_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_bh_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_xqbm_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_xqbm_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_xqbm_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_fwbm_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_fwbm_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_fwbm_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_zjhm_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_zjhm_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_zjhm_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_zjlx_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_zjlx_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_zjlx_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_rklx_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_rklx_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_rklx_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_csrq_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_csrq_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_csrq_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_jg_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_jg_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_jg_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_mzdm_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_mzdm_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_mzdm_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_hjdxz_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_hjdxz_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_hjdxz_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_zjdxz_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_zjdxz_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_zjdxz_wrap_text {
+              width: 270px;
+            }
+          }
+        }
+        .Personal_span_right {
+          width: 33%;
+          height: 100%;
+          .Personal_span_gjdm_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_gjdm_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_gjdm_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_zjxy_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_zjxy_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_zjxy_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_whcddm_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_whcddm_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_whcddm_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_hyzkdm_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_hyzkdm_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_hyzkdm_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_byzkdm_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_byzkdm_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_byzkdm_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_zzmmdm_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_zzmmdm_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_zzmmdm_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_yhzgxdm_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_yhzgxdm_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_yhzgxdm_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_addTime_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_addTime_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_addTime_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_updateTime_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_updateTime_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_updateTime_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_yxqqsrq_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_yxqqsrq_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_yxqqsrq_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_yxqjzrq_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_yxqjzrq_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_yxqjzrq_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_yhzt_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_yhzt_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_yhzt_wrap_text {
+              width: 270px;
+            }
+          }
+          .Personal_span_bz_wrap {
+            width: 100%;
+            display: flex;
+            margin: 20px 0 15px 10px;
+            .Personal_span_bz_wrap_title {
+              width: 120px;
+              text-align: right;
+            }
+            .Personal_span_bz_wrap_text {
+              width: 270px;
+            }
+          }
+        }
+        .Personal_span_Image {
+          width: 33%;
+          height: 100%;
+          .Personal_span_Image_title {
+            margin: 20px 0 40px 30px;
+          }
+          .Personal_span_Image_text {
+            width: 100%;
+            height: 60%;
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
       }
     }
   }

@@ -43,7 +43,7 @@
                   <el-option
                     v-for="item in xqmcList"
                     :key="item.xq_id"
-                    :label="item.xqbm +':'+ item.xqmc"
+                    :label="item.xqmc"
                     :value="item.xqbm"
                   ></el-option>
                 </el-select>
@@ -54,9 +54,17 @@
               <el-form-item
                 label="楼栋号:"
                 :prop="'ldinfo.' + index + '.ldh'"
-                :rules="[{required: true, message: '请输入楼栋号', trigger: 'blur'},{min: 3,max: 3,message: '长度在 3 到 3 个字符',trigger: 'blur',}]"
+                :rules="[{required: true, message: '请选择楼栋号', trigger: 'blur'}]"
               >
-                <el-input placeholder="请填写楼栋号,示范001" v-model="ruleForm.ldinfo[index].ldh"></el-input>
+                <!-- <el-input placeholder="请填写楼栋号,示范001" v-model="ruleForm.ldinfo[index].ldh"></el-input> -->
+                <el-select v-model="ruleForm.ldinfo[index].ldh" placeholder="请选择楼栋号">
+                  <el-option
+                    v-for="(item,index) in 100"
+                    :key="index"
+                    :label="(index+1)+'栋'"
+                    :value="index+1"
+                  ></el-option>
+                </el-select>
               </el-form-item>
             </div>
             <!-- 单元数 -->
@@ -64,9 +72,17 @@
               <el-form-item
                 label="单元数:"
                 :prop="'ldinfo.' + index + '.dys'"
-                :rules="[{required: true, message: '请输入单元数', trigger: 'blur'},{min: 1,max: 2,message: '长度在 1 到 2 个字符',trigger: 'blur',}]"
+                :rules="[{required: true, message: '请输入单元数', trigger: 'blur'}]"
               >
-                <el-input placeholder="实例：2" v-model="ruleForm.ldinfo[index].dys"></el-input>
+                <!-- <el-input placeholder="实例：2" v-model="ruleForm.ldinfo[index].dys"></el-input> -->
+                <el-select v-model="ruleForm.ldinfo[index].dys" placeholder="请选择单元号">
+                  <el-option
+                    v-for="(item,index) in 10"
+                    :key="index"
+                    :label="(index+1)+'单元'"
+                    :value="index+1"
+                  ></el-option>
+                </el-select>
               </el-form-item>
             </div>
             <!-- 楼层数 -->
@@ -76,7 +92,15 @@
                 :prop="'ldinfo.' + index + '.lcs'"
                 :rules="[{required: true, message: '请输入楼层数', trigger: 'blur'},{min: 1,max: 2,message: '长度在 1 到 2 个字符',trigger: 'blur',}]"
               >
-                <el-input placeholder="实例：12" v-model="ruleForm.ldinfo[index].lcs"></el-input>
+                <!-- <el-input placeholder="实例：12" v-model="ruleForm.ldinfo[index].lcs"></el-input> -->
+                <el-select v-model="ruleForm.ldinfo[index].lcs" placeholder="请选择楼层号">
+                  <el-option
+                    v-for="(item,index) in 50"
+                    :key="index"
+                    :label="(index+1)+'层'"
+                    :value="index+1"
+                  ></el-option>
+                </el-select>
               </el-form-item>
             </div>
             <!-- 楼层数 -->
@@ -86,7 +110,15 @@
                 :prop="'ldinfo.' + index + '.hs'"
                 :rules="[{required: true, message: '请输入每层房屋数量', trigger: 'blur'},{min: 1,max: 2,message: '长度在 1 到 2 个字符',trigger: 'blur',}]"
               >
-                <el-input placeholder="实例：4" v-model="ruleForm.ldinfo[index].hs"></el-input>
+                <!-- <el-input placeholder="实例：4" v-model="ruleForm.ldinfo[index].hs"></el-input> -->
+                <el-select v-model="ruleForm.ldinfo[index].hs" placeholder="请选择户数号">
+                  <el-option
+                    v-for="(item,index) in 10"
+                    :key="index"
+                    :label="(index+1)+'户'"
+                    :value="index+1"
+                  ></el-option>
+                </el-select>
               </el-form-item>
             </div>
           </div>
@@ -172,7 +204,7 @@ export default {
     // 点击提交
     handleUpTo() {
       let ldinfo = this.ruleForm.ldinfo
-      // console.log(ldinfo)
+      console.log(ldinfo)
       let self = this
       Qs.stringify({ ldinfo: ldinfo }, { arrayFormat: 'repeat' })
       self.$refs.RuleForm.validate(async (valid) => {
@@ -323,7 +355,11 @@ export default {
     line-height: 32px;
   }
   .el-form-item__content {
-    width: 693px;
+    & ::placeholder {
+      color: rgb(134, 130, 130);
+      font-size: 12px;
+    }
+    // width: 693px;
     height: 34px;
     line-height: 34px;
   }
@@ -368,6 +404,7 @@ export default {
   top: 620px;
   right: 1200px;
   border-radius: 10px;
+  cursor: pointer;
 }
 .uptoldpltj {
   height: 34px;
@@ -380,6 +417,7 @@ export default {
   top: 620px;
   right: 940px;
   border-radius: 10px;
+  cursor: pointer;
 }
 .form_wrap_box {
   width: 290px;
@@ -390,6 +428,7 @@ export default {
   height: 40px;
 }
 .addFrom_wrap_top {
+  cursor: pointer;
   width: 90px;
   height: 30px;
   background: rgb(17, 226, 69);
@@ -402,6 +441,7 @@ export default {
   right: 250px;
 }
 .deleteFrom_wrap_top {
+  cursor: pointer;
   width: 90px;
   height: 30px;
   background: #9e0f0a;

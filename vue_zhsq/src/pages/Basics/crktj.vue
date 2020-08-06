@@ -31,7 +31,7 @@
               <el-option
                 v-for="item in xqbmList"
                 :key="item.xq_id"
-                :label="item.xqbm +' '+ item.xqmc"
+                :label="item.xqmc"
                 :value="item.xqbm"
               ></el-option>
             </el-select>
@@ -99,7 +99,7 @@ export default {
       rules: {
         crkbm: [
           { required: true, message: '请输入出入口编码', trigger: 'blur' },
-          { min: 2, max: 2, message: '长度在 2 到 2 个字符', trigger: 'blur' },
+          { min: 1, max: 2, message: '长度在 1 到 2 个字符', trigger: 'blur' },
         ],
         crkmc: [
           { required: true, message: '请输入出入口名称', trigger: 'blur' },
@@ -391,6 +391,7 @@ export default {
   position: absolute;
   right: 540px;
   top: 500px;
+  cursor: pointer;
 }
 .up_wrap_crktj {
   width: 105px;
@@ -403,5 +404,6 @@ export default {
   position: absolute;
   right: 340px;
   top: 500px;
+  cursor: pointer;
 }
 </style>

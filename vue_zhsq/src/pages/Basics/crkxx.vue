@@ -367,6 +367,7 @@ export default {
       }
     }
     .crkxx_search {
+      cursor: pointer;
       width: 89px;
       height: 40px;
       background: #45a0fd;
@@ -387,6 +388,7 @@ export default {
       align-items: center;
       font-size: 14px;
       .function_wrap_left_add {
+        cursor: pointer;
         height: 40px;
         width: 93px;
         margin-left: 30px;
@@ -398,6 +400,7 @@ export default {
         color: #fff;
       }
       .function_wrap_left_up {
+        cursor: pointer;
         width: 140px;
         height: 40px;
         margin: 0 14px 0 13px;
@@ -409,6 +412,7 @@ export default {
         color: #626367;
       }
       .function_wrap_left_dele {
+        cursor: pointer;
         width: 70px;
         height: 40px;
         line-height: 40px;
@@ -431,6 +435,7 @@ export default {
       align-items: center;
       display: flex;
       .right_but {
+        cursor: pointer;
         width: 54px;
         height: 38px;
         box-sizing: border-box;

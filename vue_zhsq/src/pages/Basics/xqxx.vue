@@ -62,7 +62,7 @@
           :data="tableList"
           style="width: 100%"
           stripe
-          :header-cell-style="{color:'#44a0f7'}"
+          :header-cell-style="{color:'#44a0f7' ,background:'#f6f6f6'}"
           border
           @selection-change="handleChange"
         >
@@ -257,6 +257,7 @@ export default {
 </script>
 <style lang="less">
 .breadcrumb_wrap {
+  cursor: pointer;
   width: 9%;
   height: 39px;
   float: left;
@@ -322,6 +323,7 @@ export default {
         margin: 0 0 0 10px;
       }
       .search_but {
+        cursor: pointer;
         margin-left: 13px;
         padding: 13px;
         background: #409efe;
@@ -340,6 +342,7 @@ export default {
         height: 40px;
         align-items: center;
         .increase_but {
+          cursor: pointer;
           height: 40px;
           width: 93px;
           margin-left: 30px;
@@ -351,6 +354,7 @@ export default {
           color: #fff;
         }
         .uploadXQ {
+          cursor: pointer;
           width: 98px;
           height: 40px;
           margin: 0 14px 0 13px;
@@ -361,6 +365,7 @@ export default {
           text-align: center;
         }
         .delent_but {
+          cursor: pointer;
           width: 70px;
           height: 40px;
           line-height: 40px;
@@ -379,6 +384,7 @@ export default {
       }
       .right_button {
         margin-left: 1000px;
+        cursor: pointer;
         .right_but {
           width: 54px;
           height: 38px;

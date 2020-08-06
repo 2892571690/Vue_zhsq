@@ -37,7 +37,7 @@
                 <el-input placeholder :disabled="true"></el-input>
               </div>
               <div v-else>
-                <el-input :placeholder="fwxxList.xqbm" :disabled="true"></el-input>
+                <el-input v-model="from.xqbm" :placeholder="fwxxList.xqbm" :disabled="true"></el-input>
               </div>
             </div>
             <!-- 楼栋号 -->
@@ -122,7 +122,7 @@
               <el-form-item prop="fwmj">
                 <el-input
                   v-model="from.fwmj"
-                  :placeholder="fwxxList.fwmj == 'null' || fwxxList.fwmj == '' ? 0 :fwxxList.fwmj"
+                  :placeholder="fwxxList.fwmj == 'null' || fwxxList.fwmj == '' ? 0 : fwxxList.fwmj"
                 ></el-input>
               </el-form-item>
               <!-- </div> -->
@@ -145,7 +145,8 @@
               <div class="fzxm_input_text">房主姓名：</div>
               <el-form-item prop="xm">
                 <el-input
-                  :placeholder="fwxxList.xm == 'null' || fwxxList.xm == '' ? '' :fwxxList.xm"
+                  disabled
+                  :placeholder="fwxxList.xm == 'null' || fwxxList.xm == '' ? '读卡获取姓名' :fwxxList.xm"
                   v-model="from.xm"
                 ></el-input>
               </el-form-item>
@@ -155,7 +156,8 @@
               <div class="sfzhm_input_text">身份证号码：</div>
               <el-form-item prop="zjhm">
                 <el-input
-                  :placeholder="fwxxList.zjhm == 'null' || fwxxList.zjhm == '' ? '' :fwxxList.zjhm"
+                  disabled
+                  :placeholder="fwxxList.zjhm == 'null' || fwxxList.zjhm == '' ? '读卡获取身份证' :fwxxList.zjhm"
                   v-model="from.zjhm"
                 ></el-input>
               </el-form-item>
@@ -165,7 +167,8 @@
               <div class="sjhm_input_text">手机号码：</div>
               <el-form-item prop="sjhm">
                 <el-input
-                  :placeholder="fwxxList.sjhm == 'null' || fwxxList.sjhm == '' ? '' :fwxxList.sjhm"
+                  maxlength="11"
+                  :placeholder="fwxxList.sjhm == 'null' || fwxxList.sjhm == '' ? '请填写手机号码' :fwxxList.sjhm"
                   v-model="from.sjhm"
                 ></el-input>
               </el-form-item>
@@ -175,7 +178,7 @@
               <div class="jsrs_input_text">家属人数：</div>
               <el-form-item prop="js">
                 <el-input
-                  :placeholder="fwxxList.js == 'null' || fwxxList.js == '' ? '' :fwxxList.js"
+                  :placeholder="fwxxList.js == 'null' || fwxxList.js == '' ? '请填写家属人数' :fwxxList.js"
                   v-model="from.js"
                 ></el-input>
               </el-form-item>
@@ -185,7 +188,7 @@
               <div class="zkrs_input_text">租客人数：</div>
               <el-form-item prop="zk">
                 <el-input
-                  :placeholder="fwxxList.zk == 'null' || fwxxList.zk == '' ? '' :fwxxList.zk"
+                  :placeholder="fwxxList.zk == 'null' || fwxxList.zk == '' ? '请填写租客人数' :fwxxList.zk"
                   v-model="from.zk"
                 ></el-input>
               </el-form-item>
@@ -255,6 +258,7 @@ export default {
       // 房屋信息
       fwxxList: [],
       from: {
+        xqbm:'',
         // 房屋编码
         fwbm: '',
         fwztdm: '',
@@ -268,6 +272,7 @@ export default {
         js: '',
         zk: '',
         zjzp: '',
+        xbdm:''
       },
       strry: '',
       // 房屋状态列表
@@ -282,7 +287,7 @@ export default {
           { validator: checkmj, trigger: 'blur' },
         ],
         xm: [
-          { required: true, message: '请输入房主姓名', trigger: 'blur' },
+          // { required: true, message: '请输入房主姓名', trigger: 'blur' },
           {
             min: 1,
             max: 10,
@@ -291,7 +296,7 @@ export default {
           },
         ],
         zjhm: [
-          { required: true, message: '请输入身份证', trigger: 'blur' },
+          // { required: true, message: '请输入身份证', trigger: 'blur' },
           {
             min: 18,
             max: 18,
@@ -366,9 +371,12 @@ export default {
     async handleFWXXBM() {
       let res = await this.$http.get(`/fw/cxfwxx.do?fwbm=${this.from.fwbm}`)
       // let res = await this.$http.get(`/fw/cxfwxx.do?fwbm=888999`)
-      // console.log(res.data)
+      console.log(res.data)
       this.fwxxList = res.data.data
       this.from.zjzp = res.data.data.ryZp
+      this.from.xqbm = res.data.data.xqbm
+      this.from.xm = res.data.data.xm == 'null' || res.data.data.xm == '' ? '' : res.data.data.xm
+      this.from.zjhm = res.data.data.zjhm == 'null' || res.data.data.zjhm == '' ? '' : res.data.data.zjhm
       let rzrylb = res.data.data.rzrylb
       if (rzrylb.length == 0) {
         return
@@ -411,6 +419,7 @@ export default {
         // console.log(document.getElementById('CVR_IDCard').Picture)
         this.from.xm = document.getElementById('CVR_IDCard').Name
         this.from.zjhm = document.getElementById('CVR_IDCard').CardNo
+        this.from.xbdm = document.getElementById('CVR_IDCard').Sex == '1' ? '1' : '2';
         this.from.zjzp = `data:image/jpeg;base64,${
           document.getElementById('CVR_IDCard').Picture
         }`
@@ -425,8 +434,10 @@ export default {
     },
     // 点击提交
     handleUp() {
+      // console.log(this.from.xqbm)
       let self = this
       let data = {
+        xqbm: this.from.xqbm,
         fwbm: this.from.fwbm,
         fwztdm: this.from.fwztdm,
         fwytdm: this.from.fwytdm,
@@ -523,11 +534,15 @@ export default {
 }
 // 面包屑到这
 .fwxxbj_wrap {
+  .el-form-item__error {
+    width: 180%;
+  }
   width: 1220px;
   height: 735px;
   border-radius: 10px;
   border: 1px solid #dfe0da;
   margin: 60px 250px 0 238px;
+
   .fwxxbj_wrap_title {
     width: 100%;
     height: 50px;
@@ -917,6 +932,7 @@ export default {
       }
       .fwxxbj_wrap_content_right_but {
         .reading {
+          cursor: pointer;
           width: 65px;
           height: 35px;
           line-height: 35px;
@@ -942,6 +958,7 @@ export default {
   bottom: 80px;
   right: 500px;
   border-radius: 10px;
+  cursor: pointer;
 }
 .up_xx_fwbj {
   width: 190px;
@@ -954,6 +971,7 @@ export default {
   bottom: 80px;
   right: 250px;
   border-radius: 10px;
+  cursor: pointer;
 }
 .text1 {
   color: #f30a05;
@@ -974,6 +992,10 @@ export default {
   left: 535px;
 }
 .fw_ruleForm {
+  & ::placeholder {
+    color: rgb(134, 130, 130);
+    font-size: 12px;
+  }
   display: flex;
   .el-form-item__content {
     line-height: 1;

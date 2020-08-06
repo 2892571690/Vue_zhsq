@@ -197,6 +197,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .breadcrumb_wrap {
+  cursor: pointer;
   width: 9%;
   height: 39px;
   float: left;
@@ -242,12 +243,14 @@ export default {
   background: #f6f7fb;
   border: 1px solid #e4e7ec;
   border-left: 0;
+  cursor: pointer;
 }
 .box-card {
   width: 1680px;
   height: 350px;
   margin-left: 10px;
   .leftNews {
+    cursor: pointer;
     float: left;
     margin-top: 20px;
     width: 660px;
@@ -291,6 +294,7 @@ export default {
     }
   }
   .rightNews {
+    cursor: pointer;
     width: 965px;
     float: left;
     margin-top: 20px;
@@ -333,6 +337,7 @@ export default {
   width: 1690px;
 }
 .quick_edition_wrap {
+  cursor: pointer;
   float: left;
   width: 1250px;
   margin-top: 21px;
@@ -396,6 +401,7 @@ export default {
   }
 }
 .edition_box {
+  cursor: pointer;
   float: left;
   width: 406px;
   margin: 21px 0 3px 15px;
