@@ -82,7 +82,7 @@
             :data="zhxxList"
             style="width: 100%"
             stripe
-            :header-cell-style="{color:'#44a0f7'}"
+            :header-cell-style="{color:'#44a0f7' ,background:'#f6f6f6'}"
             border
             @selection-change="handleChange"
           >
@@ -105,14 +105,14 @@
                 <div>{{scope.row.sjhm.replace(/([0-9]{3})([0-9]{4})([0-9]{4})/,"$1****$3")}}</div>
               </template>
             </el-table-column>
-            <el-table-column label="人口类型代码">
+            <el-table-column label="人口类型代码" width="120px">
               <template slot-scope="scope">
                 <div v-if="scope.row.rklxdm == 1">常驻</div>
                 <div v-else-if="scope.row.rklxdm == 2">流动人口</div>
                 <div v-else>境外人员</div>
               </template>
             </el-table-column>
-            <el-table-column label="与房主关系">
+            <el-table-column label="与房主关系" width="120px">
               <template slot-scope="scope">
                 <div v-if="scope.row.yhzgxdm == 0">房主</div>
                 <div v-else-if="scope.row.yhzgxdm == 1">配偶</div>
@@ -596,33 +596,67 @@ export default {
       this.$router.push({ path: 'zhtj' })
     },
     // 点击删除
-    async handleDeleteZH(){
+    async handleDeleteZH() {
       let pp_id = []
-      for(var i = 0; i < this.tableNum.length; i++){
+      for (var i = 0; i < this.tableNum.length; i++) {
         pp_id.push(this.tableNum[i].pp_id)
       }
       pp_id = pp_id + ''
       let res = await this.$http.get(`ryxx/scryxx.do?pp_id=${pp_id}`)
-      // console.log(res.data.message.status)
-      if(res.data.message.status == 200){
+      console.log(res)
+      if (res.data.message.status == 200) {
         this.$message.success('删除成功')
-      }else{
+      } else {
         this.$message.error('删除成功')
       }
       this.handleZHXXList()
     },
     // 点击注册照片
-    handleAddPic(){
+    handleAddPic() {
       console.log(333)
     },
     // 点击激活
-    handleJHZH(){
-      console.log(444)
+    async handleJHZH() {
+      // console.log(this.tableNum.length)
+      if (this.tableNum.length == 0) {
+        this.$message.warning('请至少选择一名住户')
+      } else {
+        let pp_id = []
+        for (var i = 0; i < this.tableNum.length; i++) {
+          pp_id.push(this.tableNum[i].pp_id)
+        }
+        pp_id = pp_id + ''
+        let res = await this.$http.get(`/ryxx/types.do?type=1&pp_id=${pp_id}`)
+        // console.log(res)
+        if (res.data.massage.satus == 200) {
+          this.$message.success('修改成功')
+        } else {
+          this.$message.error('修改失败')
+        }
+        this.handleZHXXList()
+      }
     },
     // 点击提醒
-    handleTXZH(){
-      console.log(555)
-    }
+    async handleTXZH() {
+      // console.log(this.tableNum)
+      if (this.tableNum.length == 0) {
+        this.$message.warning('请至少选择一名住户')
+      } else {
+        let pp_id = []
+        for (var i = 0; i < this.tableNum.length; i++) {
+          pp_id.push(this.tableNum[i].pp_id)
+        }
+        pp_id = pp_id + ''
+        let res = await this.$http.get(`/ryxx/types.do?type=2&pp_id=${pp_id}`)
+        // console.log(res)
+        if (res.data.massage.satus == 200) {
+          this.$message.success('修改成功')
+        } else {
+          this.$message.error('修改失败')
+        }
+        this.handleZHXXList()
+      }
+    },
   },
 }
 </script>
@@ -776,6 +810,7 @@ export default {
       width: 100%;
       //   height: 180px;
       border: 1px solid #dcddd8;
+      font-size: 14px;
       .zhxx_content_content_but {
         display: flex;
         line-height: 1;
@@ -792,6 +827,7 @@ export default {
             border-radius: 5px;
             margin: 25px 15px 10px 25px;
             cursor: pointer;
+            color: #fff;
           }
           .deleteBut {
             width: 93px;
@@ -802,6 +838,7 @@ export default {
             border-radius: 5px;
             margin: 25px 15px 10px 0;
             cursor: pointer;
+            color: #fff;
           }
           .zhuceBut {
             width: 200px;
@@ -914,9 +951,15 @@ export default {
 .Personal_diao {
   .el-dialog {
     margin-top: 4vh !important;
+    width: 95% !important;
+    height: 87%;
+    .el-dialog__footer {
+      padding: 0 30px 20px 20px;
+    }
     .el-dialog__body {
-      width: 1260px;
-      height: 750px;
+      width: 1800px;
+      height: 87%;
+      padding: 10px 20px;
       margin: 0 auto;
       .Personal_span {
         width: 100%;
@@ -933,7 +976,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_xm_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_xm_wrap_text {
@@ -945,7 +988,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_ywx_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_ywx_wrap_text {
@@ -957,7 +1000,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_ywm_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_ywm_wrap_text {
@@ -969,7 +1012,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_xb_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_xb_wrap_text {
@@ -981,7 +1024,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_sjhm_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_sjhm_wrap_text {
@@ -993,7 +1036,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_bh_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_bh_wrap_text {
@@ -1005,7 +1048,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_xqbm_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_xqbm_wrap_text {
@@ -1017,7 +1060,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_fwbm_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_fwbm_wrap_text {
@@ -1029,7 +1072,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_zjhm_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_zjhm_text {
@@ -1041,7 +1084,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_zjlx_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_zjlx_text {
@@ -1053,7 +1096,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_rklx_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_rklx_text {
@@ -1065,7 +1108,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_csrq_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_csrq_text {
@@ -1077,7 +1120,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_jg_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_jg_wrap_text {
@@ -1089,7 +1132,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_mzdm_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_mzdm_wrap_text {
@@ -1101,7 +1144,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_hjdxz_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_hjdxz_wrap_text {
@@ -1113,7 +1156,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_zjdxz_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_zjdxz_wrap_text {
@@ -1129,7 +1172,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_gjdm_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_gjdm_wrap_text {
@@ -1141,7 +1184,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_zjxy_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_zjxy_wrap_text {
@@ -1153,7 +1196,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_whcddm_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_whcddm_wrap_text {
@@ -1165,7 +1208,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_hyzkdm_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_hyzkdm_wrap_text {
@@ -1177,7 +1220,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_byzkdm_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_byzkdm_wrap_text {
@@ -1189,7 +1232,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_zzmmdm_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_zzmmdm_wrap_text {
@@ -1201,7 +1244,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_yhzgxdm_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_yhzgxdm_wrap_text {
@@ -1213,7 +1256,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_addTime_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_addTime_wrap_text {
@@ -1225,7 +1268,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_updateTime_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_updateTime_wrap_text {
@@ -1237,7 +1280,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_yxqqsrq_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_yxqqsrq_wrap_text {
@@ -1249,7 +1292,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_yxqjzrq_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_yxqjzrq_wrap_text {
@@ -1261,7 +1304,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_yhzt_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_yhzt_wrap_text {
@@ -1273,7 +1316,7 @@ export default {
             display: flex;
             margin: 20px 0 15px 10px;
             .Personal_span_bz_wrap_title {
-              width: 120px;
+              width: 250px;
               text-align: right;
             }
             .Personal_span_bz_wrap_text {

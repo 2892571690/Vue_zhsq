@@ -52,6 +52,7 @@
             <!-- 楼栋号 -->
             <div class="form_wrap_box">
               <el-form-item
+                class="lcs_wrap_box"
                 label="楼栋号:"
                 :prop="'ldinfo.' + index + '.ldh'"
                 :rules="[{required: true, message: '请选择楼栋号', trigger: 'blur'}]"
@@ -70,6 +71,7 @@
             <!-- 单元数 -->
             <div class="form_wrap_box">
               <el-form-item
+                class="lcs_wrap_box"
                 label="单元数:"
                 :prop="'ldinfo.' + index + '.dys'"
                 :rules="[{required: true, message: '请输入单元数', trigger: 'blur'}]"
@@ -88,9 +90,10 @@
             <!-- 楼层数 -->
             <div class="form_wrap_box">
               <el-form-item
+                class="lcs_wrap_box"
                 label="楼层数:"
                 :prop="'ldinfo.' + index + '.lcs'"
-                :rules="[{required: true, message: '请输入楼层数', trigger: 'blur'},{min: 1,max: 2,message: '长度在 1 到 2 个字符',trigger: 'blur',}]"
+                :rules="[{required: true, message: '请输入楼层数', trigger: 'blur'}]"
               >
                 <!-- <el-input placeholder="实例：12" v-model="ruleForm.ldinfo[index].lcs"></el-input> -->
                 <el-select v-model="ruleForm.ldinfo[index].lcs" placeholder="请选择楼层号">
@@ -103,12 +106,13 @@
                 </el-select>
               </el-form-item>
             </div>
-            <!-- 楼层数 -->
+            <!-- 每层房屋数量 -->
             <div class="form_wrap_box">
               <el-form-item
+                class="lcs_wrap_box1"
                 label="每层房屋数量:"
                 :prop="'ldinfo.' + index + '.hs'"
-                :rules="[{required: true, message: '请输入每层房屋数量', trigger: 'blur'},{min: 1,max: 2,message: '长度在 1 到 2 个字符',trigger: 'blur',}]"
+                :rules="[{required: true, message: '请输入每层房屋数量', trigger: 'blur'}]"
               >
                 <!-- <el-input placeholder="实例：4" v-model="ruleForm.ldinfo[index].hs"></el-input> -->
                 <el-select v-model="ruleForm.ldinfo[index].hs" placeholder="请选择户数号">
@@ -318,8 +322,8 @@ export default {
 }
 // 面包屑到这
 .tjldplxx_wrap {
-  //   width: 1170px;
-  margin: 74px 30px 0 30px;
+  width: 1250px;
+  margin: 74px 30px 0 265px;
   border: 1px solid #bce9ef;
   border-radius: 10px;
   .tjldxx_wrap_title {
@@ -402,7 +406,7 @@ export default {
   color: #fff;
   position: absolute;
   top: 620px;
-  right: 1200px;
+  right: 1000px;
   border-radius: 10px;
   cursor: pointer;
 }
@@ -415,12 +419,12 @@ export default {
   color: #fff;
   position: absolute;
   top: 620px;
-  right: 940px;
+  right: 800px;
   border-radius: 10px;
   cursor: pointer;
 }
 .form_wrap_box {
-  width: 290px;
+  width: 220px;
   float: left;
 }
 .bitianFromldplzj {
@@ -438,7 +442,7 @@ export default {
   border-radius: 10px;
   position: absolute;
   top: 231px;
-  right: 250px;
+  right: 480px;
 }
 .deleteFrom_wrap_top {
   cursor: pointer;
@@ -451,6 +455,33 @@ export default {
   border-radius: 10px;
   position: absolute;
   top: 231px;
-  right: 100px;
+  right: 350px;
+}
+.lcs_wrap_box {
+  width: 270px;
+  .el-select {
+    width: 110px;
+    .el-input {
+      width: 100%;
+      .el-input__inner {
+        width: 100%;
+      }
+    }
+  }
+}
+.lcs_wrap_box1 {
+  width: 270px;
+  .el-select {
+    width: 110px;
+    .el-input {
+      width: 100%;
+      .el-input__inner {
+        width: 100%;
+      }
+    }
+  }
+  .el-form-item__error {
+    margin: 0 0 0 100px;
+  }
 }
 </style>

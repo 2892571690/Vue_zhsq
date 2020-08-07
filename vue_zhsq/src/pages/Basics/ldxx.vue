@@ -142,7 +142,7 @@ export default {
   },
   mounted() {
     // 放大
-    this.refDome = this.$refs.xqxxtj
+    this.refDome = this.$refs.ldxx
   },
   methods: {
     //   点击面包屑的x事件

@@ -53,12 +53,12 @@
             <!-- 单元号 -->
             <div class="dyh_input">
               <div class="dyh_input_text">单元号：</div>
-              <div v-if="fwxxList.dyh == '' || fwxxList.dyh == 'null'">
-                <el-input placeholder :disabled="true"></el-input>
-              </div>
-              <div v-else>
-                <el-input :placeholder="fwxxList.dyh" :disabled="true"></el-input>
-              </div>
+              <el-form-item prop="dyh">
+                <el-input
+                  :placeholder="fwxxList.dyh == '' || fwxxList.dyh == 'null' ? '' : fwxxList.dyh"
+                  v-model="from.dyh"
+                ></el-input>
+              </el-form-item>
             </div>
             <!-- 楼层号 -->
             <div class="lch_input">
@@ -83,38 +83,44 @@
             <!-- 房屋状态 -->
             <div class="fwzt_input">
               <div class="fwzt_input_text">房屋状态：</div>
-              <el-select v-model="from.fwztdm" placeholder="请选择">
-                <el-option
-                  v-for="item in FWZTList"
-                  :key="item.zdid"
-                  :label="item.zdz"
-                  :value="item.zdid"
-                ></el-option>
-              </el-select>
+              <el-form-item prop="fwztdm">
+                <el-select v-model="from.fwztdm" placeholder="请选择">
+                  <el-option
+                    v-for="item in FWZTList"
+                    :key="item.zdid"
+                    :label="item.zdz"
+                    :value="item.zdid"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
             </div>
             <!-- 房屋用途 -->
             <div class="fwyt_input">
               <div class="fwyt_input_text">房屋用途：</div>
-              <el-select v-model="from.fwytdm" placeholder="请选择">
-                <el-option
-                  v-for="item in FWYTList"
-                  :key="item.zdid"
-                  :label="item.zdz"
-                  :value="item.zdid"
-                ></el-option>
-              </el-select>
+              <el-form-item prop="fwytdm">
+                <el-select v-model="from.fwytdm" placeholder="请选择">
+                  <el-option
+                    v-for="item in FWYTList"
+                    :key="item.zdid"
+                    :label="item.zdz"
+                    :value="item.zdid"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
             </div>
             <!-- 产权性质 -->
             <div class="cqxz_input">
               <div class="cqxz_input_text">产权性质：</div>
-              <el-select v-model="from.cqxzdm" placeholder="请选择">
-                <el-option
-                  v-for="item in FWCQXZList"
-                  :key="item.zdid"
-                  :label="item.zdz"
-                  :value="item.zdid"
-                ></el-option>
-              </el-select>
+              <el-form-item prop="cqxzdm">
+                <el-select v-model="from.cqxzdm" placeholder="请选择">
+                  <el-option
+                    v-for="item in FWCQXZList"
+                    :key="item.zdid"
+                    :label="item.zdz"
+                    :value="item.zdid"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
             </div>
             <!-- 房屋面积 -->
             <div class="fwmj_input">
@@ -258,7 +264,7 @@ export default {
       // 房屋信息
       fwxxList: [],
       from: {
-        xqbm:'',
+        xqbm: '',
         // 房屋编码
         fwbm: '',
         fwztdm: '',
@@ -272,7 +278,8 @@ export default {
         js: '',
         zk: '',
         zjzp: '',
-        xbdm:''
+        xbdm: '',
+        dyh: '',
       },
       strry: '',
       // 房屋状态列表
@@ -326,6 +333,24 @@ export default {
             trigger: 'blur',
           },
         ],
+        dyh: [
+          { required: true, message: '请输入单元号', trigger: 'blur' },
+          {
+            min: 1,
+            max: 2,
+            message: '长度在 1 到 2 个字符',
+            trigger: 'blur',
+          },
+        ],
+        fwztdm: [
+          { required: true, message: '请选择房屋状态', trigger: 'blur' },
+        ],
+        fwytdm: [
+          { required: true, message: '请选择房屋用途', trigger: 'blur' },
+        ],
+        cqxzdm: [
+          { required: true, message: '请选择房产性质', trigger: 'blur' },
+        ],
       },
     }
   },
@@ -375,8 +400,14 @@ export default {
       this.fwxxList = res.data.data
       this.from.zjzp = res.data.data.ryZp
       this.from.xqbm = res.data.data.xqbm
-      this.from.xm = res.data.data.xm == 'null' || res.data.data.xm == '' ? '' : res.data.data.xm
-      this.from.zjhm = res.data.data.zjhm == 'null' || res.data.data.zjhm == '' ? '' : res.data.data.zjhm
+      this.from.xm =
+        res.data.data.xm == 'null' || res.data.data.xm == ''
+          ? ''
+          : res.data.data.xm
+      this.from.zjhm =
+        res.data.data.zjhm == 'null' || res.data.data.zjhm == ''
+          ? ''
+          : res.data.data.zjhm
       let rzrylb = res.data.data.rzrylb
       if (rzrylb.length == 0) {
         return
@@ -419,7 +450,8 @@ export default {
         // console.log(document.getElementById('CVR_IDCard').Picture)
         this.from.xm = document.getElementById('CVR_IDCard').Name
         this.from.zjhm = document.getElementById('CVR_IDCard').CardNo
-        this.from.xbdm = document.getElementById('CVR_IDCard').Sex == '1' ? '1' : '2';
+        this.from.xbdm =
+          document.getElementById('CVR_IDCard').Sex == '1' ? '1' : '2'
         this.from.zjzp = `data:image/jpeg;base64,${
           document.getElementById('CVR_IDCard').Picture
         }`
@@ -450,6 +482,7 @@ export default {
         jsNum: this.from.js,
         zkNum: this.from.zk,
         zjzp: this.from.zjzp,
+        dyh: this.from.dyh,
       }
       data = Qs.stringify(data)
       self.$refs.ruleForm.validate(async (valid) => {
@@ -647,7 +680,7 @@ export default {
       .lch_input {
         height: 34px;
         display: flex;
-        margin: 12px 0 0 0;
+        margin: 22px 0 0 0;
         .lch_input_text {
           height: 34px;
           width: 110px;
@@ -707,7 +740,7 @@ export default {
       .fwyt_input {
         height: 34px;
         display: flex;
-        margin: 12px 0 0 0;
+        margin: 22px 0 0 0;
         .fwyt_input_text {
           height: 34px;
           width: 110px;
@@ -727,7 +760,7 @@ export default {
       .cqxz_input {
         height: 34px;
         display: flex;
-        margin: 12px 0 0 0;
+        margin: 22px 0 0 0;
         .cqxz_input_text {
           height: 34px;
           width: 110px;
@@ -747,7 +780,7 @@ export default {
       .fwmj_input {
         height: 34px;
         display: flex;
-        margin: 12px 0 0 0;
+        margin: 22px 0 0 0;
         .fwmj_input_text {
           height: 34px;
           width: 110px;

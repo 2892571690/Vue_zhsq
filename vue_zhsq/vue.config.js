@@ -20,14 +20,14 @@ module.exports = {
     },
     devServer: {
         proxy: {
-            '/admin': {//代理api
-                target: "http://192.168.1.248:8096",// 代理接口
-                changeOrigin: true,//是否跨域
-                ws: true, // proxy websockets
-                pathRewrite: {//重写路径
-                    "^/admin": ''//代理路径
-                }
-            }
+            // '/admin': {//代理api
+            //     target: "http://192.168.1.248:8096",// 代理接口
+            //     changeOrigin: true,//是否跨域
+            //     ws: true, // proxy websockets
+            //     pathRewrite: {//重写路径
+            //         "^/admin": ''//代理路径
+            //     }
+            // }
         }
     }
 }
