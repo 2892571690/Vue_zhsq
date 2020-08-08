@@ -223,7 +223,7 @@ export default {
       }
       // console.log(ldidList)
       Qs.stringify({ ldidList: ldidList }, { arrayFormat: 'repeat' })
-      let res = await this.$http.post('/ld/delLouDong.do?', ldidList)
+      let res = await this.$http.post('/ld/delLouDong.do', ldidList)
       // console.log(res)
       let self = this
       for (var i = 0; i < res.data.msg.length; i++) {

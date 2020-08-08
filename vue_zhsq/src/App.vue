@@ -30,9 +30,10 @@ img {
 div {
   box-sizing: border-box;
 }
-/* .el-message{
-  top: 50% !important;
-  left: 50% !important;
-  transform: scale(-50% -50%) !important;
-} */
+.el-message{
+  margin: 400px 0 0 0;
+  /* top: 50% !important; */
+  /* left: 50% !important;
+  transform: scale(-50% -50%) !important; */
+}
 </style>

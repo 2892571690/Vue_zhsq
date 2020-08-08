@@ -89,12 +89,7 @@
             <el-table-column type="selection"></el-table-column>
             <el-table-column prop="xqmc" label="小区名称"></el-table-column>
             <el-table-column prop="xm" label="姓名"></el-table-column>
-            <el-table-column label="性别">
-              <template slot-scope="scope">
-                <div v-if="scope.row.xbdm == 1">男</div>
-                <div v-else>女</div>
-              </template>
-            </el-table-column>
+            <el-table-column label="性别" prop="xbdm"></el-table-column>
             <el-table-column label="身份证号码" width="220px">
               <template slot-scope="scope">
                 <div>{{`**************${scope.row.zjhm.substr(-4,4)}`}}</div>
@@ -172,7 +167,6 @@
     <el-dialog
       title="注册图片"
       :visible.sync="PicDialogVisible"
-      width="50%"
       :before-close="PicHandleClose"
       class="Pic_diao"
     >
@@ -180,8 +174,7 @@
         <img :src="PicImg" />
       </span>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="PicDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="PicDialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="PicDialogVisible = false">返 回</el-button>
       </span>
     </el-dialog>
     <!-- 个人资料的弹出框 -->
@@ -408,8 +401,7 @@
         </div>
       </span>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="PersonalDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="PersonalDialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="PersonalDialogVisible = false">返 回</el-button>
       </span>
     </el-dialog>
   </div>
@@ -932,32 +924,36 @@ export default {
 }
 .Pic_diao {
   .el-dialog {
-    margin-top: 2vh !important;
+    width: 30%;
     .el-dialog__body {
-      width: 735px;
-      height: 735px;
+      width: 300px;
+      height: 300px;
       margin: 0 auto;
       .Pic_span {
-        width: 735px;
-        height: 735px;
+        width: 300px;
+        height: 300px;
         img {
           width: 100%;
           height: 100%;
         }
       }
     }
+    .el-dialog__footer {
+      text-align: center;
+    }
   }
 }
 .Personal_diao {
   .el-dialog {
     margin-top: 4vh !important;
-    width: 95% !important;
+    width: 60% !important;
     height: 87%;
     .el-dialog__footer {
       padding: 0 30px 20px 20px;
+      text-align: center;
     }
     .el-dialog__body {
-      width: 1800px;
+      width: 1100px;
       height: 87%;
       padding: 10px 20px;
       margin: 0 auto;
@@ -968,7 +964,7 @@ export default {
         display: flex;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
         .Personal_span_left {
-          width: 33%;
+          width: 40%;
           height: 100%;
           // background: pink;
           .Personal_span_xm_wrap {
@@ -1165,7 +1161,7 @@ export default {
           }
         }
         .Personal_span_right {
-          width: 33%;
+          width: 40%;
           height: 100%;
           .Personal_span_gjdm_wrap {
             width: 100%;
@@ -1325,14 +1321,14 @@ export default {
           }
         }
         .Personal_span_Image {
-          width: 33%;
+          width: 20%;
           height: 100%;
           .Personal_span_Image_title {
             margin: 20px 0 40px 30px;
           }
           .Personal_span_Image_text {
-            width: 100%;
-            height: 60%;
+            width: 70%;
+            height: 25%;
             img {
               width: 100%;
               height: 100%;

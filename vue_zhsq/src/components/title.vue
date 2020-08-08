@@ -81,7 +81,6 @@
       <!-- 下面的取消和确定 -->
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleFontReset">重置</el-button>
-        <el-button @click="addFont = false">取 消</el-button>
         <el-button type="primary" @click="determineFont">确 定</el-button>
       </span>
     </el-dialog>

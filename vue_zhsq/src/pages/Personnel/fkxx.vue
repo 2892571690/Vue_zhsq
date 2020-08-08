@@ -20,7 +20,7 @@
           <el-form class="fkxx_wrap_From_wrap" ref="form" :model="form">
             <!-- 小区信息 -->
             <el-form-item class="fkxx_wrap_xqxx">
-              <el-select placeholder="请选择小区" v-model="form.xqmc" clearable>
+              <el-select placeholder="请选择小区" v-model="form.xqmc" clearable @clear="clearXQ">
                 <el-option
                   v-for="item in xqList"
                   :key="item.xq_id"
@@ -39,9 +39,11 @@
             </el-form-item>
             <!-- 选择状态 -->
             <el-form-item class="fkxx_zt_xqxx">
-              <el-select placeholder="请选择状态" v-model="zt" clearable>
+              <el-select placeholder="请选择状态" v-model="zt" clearable @clear="clearZT">
                 <el-option label="未启用/未放行状态" value="0|0"></el-option>
+                <el-option label="未启用/已放行状态" value="0|1"></el-option>
                 <el-option label="已启用/已放行状态" value="1|1"></el-option>
+                <el-option label="已启用/未放行状态" value="1|0"></el-option>
               </el-select>
             </el-form-item>
             <div class="el-icon-search fkxx_search" @click="handleFKXXsearch">搜索</div>
@@ -60,7 +62,7 @@
               <div class="zhuceBut" @click="handleAddPic">授权/取消</div>
               <div class="putBut">上传人员</div>
               <div class="jihuoBut" @click="handleJHZH">取消预约来访</div>
-              <!-- <div class="xz_wrap">{{zhxxList.length}}个中{{tableNum.length}}个被选</div> -->
+              <div class="xz_wrap">{{tableList.length}}个中{{tableNum.length}}个被选</div>
             </div>
             <div class="right_button">
               <div class="right_but" @click="handleSearchBlock">
@@ -122,11 +124,6 @@
               width="190px"
             ></el-table-column>
             <el-table-column prop="fwdd" label="访问地点" width="120px"></el-table-column>
-            <el-table-column prop="xxdz" label="历史来访资料" width="130px">
-              <template>
-                <div class="zcBox" @click="handleAddCart">查看</div>
-              </template>
-            </el-table-column>
             <el-table-column label="是否上传">
               <template slot-scope="scope">
                 <div v-if="scope.row.isUpload == 1" style="color:green;">已上传</div>
@@ -135,8 +132,22 @@
             </el-table-column>
             <el-table-column label="预约/授权状态" width="150px">
               <template slot-scope="scope">
-                <div v-if="scope.row.yyzt == 0">未启用/未放行</div>
-                <div v-else>已启用/已放行</div>
+                <div style="display:flex;">
+                  <div>
+                    <div v-if="scope.row.yyzt == 0">未启用</div>
+                    <div v-else>已启用</div>
+                  </div>
+                  <div>/</div>
+                  <div>
+                    <div v-if="scope.row.sqzt == 0">未放行</div>
+                    <div v-else>已放行</div>
+                  </div>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="xxdz" label="详情" width="130px">
+              <template slot-scope="scope">
+                <div class="zcBox" @click="handleAddCart(scope.row.fksfzhm)">查看</div>
               </template>
             </el-table-column>
           </el-table>
@@ -153,6 +164,44 @@
         </div>
       </div>
     </div>
+    <!-- 访客历史信息弹出框 -->
+    <el-dialog
+      class="fklszl_Dialog"
+      title="来访历史资料"
+      :visible.sync="FXLSZLDialogVisible"
+      width="50%"
+      :before-close="fxlszlHandleClose"
+    >
+      <span class="fxlszl_wrap_span">
+        <div class="lszl_wrap" v-for="(item,index) in fklsxx" :key="index">
+          <!-- 序号 -->
+          <div class="yyr_wrap">
+            <div class="yyr_wrap_title">序号：</div>
+            <div class="yyr_wrap_text">{{item.fkId}},</div>
+          </div>
+          <!-- 预约人 -->
+          <div class="yyr_wrap">
+            <div class="yyr_wrap_title">预约人：</div>
+            <div class="yyr_wrap_text">{{item.fkxm}},</div>
+          </div>
+          <!-- 来访地点 -->
+          <div class="yyr_wrap">
+            <div class="yyr_wrap_title">来访地点：</div>
+            <div class="yyr_wrap_text">{{item.fwdd}},</div>
+          </div>
+          <!-- 预约时间 -->
+          <div class="yyr_wrap">
+            <div class="yyr_wrap_title">预约时间：</div>
+            <div
+              class="yyr_wrap_text"
+            >{{lszlDataFrom(item.yylfqssj.time)}}到{{lszlDataFrom(item.yylfqssj.time)}}</div>
+          </div>
+        </div>
+      </span>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="FXLSZLDialogVisible = false">返 回</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -191,6 +240,10 @@ export default {
       tableList: [],
       // 表格选中的数量
       tableNum: [],
+      // 访客历史信息
+      fklsxx: [],
+      // 控制来访历史资料的弹出框显示
+      FXLSZLDialogVisible: false,
     }
   },
   async created() {
@@ -235,7 +288,7 @@ export default {
     // 获取表格数据
     async handleFKList() {
       let res = await this.$http.get('/fk/selFangKe.do', { params: this.form })
-      console.log(res)
+      // console.log(res)
       let tatol = res.data[res.data.length - 1]
       this.tatal = Number(tatol.totalCount)
       res.data.splice(res.data.length - 1, 1)
@@ -245,6 +298,7 @@ export default {
     handleFKXXsearch() {
       this.form.yyzt = this.zt.split('|')[0]
       this.form.sqzt = this.zt.split('|')[1]
+      this.handleFKList()
     },
     // 点击显示和隐藏
     handleSearchBlock() {
@@ -274,19 +328,67 @@ export default {
     },
     // 点击增加
     handleAddZH() {
-      console.log(1)
+      this.$router.push({ path: 'fkzj' })
     },
     // 点击删除
-    handleDeleteZH() {
-      console.log(2)
+    async handleDeleteZH() {
+      if (this.tableNum.length == 0) {
+        this.$message.warning('请至少选择一名访客')
+        return
+      } else {
+        let fkidList = []
+        for (var i = 0; i < this.tableNum.length; i++) {
+          fkidList.push(this.tableNum[i].fkId)
+        }
+        Qs.stringify({ fkidList: fkidList }, { arrayFormat: 'repeat' })
+        let res = await this.$http.post('/fk/delFangKeBatch.do', fkidList)
+        if (res.data.msg == 200) {
+          this.$message.success('删除成功')
+        } else {
+          this.$message.error('删除失败')
+        }
+        this.handleFKList()
+      }
     },
     // 点击授权取消
-    handleAddPic() {
-      console.log(3)
+    async handleAddPic() {
+      if (this.tableNum.length == 0) {
+        this.$message.warning('请至少选择一名访客')
+        return
+      } else {
+        let fkidList = []
+        for (var i = 0; i < this.tableNum.length; i++) {
+          fkidList.push(this.tableNum[i].fkId)
+        }
+        Qs.stringify({ fkidList: fkidList }, { arrayFormat: 'repeat' })
+        let res = await this.$http.post('/fk/updAuthorize.do', fkidList)
+        if (res.data.msg == 200) {
+          this.$message.success('修改成功')
+        } else {
+          this.$message.error('修改失败')
+        }
+        this.handleFKList()
+      }
     },
     // 点击取消预约来访
-    handleJHZH() {
-      console.log(4)
+    async handleJHZH() {
+      if (this.tableNum.length == 0) {
+        this.$message.warning('请至少选择一名访客')
+        return
+      } else {
+        let fkidList = []
+        for (var i = 0; i < this.tableNum.length; i++) {
+          fkidList.push(this.tableNum[i].fkId)
+        }
+        Qs.stringify({ fkidList: fkidList }, { arrayFormat: 'repeat' })
+        let res = await this.$http.post('/fk/updReservation.do', fkidList)
+        if (res.data.msg == 200) {
+          this.$message.success('修改成功')
+        } else {
+          this.$message.error('修改失败')
+        }
+        this.handleFKList()
+      }
     },
     // 表格选中的事件
     handleChange(value) {
@@ -312,9 +414,28 @@ export default {
           : date.getMinutes()
       return Y + M + D + h + m
     },
+    lszlDataFrom(time) {
+      let datas = new Date(time)
+      let y = datas.getFullYear()
+      let MM = datas.getMonth() + 1
+      MM = MM < 10 ? '0' + MM : MM
+      let d = datas.getDate()
+      d = d < 10 ? '0' + d : d
+      let h = datas.getHours()
+      h = h < 10 ? '0' + h : h
+      let m = datas.getMinutes()
+      m = m < 10 ? '0' + m : m
+      return y + '-' + MM + '-' + d + ' ' + h + ':' + m
+    },
     // 查看
-    handleAddCart() {
-      console.log(111)
+    async handleAddCart(fksfzhm) {
+      // console.log(fksfzhm)
+      let res = await this.$http.get(
+        `/fk/selFangKeHistory.do?fksfzhm=${fksfzhm}`
+      )
+      console.log(res)
+      this.fklsxx = res.data
+      this.FXLSZLDialogVisible = true
     },
     // 监听 pagesize 改变的事件
     handleSizeChange(newSize) {
@@ -324,6 +445,25 @@ export default {
     // 监听 页码值 改变的事件
     handleCurrentChange(newPage) {
       this.form.currPageNo = newPage
+      this.handleFKList()
+    },
+    fxlszlHandleClose(done) {
+      this.$confirm('确认关闭？')
+        .then((_) => {
+          done()
+        })
+        .catch((_) => {})
+    },
+    // 小区点击清空
+    clearXQ() {
+      this.form.yyzt = this.zt.split('|')[0]
+      this.form.sqzt = this.zt.split('|')[1]
+      this.handleFKList()
+    },
+    // 状态点击清空
+    clearZT() {
+      this.form.yyzt = this.zt.split('|')[0]
+      this.form.sqzt = this.zt.split('|')[1]
       this.handleFKList()
     },
   },
@@ -381,7 +521,7 @@ export default {
 // 面包屑到这
 .fkxx_wrap {
   width: 1628px;
-//   height: 600px;
+  //   height: 600px;
   margin: 42px 40px 0 40px;
   overflow: hidden;
   .fkxx_wrap_from {
@@ -573,7 +713,7 @@ export default {
           }
         }
         .right_button {
-          margin-left: 680px;
+          margin-left: 480px;
           .right_but {
             width: 54px;
             height: 38px;
@@ -620,5 +760,33 @@ export default {
   background: #53b3dd;
   border-radius: 10px;
   cursor: pointer;
+}
+.fklszl_Dialog {
+  .el-dialog {
+    margin-top: 7vh;
+    width: 70% !important;
+  }
+  .el-dialog__header {
+    padding: 20px 20px 0 10px;
+  }
+  .el-dialog__body {
+    padding: 0 20px 30px 20px;
+  }
+  .el-dialog__footer {
+    text-align: center;
+  }
+  .fxlszl_wrap_span {
+    .lszl_wrap {
+      display: flex;
+      .yyr_wrap {
+        display: flex;
+        margin: 40px 20px 0 0;
+        .yyr_wrap_title {
+        }
+        .yyr_wrap_text {
+        }
+      }
+    }
+  }
 }
 </style>

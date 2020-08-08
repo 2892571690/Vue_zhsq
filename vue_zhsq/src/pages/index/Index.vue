@@ -34,7 +34,7 @@
     <el-card class="box-card">
       <div class="leftNews">
         <div class="newAray" v-for="item in leftNewList" :key="item.id">
-          <div class="text_title_wrap">
+          <div class="text_title_wrap" @click="handleNewsList(item.id)">
             <div class="text_square"></div>
             <div class="Hot" v-if="item.ishot == 1">
               <img :src="item.pic" />
@@ -45,7 +45,12 @@
         </div>
       </div>
       <div class="rightNews">
-        <div class="rightNews_wrap" v-for="item in rightNewsList" :key="item.id">
+        <div
+          class="rightNews_wrap"
+          v-for="item in rightNewsList"
+          :key="item.id"
+          @click="handleNewsList(item.id)"
+        >
           <div class="rightNews_img">
             <img :src="item.pic" />
           </div>
@@ -152,13 +157,13 @@ export default {
     // 获取快捷操作列表
     this.handleQuickList()
     if (this.$route.query.breadcrumb) {
-      if(this.$route.query.breadcrumb.length == 1){
+      if (this.$route.query.breadcrumb.length == 1) {
         this.breadcrumb = this.$route.query.breadcrumb
-      }else{
+      } else {
         let breadcrumb = this.$route.query.breadcrumb.split(',')
         let breadcrumb5 = breadcrumb[0]
-        let breadcrumb6 = breadcrumb[1]+','+breadcrumb[2]
-        let breadcrumb7 = [breadcrumb5,breadcrumb6]
+        let breadcrumb6 = breadcrumb[1] + ',' + breadcrumb[2]
+        let breadcrumb7 = [breadcrumb5, breadcrumb6]
         this.breadcrumb = breadcrumb7
       }
     } else {
@@ -183,7 +188,7 @@ export default {
     // 获取新闻列表
     async handleNewList() {
       let res = await this.$http.get('/sy/content.do')
-      // console.log(res)
+      console.log(res)
       this.leftNewList = res.data.data
       this.rightNewsList = res.data.dataArray
     },
@@ -191,6 +196,11 @@ export default {
     async handleQuickList() {
       let res = await this.$http.get('/sy/getshortcut.do')
       this.QuickList = res.data.message
+    },
+    // 点击新闻跳转
+    handleNewsList(id) {
+      // console.log(id)
+      this.$router.push({ path: 'newsList', query: { id } })
     },
   },
 }
@@ -243,14 +253,13 @@ export default {
   background: #f6f7fb;
   border: 1px solid #e4e7ec;
   border-left: 0;
-  cursor: pointer;
 }
 .box-card {
   width: 1680px;
   height: 350px;
   margin-left: 10px;
   .leftNews {
-    cursor: pointer;
+    // cursor: pointer;
     float: left;
     margin-top: 20px;
     width: 660px;
@@ -279,6 +288,10 @@ export default {
           text-overflow: ellipsis;
           overflow: hidden;
           word-break: break-all;
+          cursor: pointer;
+          &:hover{
+            text-decoration: underline;
+          }
         }
         .Hot {
           width: 22px;
@@ -294,7 +307,6 @@ export default {
     }
   }
   .rightNews {
-    cursor: pointer;
     width: 965px;
     float: left;
     margin-top: 20px;
@@ -329,6 +341,10 @@ export default {
         -webkit-line-clamp: 5;
         line-clamp: 5;
         -webkit-box-orient: vertical;
+        cursor: pointer;
+        &:hover{
+          text-decoration: underline;
+        }
       }
     }
   }
@@ -343,11 +359,13 @@ export default {
   margin-top: 21px;
   margin-left: 10px;
   margin-bottom: 3px;
+  background: #f8f8f8;
+  height: 365px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   .quick_wrap {
     width: 1261px;
     .quick_title_wrap {
-      width: 100%;
+      width: 99%;
       height: 40px;
       display: flex;
       align-items: center;
@@ -413,7 +431,7 @@ export default {
     flex-wrap: wrap;
     .edition_title {
       width: 100%;
-      height: 58px;
+      height: 40px;
       // background: red;
       display: flex;
       align-items: center;
@@ -485,7 +503,7 @@ export default {
       border: 1px solid #dfddea;
       display: flex;
       justify-content: center;
-      margin: 11px 0 0 0;
+      margin: 11px 0 11px 0;
       border-radius: 10px;
       .Official_website_wrap {
         display: flex;

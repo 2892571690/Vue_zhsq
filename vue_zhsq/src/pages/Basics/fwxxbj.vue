@@ -54,10 +54,7 @@
             <div class="dyh_input">
               <div class="dyh_input_text">单元号：</div>
               <el-form-item prop="dyh">
-                <el-input
-                  :placeholder="fwxxList.dyh == '' || fwxxList.dyh == 'null' ? '' : fwxxList.dyh"
-                  v-model="from.dyh"
-                ></el-input>
+                <el-input v-model="from.dyh"></el-input>
               </el-form-item>
             </div>
             <!-- 楼层号 -->
@@ -126,10 +123,7 @@
             <div class="fwmj_input">
               <div class="fwmj_input_text">房屋面积：</div>
               <el-form-item prop="fwmj">
-                <el-input
-                  v-model="from.fwmj"
-                  :placeholder="fwxxList.fwmj == 'null' || fwxxList.fwmj == '' ? 0 : fwxxList.fwmj"
-                ></el-input>
+                <el-input v-model="from.fwmj"></el-input>
               </el-form-item>
               <!-- </div> -->
               <div class="fwmj_input_text1">平方米</div>
@@ -172,31 +166,21 @@
             <div class="sjhm_input">
               <div class="sjhm_input_text">手机号码：</div>
               <el-form-item prop="sjhm">
-                <el-input
-                  maxlength="11"
-                  :placeholder="fwxxList.sjhm == 'null' || fwxxList.sjhm == '' ? '请填写手机号码' :fwxxList.sjhm"
-                  v-model="from.sjhm"
-                ></el-input>
+                <el-input maxlength="11" v-model="from.sjhm"></el-input>
               </el-form-item>
             </div>
             <!-- 家属人数 -->
             <div class="jsrs_input">
               <div class="jsrs_input_text">家属人数：</div>
               <el-form-item prop="js">
-                <el-input
-                  :placeholder="fwxxList.js == 'null' || fwxxList.js == '' ? '请填写家属人数' :fwxxList.js"
-                  v-model="from.js"
-                ></el-input>
+                <el-input v-model="from.js"></el-input>
               </el-form-item>
             </div>
             <!-- 租客人数 -->
             <div class="zkrs_input">
               <div class="zkrs_input_text">租客人数：</div>
               <el-form-item prop="zk">
-                <el-input
-                  :placeholder="fwxxList.zk == 'null' || fwxxList.zk == '' ? '请填写租客人数' :fwxxList.zk"
-                  v-model="from.zk"
-                ></el-input>
+                <el-input v-model="from.zk"></el-input>
               </el-form-item>
             </div>
             <!-- 入住人员列表 -->
@@ -408,6 +392,38 @@ export default {
         res.data.data.zjhm == 'null' || res.data.data.zjhm == ''
           ? ''
           : res.data.data.zjhm
+      this.from.dyh =
+        res.data.data.dyh == 'null' || res.data.data.dyh == ''
+          ? ''
+          : res.data.data.dyh
+      this.from.fwztdm =
+        res.data.data.fwztdm == 'null' || res.data.data.fwztdm == ''
+          ? ''
+          : res.data.data.fwztdm
+      this.from.fwytdm =
+        res.data.data.fwytdm == 'null' || res.data.data.fwytdm == ''
+          ? ''
+          : res.data.data.fwytdm
+      this.from.cqxzdm =
+        res.data.data.cqxzdm == 'null' || res.data.data.cqxzdm == ''
+          ? ''
+          : res.data.data.cqxzdm
+      this.from.fwmj =
+        res.data.data.fwmj == 'null' || res.data.data.fwmj == ''
+          ? ''
+          : res.data.data.fwmj
+      this.from.sjhm =
+        res.data.data.sjhm == 'null' || res.data.data.sjhm == ''
+          ? ''
+          : res.data.data.sjhm
+      this.from.js =
+        res.data.data.js == 'null' || res.data.data.js == ''
+          ? ''
+          : res.data.data.js
+      this.from.zk =
+        res.data.data.zk == 'null' || res.data.data.zk == ''
+          ? ''
+          : res.data.data.zk
       let rzrylb = res.data.data.rzrylb
       if (rzrylb.length == 0) {
         return
@@ -466,7 +482,6 @@ export default {
     },
     // 点击提交
     handleUp() {
-      // console.log(this.from.xqbm)
       let self = this
       let data = {
         xqbm: this.from.xqbm,
@@ -479,8 +494,8 @@ export default {
         xm: this.from.xm,
         zjhm: this.from.zjhm,
         sjhm: this.from.sjhm,
-        jsNum: this.from.js,
-        zkNum: this.from.zk,
+        js: this.from.js,
+        zk: this.from.zk,
         zjzp: this.from.zjzp,
         dyh: this.from.dyh,
       }
