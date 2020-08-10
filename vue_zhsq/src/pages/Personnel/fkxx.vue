@@ -40,12 +40,15 @@
             <!-- 选择状态 -->
             <el-form-item class="fkxx_zt_xqxx">
               <el-select placeholder="请选择状态" v-model="zt" clearable @clear="clearZT">
-                <el-option label="未启用/未放行状态" value="0|0"></el-option>
-                <el-option label="未启用/已放行状态" value="0|1"></el-option>
+                <el-option label="未启用" value="0|3"></el-option>
                 <el-option label="已启用/已放行状态" value="1|1"></el-option>
                 <el-option label="已启用/未放行状态" value="1|0"></el-option>
               </el-select>
             </el-form-item>
+            <!-- 预约起始时间 -->
+            <el-date-picker v-model="form.yyqssj" type="date" placeholder="选择预约起始时间"></el-date-picker>
+            <!-- 预约截止时间 -->
+            <el-date-picker class="jzData" v-model="form.yyjzsj" type="date" placeholder="选择预约截止时间"></el-date-picker>
             <div class="el-icon-search fkxx_search" @click="handleFKXXsearch">搜索</div>
           </el-form>
         </div>
@@ -156,7 +159,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="form.currPageNo"
-            :page-sizes="[5, 9, 13]"
+            :page-sizes="[5, 10, 50]"
             :page-size="100"
             layout="total, sizes, prev, pager, next, jumper"
             :total="tatal"
@@ -230,6 +233,8 @@ export default {
         sqzt: '',
         currPageNo: 1,
         pageSize: 5,
+        yyqssj: '',
+        yyjzsj: '',
       },
       // 控制搜索框的显示与隐藏
       searchBlock: false,
@@ -296,13 +301,53 @@ export default {
     },
     // 点击搜索
     handleFKXXsearch() {
+      // console.log(typeof this.form.yyqssj == 'number')
+      // console.log(this.form.yyjzsj)
+      if (
+        (this.form.yyqssj == '' || this.form.yyqssj == null) &&
+        (this.form.yyjzsj == null || this.form.yyjzsj == '')
+      ) {
+      } else {
+        if (
+          (this.form.yyqssj == '' || this.form.yyqssj == null) &&
+          (this.form.yyjzsj !== '' || this.form.yyjzsj !== null)
+        ) {
+          console.log('有截止时间---没有起始时间')
+          if (typeof this.form.yyjzsj !== 'number') {
+            this.form.yyjzsj = this.form.yyjzsj.getTime()
+          } else {
+          }
+        } else if (
+          (this.form.yyjzsj == '' || this.form.yyjzsj == null) &&
+          (this.form.yyqssj !== '' || this.form.yyqssj !== null)
+        ) {
+          if (typeof this.form.yyqssj !== 'number') {
+            this.form.yyqssj = this.form.yyqssj.getTime()
+          } else {
+          }
+        } else if (
+          (this.form.yyjzsj !== '' || this.form.yyjzsj !== null) &&
+          (this.form.yyqssj !== '' || this.form.yyqssj !== null)
+        ) {
+          if (
+            typeof this.form.yyjzsj == 'object' &&
+            typeof this.form.yyqssj == 'object'
+          ) {
+            this.form.yyjzsj = this.form.yyjzsj.getTime()
+            this.form.yyqssj = this.form.yyqssj.getTime()
+          } else if (
+            typeof this.form.yyjzsj == 'number' &&
+            typeof this.form.yyqssj == 'number'
+          ) {
+          }
+        }
+      }
       this.form.yyzt = this.zt.split('|')[0]
       this.form.sqzt = this.zt.split('|')[1]
       this.handleFKList()
     },
     // 点击显示和隐藏
     handleSearchBlock() {
-      console.log(111)
       this.searchBlock = !this.searchBlock
     },
     // 点击刷新
@@ -609,6 +654,20 @@ export default {
             }
           }
         }
+      }
+      .el-date-editor {
+        height: 36px;
+        width: 160px;
+        .el-input__inner {
+          width: 100%;
+          height: 100%;
+        }
+        .el-input__icon {
+          line-height: 36px;
+        }
+      }
+      .jzData {
+        margin: 0 15px;
       }
       .fkxx_search {
         width: 90px;

@@ -424,6 +424,10 @@ export default {
         res.data.data.zk == 'null' || res.data.data.zk == ''
           ? ''
           : res.data.data.zk
+      this.from.bz =
+        res.data.data.bz == 'null' || res.data.data.bz == ''
+          ? ''
+          : res.data.data.bz
       let rzrylb = res.data.data.rzrylb
       if (rzrylb.length == 0) {
         return

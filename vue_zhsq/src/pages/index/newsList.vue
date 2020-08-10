@@ -99,9 +99,9 @@ export default {
       console.log(res)
       this.newTextList = res.data.message
     },
-    handleBlack(){
+    handleBlack() {
       this.$router.go(-1)
-    }
+    },
   },
 }
 </script>
@@ -156,9 +156,7 @@ export default {
   cursor: pointer;
 }
 .newList_wrap {
-  position: relative;
   width: 1200px;
-//   height: 500px;
   margin: 60px auto;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
   overflow: hidden;
@@ -170,19 +168,17 @@ export default {
     margin: 20px 0 30px 0;
     padding: 10px;
   }
-  .newList_wrap_text{
-      text-indent: 2em;
-      font-size: 20px;
-      margin: 0 0 30px 0;
-      padding: 0 40px ;
+  .newList_wrap_text {
+    text-indent: 2em;
+    font-size: 20px;
+    margin: 0 0 30px 0;
+    padding: 0 40px;
+    position: relative;
   }
-  .newList_wrap_pic{
-      padding:0 100px;
+  .newList_wrap_pic {
+    padding: 0 100px;
   }
-  .black{
-    position: absolute;
-    top: 20px;
-    right: 10px;
+  .black {
     width: 100px;
     height: 40px;
     color: #fff;
@@ -190,7 +186,9 @@ export default {
     border-radius: 5px;
     line-height: 40px;
     text-align: center;
-    cursor:pointer;
+    cursor: pointer;
+    margin: 0 auto;
+    margin-bottom: 10px;
   }
 }
 </style>

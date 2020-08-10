@@ -155,7 +155,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="form.pagenum"
-            :page-sizes="[5, 9, 13]"
+            :page-sizes="[5, 10, 50]"
             :page-size="100"
             layout="total, sizes, prev, pager, next, jumper"
             :total="tatal"
@@ -221,13 +221,6 @@
             <div
               class="Personal_span_sjhm_wrap_text"
             >{{PersonalObj.sjhm == '' || PersonalObj.sjhm == 'null' ? '' : PersonalObj.sjhm}}</div>
-          </div>
-          <!-- 编号 -->
-          <div class="Personal_span_bh_wrap">
-            <div class="Personal_span_bh_wrap_title">编号：</div>
-            <div
-              class="Personal_span_bh_wrap_text"
-            >{{PersonalObj.pp_id == '' || PersonalObj.pp_id == 'null' ? '' : PersonalObj.pp_id}}</div>
           </div>
           <!-- 小区编码 -->
           <div class="Personal_span_xqbm_wrap">

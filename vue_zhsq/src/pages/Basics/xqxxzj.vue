@@ -25,7 +25,7 @@
               <div class="bitianFrom">
                 <!-- 小区编码 -->
                 <el-form-item label="小区序号:" prop="xqbm">
-                  <el-input placeholder="请输入小区序号3位,案例001" v-model="ruleForm.xqbm"></el-input>
+                  <el-input placeholder="请输入小区序号3位" v-model="ruleForm.xqbm"></el-input>
                 </el-form-item>
                 <!-- 小区名称 -->
                 <el-form-item label="小区名称:" prop="xqmc">

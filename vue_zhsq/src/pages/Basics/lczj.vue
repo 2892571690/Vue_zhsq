@@ -39,7 +39,7 @@
             </el-form-item>
             <!-- 楼栋号 -->
             <el-form-item label="楼栋号:" prop="ldh">
-              <el-input placeholder="请填写楼栋号,示范001" v-model="ruleForm.ldh"></el-input>
+              <el-input placeholder="请填写楼栋号" v-model="ruleForm.ldh"></el-input>
             </el-form-item>
             <!-- 单元数 -->
             <el-form-item label="单元数:" prop="dys">

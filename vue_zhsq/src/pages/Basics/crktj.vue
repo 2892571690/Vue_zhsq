@@ -26,8 +26,8 @@
           class="crktj_ruleForm"
         >
           <!-- 小区编码 -->
-          <el-form-item class="crkbm_select_item" label="小区编码：" prop="xqbm">
-            <el-select v-model="ruleForm.xqbm" placeholder="请选择小区编码">
+          <el-form-item class="crkbm_select_item" label="小区：" prop="xqbm">
+            <el-select v-model="ruleForm.xqbm" placeholder="请选择小区">
               <el-option
                 v-for="item in xqbmList"
                 :key="item.xq_id"
@@ -38,7 +38,7 @@
           </el-form-item>
           <!-- 出入口序号： -->
           <el-form-item class="crkbm_item" label="出入口序号：" prop="crkbm">
-            <el-input placeholder="请填写两位数字例如东门01" v-model="ruleForm.crkbm"></el-input>
+            <el-input placeholder="请填写出入口序号" v-model="ruleForm.crkbm"></el-input>
           </el-form-item>
           <!-- 出入口名称： -->
           <el-form-item class="crkbm_item" label="出入口名称：" prop="crkmc">
