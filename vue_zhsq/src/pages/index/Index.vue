@@ -12,7 +12,7 @@
         <div class="cha" @click="handleGoIndex">x</div>
       </div>
       <div class="tou"></div>
-      <div class="tou_img">
+      <div class="tou_img" @click="handleContribution">
         <img src="../../assets/tou.png" />
       </div>
     </div>
@@ -25,7 +25,7 @@
         <div class="cha" @click="handleGoIndex">x</div>
       </div>
       <div class="tou"></div>
-      <div class="tou_img">
+      <div class="tou_img" @click="handleContribution">
         <img src="../../assets/tou.png" />
       </div>
     </div>
@@ -188,7 +188,7 @@ export default {
     // 获取新闻列表
     async handleNewList() {
       let res = await this.$http.get('/sy/content.do')
-      console.log(res)
+      // console.log(res)
       this.leftNewList = res.data.data
       this.rightNewsList = res.data.dataArray
     },
@@ -201,6 +201,10 @@ export default {
     handleNewsList(id) {
       // console.log(id)
       this.$router.push({ path: 'newsList', query: { id } })
+    },
+    // 点击投稿
+    handleContribution() {
+      this.$router.push({ path: 'Contribution' })
     },
   },
 }
@@ -253,6 +257,7 @@ export default {
   background: #f6f7fb;
   border: 1px solid #e4e7ec;
   border-left: 0;
+  cursor: pointer;
 }
 .box-card {
   width: 1680px;
@@ -282,14 +287,14 @@ export default {
         }
         .newAray_title {
           font-size: 14px;
-          line-height: 32px;
+          line-height: 37px;
           width: 660px;
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
           word-break: break-all;
           cursor: pointer;
-          &:hover{
+          &:hover {
             text-decoration: underline;
           }
         }
@@ -342,7 +347,7 @@ export default {
         line-clamp: 5;
         -webkit-box-orient: vertical;
         cursor: pointer;
-        &:hover{
+        &:hover {
           text-decoration: underline;
         }
       }

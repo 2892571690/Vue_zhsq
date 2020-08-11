@@ -145,7 +145,7 @@
               <div class="fzxm_input_text">房主姓名：</div>
               <el-form-item prop="xm">
                 <el-input
-                  disabled
+                  
                   :placeholder="fwxxList.xm == 'null' || fwxxList.xm == '' ? '读卡获取姓名' :fwxxList.xm"
                   v-model="from.xm"
                 ></el-input>
@@ -156,7 +156,7 @@
               <div class="sfzhm_input_text">身份证号码：</div>
               <el-form-item prop="zjhm">
                 <el-input
-                  disabled
+                  
                   :placeholder="fwxxList.zjhm == 'null' || fwxxList.zjhm == '' ? '读卡获取身份证' :fwxxList.zjhm"
                   v-model="from.zjhm"
                 ></el-input>
@@ -262,7 +262,7 @@ export default {
         js: '',
         zk: '',
         zjzp: '',
-        xbdm: '',
+        xbdm: '1',
         dyh: '',
       },
       strry: '',

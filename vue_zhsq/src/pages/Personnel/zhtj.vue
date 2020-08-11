@@ -30,11 +30,11 @@
             <div class="zhbjxx_ruleForm_topLeft">
               <!-- 姓名 -->
               <el-form-item label="姓名：" prop="xm">
-                <el-input disabled placeholder="请先读取身份信息" v-model="ruleForm.xm"></el-input>
+                <el-input  placeholder="请先读取身份信息" v-model="ruleForm.xm"></el-input>
               </el-form-item>
               <!-- 户籍所在地： -->
               <el-form-item label="户籍所在地：" prop="hjdxz">
-                <el-input disabled placeholder="请先读取身份信息" v-model="ruleForm.hjdxz"></el-input>
+                <el-input  placeholder="请先读取身份信息" v-model="ruleForm.hjdxz"></el-input>
               </el-form-item>
               <!-- 小区 -->
               <el-form-item label="小区：" prop="xqbm">
@@ -88,11 +88,11 @@
             <div class="zhbjxx_ruleForm_topRight">
               <!-- 身份证号码 -->
               <el-form-item label="身份证号码：" prop="zjhm">
-                <el-input disabled placeholder="请先读取身份信息" v-model="ruleForm.zjhm"></el-input>
+                <el-input  placeholder="请先读取身份信息" v-model="ruleForm.zjhm"></el-input>
               </el-form-item>
               <!-- 性别 -->
               <el-form-item label="性别：" prop="xbdm">
-                <el-input disabled placeholder="请先读取身份信息" v-model="xb"></el-input>
+                <el-input  placeholder="请先读取身份信息" v-model="xb"></el-input>
               </el-form-item>
               <!-- 楼栋号 -->
               <el-form-item label="楼栋号：" prop="ldh">
@@ -303,7 +303,7 @@ export default {
         rklxdm: '',
         zzmmdm: '',
         zjhm: '',
-        xbdm: '',
+        xbdm: '1',
         ldh: '',
         mph: '',
         zjlxdm: '',
@@ -373,15 +373,15 @@ export default {
             trigger: 'blur',
           },
         ],
-        xbdm: [
-          { required: true, message: '请读卡获取性别', trigger: 'blur' },
-          {
-            min: 1,
-            max: 1,
-            message: '长度在 1 到 1 个字符',
-            trigger: 'blur',
-          },
-        ],
+        // xbdm: [
+        //   { required: true, message: '请读卡获取性别', trigger: 'blur' },
+        //   {
+        //     min: 1,
+        //     max: 1,
+        //     message: '长度在 1 到 1 个字符',
+        //     trigger: 'blur',
+        //   },
+        // ],
         ldh: [{ required: true, message: '请选择楼栋号', trigger: 'change' }],
         mph: [{ required: true, message: '请选择门牌号', trigger: 'change' }],
         zjlxdm: [

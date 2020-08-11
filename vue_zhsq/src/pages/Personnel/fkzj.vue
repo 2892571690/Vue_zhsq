@@ -58,7 +58,7 @@
             <div class="fxzj_wrap_content_FromCenter_top">
               <!-- 小区 -->
               <el-form-item class="fxzj_ruleForm_xq" label="小区：" prop="xqbm">
-                <el-select v-model="ruleForm.xqbm" placeholder="请选择小区">
+                <el-select @change="handleXQClick" v-model="ruleForm.xqbm" placeholder="请选择小区">
                   <el-option
                     v-for="item in xqList"
                     :key="item.xq_id"
@@ -67,36 +67,57 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <!-- 单元号 -->
+              <!-- 楼栋号 -->
               <el-form-item class="fxzj_ruleForm_ldh" label="楼栋号：" prop="ldh">
-                <el-select v-model="ruleForm.ldh" placeholder="请选择楼栋号">
-                  <el-option label="区域一" value="shanghai"></el-option>
-                  <el-option label="区域二" value="beijing"></el-option>
+                <el-select
+                  @change="LDHchange"
+                  @focus="LDHfocus"
+                  v-model="ruleForm.ldh"
+                  placeholder="请选择楼栋号"
+                >
+                  <el-option
+                    v-for="(item,index) in LDList"
+                    :key="index"
+                    :label="item.ldh+'栋'"
+                    :value="item.ldh"
+                  ></el-option>
                 </el-select>
               </el-form-item>
             </div>
             <div class="fxzj_wrap_content_FromCenter_center">
               <!-- 单元号 -->
               <el-form-item class="fxzj_ruleForm_dyh" label="单元号：" prop="dyh">
-                <el-select v-model="ruleForm.dyh" placeholder="请选择单元号">
-                  <el-option label="区域一" value="shanghai"></el-option>
-                  <el-option label="区域二" value="beijing"></el-option>
+                <el-select
+                  @focus="DYHfocus"
+                  @change="DYHchange"
+                  v-model="ruleForm.dyh"
+                  placeholder="请选择单元号"
+                >
+                  <el-option v-for="item in DYList" :key="item" :label="item+'单元'" :value="item"></el-option>
                 </el-select>
               </el-form-item>
               <!-- 门牌号 -->
-              <el-form-item class="fxzj_ruleForm_mph" label="单元号：" prop="mph">
-                <el-select v-model="ruleForm.mph" placeholder="请选择门牌号">
-                  <el-option label="区域一" value="shanghai"></el-option>
-                  <el-option label="区域二" value="beijing"></el-option>
+              <el-form-item class="fxzj_ruleForm_mph" label="门牌号：" prop="mph">
+                <el-select
+                  @change="handleMph"
+                  @focus="MPLfocus"
+                  v-model="ruleForm.mph"
+                  placeholder="请选择门牌号"
+                >
+                  <el-option v-for="item in MPList" :key="item" :label="item + '号'" :value="item"></el-option>
                 </el-select>
               </el-form-item>
             </div>
             <div class="fxzj_wrap_content_FromCenter_bottom">
               <!-- 住户姓名 -->
               <el-form-item class="fxzj_ruleForm_zhxm" label="住户姓名：" prop="zhxm">
-                <el-select v-model="ruleForm.zhxm" placeholder="请选择住户姓名">
-                  <el-option label="区域一" value="shanghai"></el-option>
-                  <el-option label="区域二" value="beijing"></el-option>
+                <el-select multiple v-model="ruleForm.zhxm" placeholder="请选择住户姓名">
+                  <el-option
+                    v-for="(item,index) in RYLBList"
+                    :key="index"
+                    :label="item.xm"
+                    :value="item.zjhm"
+                  ></el-option>
                 </el-select>
               </el-form-item>
             </div>
@@ -129,6 +150,28 @@
             </el-form-item>
           </div>
         </el-form>
+        <div style="display:flex;">
+          <div class="fxzj_wrap_black" @click="handleBlack">返 回</div>
+          <div class="fxzj_wrap_up" @click="handleUp">提 交</div>
+        </div>
+        <!-- 点击下载 -->
+        <div class="zhxxbj_wrap_titleText">
+          <div class="zhxxbj_wrap_titleText_text1">请在IE浏览器使用</div>
+          <div class="zhxxbj_wrap_titleText_text2">控件不可用，可能未正确安装控件及驱动,或者控件未启用</div>
+          <div class="zhxxbj_wrap_titleText_text3" @click="handleDownload">点击此处查看文档</div>
+        </div>
+        <div class="fxzj_wrap_zjz">
+          <div class="fxzj_wrap_zjz_text">身份证照片：</div>
+          <div class="fxzj_wrap_zjz_img">
+            <div v-if="ruleForm.sfzzp == ''">
+              <img src="../../assets/zjzp.png" />
+            </div>
+            <div v-else>
+              <img :src="ruleForm.sfzzp" />
+            </div>
+          </div>
+          <div class="fxzj_wrap_zjz_but" @click="ReadCard">读卡</div>
+        </div>
       </div>
     </div>
   </div>
@@ -158,17 +201,18 @@ export default {
       xqList: [],
       // 表单
       ruleForm: {
-        xm: '',
+        xm: '吴品龙',
         xb: '',
-        sfzhm: '',
+        sfzhm: '331023200006215132',
         sjhm: '',
         xqbm: '',
         ldh: '',
         dyh: '',
         mph: '',
-        zhxm: '',
+        zhxm: [],
         qssj: '',
-        jzsj:''
+        jzsj: '',
+        sfzzp: '',
       },
       // 表单验证
       rules: {
@@ -200,7 +244,12 @@ export default {
         dyh: [{ required: true, message: '请选择单元号', trigger: 'change' }],
         mph: [{ required: true, message: '请选择门牌号', trigger: 'change' }],
         zhxm: [
-          { required: true, message: '请选择住户姓名', trigger: 'change' },
+          {
+            type: 'array',
+            required: true,
+            message: '请选择住户姓名',
+            trigger: 'change',
+          },
         ],
         qssj: [
           { required: true, message: '请选择预约起始时间', trigger: 'change' },
@@ -209,6 +258,22 @@ export default {
           { required: true, message: '请选择预约截止期间', trigger: 'change' },
         ],
       },
+      // 小区编码
+      XQBMStr: '',
+      // 楼栋编码
+      LDHStr: '',
+      // 单元号
+      DYHMStr: '',
+      //门牌编码
+      MPHMStr: '',
+      //楼栋列表
+      LDList: [],
+      //单元列表
+      DYList: [],
+      //门牌列表
+      MPList: [],
+      // 人员列表
+      RYLBList: [],
     }
   },
   async created() {
@@ -246,8 +311,142 @@ export default {
     // 获取小区下拉框的
     async handleXQList() {
       let res = await this.$http.get('/xq/selXQ.do')
-      console.log(res)
+      // console.log(res)
       this.xqList = res.data
+    },
+    // 点击返回
+    handleBlack() {
+      this.$router.go(-1)
+    },
+    // 点击提交
+    handleUp() {
+      console.log(this.ruleForm)
+      let self = this
+      let data = {
+        xm: this.ruleForm.xm,
+        xb: this.ruleForm.xb,
+        sfzhm: this.ruleForm.sfzhm,
+        sjhm: this.ruleForm.sjhm,
+        xqbm: this.ruleForm.xqbm,
+        ldh: this.ruleForm.ldh,
+        mph: this.ruleForm.mph,
+        zhxm: this.ruleForm.zhxm,
+        qssj: this.ruleForm.qssj,
+        jzsj: this.ruleForm.jzsj,
+        sfzzp: this.ruleForm.sfzzp,
+        dyh: this.ruleForm.dyh,
+      }
+      data = Qs.stringify(data)
+      self.$refs.ruleForm.validate(async (valid) => {
+        if (valid) {
+          // let res = await self.$http.post('ryxx/xzryxx.do', data)
+          // // console.log(res)
+          // if (res.data.message.status == '200') {
+          //   this.$message.success('入住成功')
+          //   this.$router.go(-1)
+          // } else if(res.data.message.status == '201'){
+          //   this.$message.warning('房主已经存在,请更换与房主关系')
+          // }else{
+          //   this.$message.error('入住失败')
+          // }
+        }
+      })
+    },
+    // 点击下载
+    async handleDownload() {
+      let res = await this.$http.get('/qh/download.do', {
+        responseType: 'blob', // 设置响应数据类型
+      })
+      const data = res.data
+      let url = window.URL.createObjectURL(data) // 将二进制文件转化为可访问的url
+      var a = document.createElement('a')
+      document.body.appendChild(a)
+      a.href = url
+      a.download = 'cvr-100uc-driver.zip'
+      a.click() // 模拟点击下载
+      window.URL.revokeObjectURL(url)
+    },
+    // 点击读卡
+    ReadCard() {
+      var ret = document.getElementById('CVR_IDCard').ReadCard()
+      if (ret == '0') {
+        this.ruleForm.xm = document.getElementById('CVR_IDCard').Name
+        this.ruleForm.sfzhm = document.getElementById('CVR_IDCard').CardNo
+        this.ruleForm.sfzzp = `data:image/jpeg;base64,${
+          document.getElementById('CVR_IDCard').Picture
+        }`
+        return
+      }
+      this.$message.error('读卡错误，尝试重新放置')
+      return
+    },
+    // 点击小区下拉框
+    async handleXQClick(e) {
+      this.ruleForm.ldh = ''
+      this.ruleForm.dyh = ''
+      this.ruleForm.mph = ''
+      this.ruleForm.zhxm = []
+      this.XQBMStr = e
+      let res = await this.$http.get(
+        `/fw/selLouDongHao.do?xqbm=${this.XQBMStr}`
+      )
+      this.LDList = res.data
+    },
+    // 楼栋号获取焦点
+    LDHfocus() {
+      if (this.LDList.length == 0) {
+        this.$message.warning('请先选择小区')
+      } else {
+        return
+      }
+    },
+    // 点击楼栋号下拉框
+    async LDHchange(e) {
+      this.ruleForm.dyh = ''
+      this.ruleForm.mph = ''
+      this.ruleForm.zhxm = []
+      let index = this.LDList.findIndex((v) => v.ldh == e)
+      this.LDHStr = this.LDList[index].ldbm
+      let res = await this.$http.get(
+        `/fw/selDanYuanHao.do?ldbm=${this.LDHStr}&xqbm=${this.XQBMStr}`
+      )
+
+      this.DYList = res.data
+    },
+    // 单元号获取焦点
+    DYHfocus() {
+      if (this.DYList.length == 0) {
+        this.$message.warning('请先选择楼栋')
+      } else {
+        return
+      }
+    },
+    // 点击单元数下拉框
+    async DYHchange(e) {
+      this.ruleForm.mph = ''
+      this.ruleForm.zhxm = []
+      this.DYHMStr = e
+      let res = await this.$http.get(
+        `/fw/selMenPaiHao.do?xqbm=${this.XQBMStr}&ldbm=${this.LDHStr}&dyh=${this.DYHMStr}`
+      )
+      this.MPList = res.data
+    },
+    // 门牌号获取焦点
+    MPLfocus() {
+      if (this.MPList.length == 0) {
+        this.$message.warning('请先选择单元号')
+      } else {
+        return
+      }
+    },
+    // 获取人数
+    async handleMph(e) {
+      this.ruleForm.zhxm = []
+      this.MPHMStr = e
+      let res = await this.$http.get(
+        `/fk/selPersonFromFw.do?ldbm=${this.LDHStr}&dyh=${this.DYHMStr}&mph=${this.MPHMStr}`
+      )
+      this.RYLBList = res.data
     },
   },
 }
@@ -304,7 +503,6 @@ export default {
 // 面包屑到这
 .fxzj_wrap {
   width: 1172px;
-  height: 700px;
   border-radius: 10px;
   border: 1px solid #cee0e2;
   margin: 88px 255px 0 285px;
@@ -320,6 +518,7 @@ export default {
     }
   }
   .fxzj_wrap_content {
+    position: relative;
     .fxzj_ruleForm {
       .el-form-item {
         margin-bottom: 0;
@@ -368,6 +567,9 @@ export default {
               width: 383px;
               height: 100%;
               line-height: 1;
+              .el-form-item__error {
+                left: 185px;
+              }
               .el-select {
                 width: 193px;
                 height: 100%;
@@ -386,7 +588,7 @@ export default {
         }
         .fxzj_wrap_content_FromTop_bottom {
           display: flex;
-          margin: 15px 0 35px 0;
+          margin: 25px 0 35px 0;
           .fxzj_ruleForm_sfzhm {
             width: 397px;
             height: 34px;
@@ -524,7 +726,7 @@ export default {
         .fxzj_wrap_content_FromCenter_center {
           width: 780px;
           display: flex;
-          margin: 15px 0 0 0;
+          margin: 25px 0 0 0;
           .fxzj_ruleForm_dyh {
             width: 397px;
             height: 34px;
@@ -587,9 +789,9 @@ export default {
         .fxzj_wrap_content_FromCenter_bottom {
           width: 780px;
           display: flex;
-          margin: 15px 0 35px 0;
+          margin: 25px 0 35px 0;
           .fxzj_ruleForm_zhxm {
-            width: 397px;
+            width: 520px;
             height: 34px;
             display: flex;
             .el-form-item__label {
@@ -599,19 +801,24 @@ export default {
               padding: 0;
             }
             .el-form-item__content {
-              width: 193px;
+              width: 300px;
               height: 100%;
               line-height: 1;
               margin: 0 0 0 39px;
               .el-select {
                 width: 100%;
                 height: 100%;
+                .el-select__tags {
+                  transform: none;
+                  top: 15%;
+                  // flex-wrap: nowrap;
+                }
                 .el-input {
                   width: 100%;
                   height: 100%;
                   .el-input__inner {
                     width: 100%;
-                    height: 100%;
+                    height: 100% !important;
                   }
                 }
               }
@@ -640,8 +847,6 @@ export default {
       .fxzj_wrap_content_FromBottom {
         width: 780px;
         height: 100px;
-        background: pink;
-        overflow: hidden;
         display: flex;
         .fxzj_ruleForm_qssj {
           width: 398px;
@@ -703,6 +908,72 @@ export default {
         }
       }
     }
+  }
+}
+.fxzj_wrap_black {
+  width: 190px;
+  height: 34px;
+  background-color: #5bc0de;
+  color: #fff;
+  text-align: center;
+  line-height: 34px;
+  border-radius: 10px;
+  margin: 0 150px 0 310px;
+  cursor: pointer;
+}
+.fxzj_wrap_up {
+  width: 190px;
+  height: 34px;
+  background-color: #d9544f;
+  color: #fff;
+  text-align: center;
+  line-height: 34px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.zhxxbj_wrap_titleText {
+  font-size: 14px;
+  margin: 10px 0 10px 410px;
+  color: #f30a05;
+  .zhxxbj_wrap_titleText_text1 {
+  }
+  .zhxxbj_wrap_titleText_text2 {
+  }
+  .zhxxbj_wrap_titleText_text3 {
+    color: #2e79b2;
+    cursor: pointer;
+  }
+}
+.fxzj_wrap_zjz {
+  width: 173px;
+  height: 336px;
+  position: absolute;
+  top: 30px;
+  right: 80px;
+  .fxzj_wrap_zjz_text {
+    font-size: 15px;
+    text-align: center;
+    line-height: 1;
+    margin: 0 0 9px 0;
+  }
+  .fxzj_wrap_zjz_img {
+    width: 175px;
+    height: 270px;
+    div {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .fxzj_wrap_zjz_but {
+    width: 63px;
+    height: 34px;
+    background: #4fb6d5;
+    color: #fff;
+    line-height: 34px;
+    text-align: center;
+    margin: 5px auto;
+    border-radius: 10px;
+    cursor: pointer;
   }
 }
 </style>

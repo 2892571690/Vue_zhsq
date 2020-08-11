@@ -46,9 +46,19 @@
               </el-select>
             </el-form-item>
             <!-- 预约起始时间 -->
-            <el-date-picker v-model="form.yyqssj" type="date" placeholder="选择预约起始时间"></el-date-picker>
+            <!-- <el-date-picker v-model="form.yyqssj" type="date" placeholder="选择预约起始时间"></el-date-picker> -->
             <!-- 预约截止时间 -->
-            <el-date-picker class="jzData" v-model="form.yyjzsj" type="date" placeholder="选择预约截止时间"></el-date-picker>
+            <!-- <el-date-picker class="jzData" v-model="form.yyjzsj" type="date" placeholder="选择预约截止时间"></el-date-picker> -->
+            <!-- {{form.yyqssj}} -->
+            <el-date-picker
+              format="yyyy 年 MM 月 dd 日"
+              value-format="yyyy-MM-dd"
+              v-model="yyData"
+              type="daterange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+            ></el-date-picker>
             <div class="el-icon-search fkxx_search" @click="handleFKXXsearch">搜索</div>
           </el-form>
         </div>
@@ -236,6 +246,8 @@ export default {
         yyqssj: '',
         yyjzsj: '',
       },
+      // 预约时间
+      yyData: '',
       // 控制搜索框的显示与隐藏
       searchBlock: false,
       //   控制全屏跟小屏的切换
@@ -303,45 +315,47 @@ export default {
     handleFKXXsearch() {
       // console.log(typeof this.form.yyqssj == 'number')
       // console.log(this.form.yyjzsj)
-      if (
-        (this.form.yyqssj == '' || this.form.yyqssj == null) &&
-        (this.form.yyjzsj == null || this.form.yyjzsj == '')
-      ) {
-      } else {
-        if (
-          (this.form.yyqssj == '' || this.form.yyqssj == null) &&
-          (this.form.yyjzsj !== '' || this.form.yyjzsj !== null)
-        ) {
-          console.log('有截止时间---没有起始时间')
-          if (typeof this.form.yyjzsj !== 'number') {
-            this.form.yyjzsj = this.form.yyjzsj.getTime()
-          } else {
-          }
-        } else if (
-          (this.form.yyjzsj == '' || this.form.yyjzsj == null) &&
-          (this.form.yyqssj !== '' || this.form.yyqssj !== null)
-        ) {
-          if (typeof this.form.yyqssj !== 'number') {
-            this.form.yyqssj = this.form.yyqssj.getTime()
-          } else {
-          }
-        } else if (
-          (this.form.yyjzsj !== '' || this.form.yyjzsj !== null) &&
-          (this.form.yyqssj !== '' || this.form.yyqssj !== null)
-        ) {
-          if (
-            typeof this.form.yyjzsj == 'object' &&
-            typeof this.form.yyqssj == 'object'
-          ) {
-            this.form.yyjzsj = this.form.yyjzsj.getTime()
-            this.form.yyqssj = this.form.yyqssj.getTime()
-          } else if (
-            typeof this.form.yyjzsj == 'number' &&
-            typeof this.form.yyqssj == 'number'
-          ) {
-          }
-        }
-      }
+      // if (
+      //   (this.form.yyqssj == '' || this.form.yyqssj == null) &&
+      //   (this.form.yyjzsj == null || this.form.yyjzsj == '')
+      // ) {
+      // } else {
+      //   if (
+      //     (this.form.yyqssj == '' || this.form.yyqssj == null) &&
+      //     (this.form.yyjzsj !== '' || this.form.yyjzsj !== null)
+      //   ) {
+      //     console.log('有截止时间---没有起始时间')
+      //     if (typeof this.form.yyjzsj !== 'number') {
+      //       this.form.yyjzsj = this.form.yyjzsj.getTime()
+      //     } else {
+      //     }
+      //   } else if (
+      //     (this.form.yyjzsj == '' || this.form.yyjzsj == null) &&
+      //     (this.form.yyqssj !== '' || this.form.yyqssj !== null)
+      //   ) {
+      //     if (typeof this.form.yyqssj !== 'number') {
+      //       this.form.yyqssj = this.form.yyqssj.getTime()
+      //     } else {
+      //     }
+      //   } else if (
+      //     (this.form.yyjzsj !== '' || this.form.yyjzsj !== null) &&
+      //     (this.form.yyqssj !== '' || this.form.yyqssj !== null)
+      //   ) {
+      //     if (
+      //       typeof this.form.yyjzsj == 'object' &&
+      //       typeof this.form.yyqssj == 'object'
+      //     ) {
+      //       this.form.yyjzsj = this.form.yyjzsj.getTime()
+      //       this.form.yyqssj = this.form.yyqssj.getTime()
+      //     } else if (
+      //       typeof this.form.yyjzsj == 'number' &&
+      //       typeof this.form.yyqssj == 'number'
+      //     ) {
+      //     }
+      //   }
+      // }
+      this.form.yyqssj = this.yyData[0]
+      this.form.yyjzsj = this.yyData[1]
       this.form.yyzt = this.zt.split('|')[0]
       this.form.sqzt = this.zt.split('|')[1]
       this.handleFKList()
@@ -657,13 +671,19 @@ export default {
       }
       .el-date-editor {
         height: 36px;
-        width: 160px;
+        width: 230px;
         .el-input__inner {
           width: 100%;
           height: 100%;
         }
         .el-input__icon {
-          line-height: 36px;
+          line-height: 28px;
+        }
+        .el-range-separator {
+          line-height: 28px;
+          padding: 0 5px;
+          font-size: 12px;
+          width: 12%;
         }
       }
       .jzData {
@@ -679,6 +699,7 @@ export default {
         border-radius: 5px;
         cursor: pointer;
         font-size: 14px;
+        margin: 0 0 0 15px;
       }
     }
   }
