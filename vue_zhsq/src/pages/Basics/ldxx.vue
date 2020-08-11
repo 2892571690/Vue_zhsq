@@ -224,21 +224,13 @@ export default {
       // console.log(ldidList)
       Qs.stringify({ ldidList: ldidList }, { arrayFormat: 'repeat' })
       let res = await this.$http.post('/ld/delLouDong.do', ldidList)
-      // console.log(res)
-      let self = this
-      for (var i = 0; i < res.data.msg.length; i++) {
-        let index = self.tableNum.findIndex(
-          (v) => v.ldbm == res.data.msg[i].ldbm
-        )
-        if (res.data.msg[i].mes == '200') {
-          await self.$message.success(
-            `${self.tableNum[index].xqmc}小区${self.tableNum[index].ldh}楼栋号删除成功`
-          )
-        } else {
-          await self.$message.warning(
-            `${self.tableNum[index].xqmc}小区${self.tableNum[index].ldh}楼栋号内有住户导致删除失败`
-          )
-        }
+      console.log(res)
+      if (res.data.mes == 200) {
+        this.$message.success('删除成功')
+      } else if (res.data.mes == 202) {
+        this.$message.warning('楼栋有住户,删除失败')
+      } else {
+        this.$message.error('删除失败')
       }
       this.handleTableList()
     },

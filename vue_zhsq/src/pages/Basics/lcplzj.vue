@@ -58,7 +58,10 @@
                 :rules="[{required: true, message: '请选择楼栋号', trigger: 'blur'}]"
               >
                 <!-- <el-input placeholder="请填写楼栋号,示范001" v-model="ruleForm.ldinfo[index].ldh"></el-input> -->
-                <el-select v-model="ruleForm.ldinfo[index].ldh" placeholder="请选择楼栋号">
+                <el-select
+                  v-model="ruleForm.ldinfo[index].ldh"
+                  placeholder="请选择楼栋号"
+                >
                   <el-option
                     v-for="(item,index) in 100"
                     :key="index"
@@ -208,30 +211,19 @@ export default {
     // 点击提交
     handleUpTo() {
       let ldinfo = this.ruleForm.ldinfo
-      console.log(ldinfo)
+      // console.log(ldinfo)
       let self = this
       Qs.stringify({ ldinfo: ldinfo }, { arrayFormat: 'repeat' })
       self.$refs.RuleForm.validate(async (valid) => {
         if (valid) {
           let res = await self.$http.post('/ld/insLouDongList.do', ldinfo)
-          // console.log(res.data.msg)
-          for (var i = 0; i < res.data.msg.length; i++) {
-            let ldh = res.data.msg[i].ldbm.substr(-3)
-            let xqbm = res.data.msg[i].ldbm.substr(0, 15)
-            let index = self.xqmcList.findIndex((v) => v.xqbm == xqbm)
-            if (res.data.msg[i].mes == '200') {
-              await self.$message.success(
-                `${self.xqmcList[index].xqmc}小区${ldh}号楼添加成功`
-              )
-            } else if (res.data.msg[i].mes == '202') {
-              await self.$message.warning(
-                `${self.xqmcList[index].xqmc}小区${ldh}号楼已经存在导致添加失败`
-              )
-            } else {
-              await self.$message.error(
-                `${self.xqmcList[index].xqmc}小区${ldh}号楼添加失败`
-              )
-            }
+          // console.log(res)
+          if(res.data.msg == 200){
+            this.$message.success('添加成功')
+          }else if(res.data.msg == 202){
+            this.$message.warning('添加失败,楼栋信息重复')
+          }else{
+            this.$message.error('添加失败')
           }
           self.$router.go(-1)
         }
@@ -267,7 +259,7 @@ export default {
       } else {
         this.ruleForm.ldinfo.pop()
       }
-    },
+    }
   },
 }
 </script>

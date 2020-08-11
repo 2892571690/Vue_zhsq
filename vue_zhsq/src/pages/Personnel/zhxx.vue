@@ -224,14 +224,14 @@
           </div>
           <!-- 小区编码 -->
           <div class="Personal_span_xqbm_wrap">
-            <div class="Personal_span_xqbm_wrap_title">小区编码：</div>
+            <div class="Personal_span_xqbm_wrap_title">小区：</div>
             <div
               class="Personal_span_xqbm_wrap_text"
             >{{PersonalObj.xqbm == '' || PersonalObj.xqbm == 'null' ? '' : PersonalObj.xqbm}}</div>
           </div>
           <!-- 房屋编码 -->
           <div class="Personal_span_fwbm_wrap">
-            <div class="Personal_span_fwbm_wrap_title">房屋编码：</div>
+            <div class="Personal_span_fwbm_wrap_title">楼栋单元号：</div>
             <div
               class="Personal_span_fwbm_wrap_text"
             >{{PersonalObj.fwbm == '' || PersonalObj.fwbm == 'null' ? '' : PersonalObj.fwbm}}</div>

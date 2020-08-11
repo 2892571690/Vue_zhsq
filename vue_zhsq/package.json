@@ -13,6 +13,7 @@
     "element-ui": "^2.4.5",
     "lib-flexible": "^0.3.2",
     "px2rem-loader": "^0.1.9",
+    "tinymce": "^5.4.1",
     "vue-router": "^3.2.0"
   },
   "devDependencies": {
