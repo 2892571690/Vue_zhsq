@@ -51,22 +51,21 @@
               <el-option label="车行" value="12"></el-option>
             </el-select>
           </el-form-item>
+          <!-- 小区照片 -->
+          <el-form-item class="crkpic_item" prop="imgname">
+            <div class="from_img_wrap">
+              <div class="from_img_wrap_image">出入口照片:</div>
+              <div class="from_img_wrap_upLiadImg">
+                <el-upload class="avatar-uploader"  action="/admin/xq/xztp.do" :on-change="getFile" :limit="1">
+                  <el-input v-model="ruleForm.imgname" class="imgInput" placeholder="点击右边选择一张图片"></el-input>
+                  <div class="upImg">选择图片</div>
+                  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb,一次只能传一次</div>
+                </el-upload>
+              </div>
+            </div>
+          </el-form-item>
         </el-form>
-        <div class="from_img_wrap">
-          <div class="from_img_wrap_image">出入口照片:</div>
-          <div class="from_img_wrap_upLiadImg">
-            <el-upload
-              class="avatar-uploader"
-              action=""
-              :on-change="getFile"
-              :limit="1"
-            >
-              <input v-model="imgname" class="imgInput" placeholder="点击右边选择一张图片" />
-              <div class="upImg">选择图片</div>
-              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb,一次只能传一次</div>
-            </el-upload>
-          </div>
-        </div>
+
         <div class="black_wrap_crktj" @click="handleBlack">返回</div>
         <div class="up_wrap_crktj" @click="handleUp">提交</div>
       </div>
@@ -95,6 +94,7 @@ export default {
         crkmc: '',
         lx: '',
         crkzp: '',
+        imgname: '',
       },
       rules: {
         crkbm: [
@@ -114,6 +114,7 @@ export default {
         xqbm: [
           { required: true, message: '请选择出入口类型', trigger: 'blur' },
         ],
+        imgname: [{ required: true, message: '请选择照片', trigger: 'blur' }],
       },
     }
   },
@@ -176,7 +177,7 @@ export default {
     },
     getFile(file, fileList) {
       //上传图片
-      this.imgname = file.name
+      this.ruleForm.imgname = file.name
       this.getBase64(file.raw)
     },
     // 返回
@@ -345,17 +346,17 @@ export default {
         }
       }
     }
-    .from_img_wrap {
-      width: 515px;
-      height: 100%;
-      .from_img_wrap_image {
-        font-size: 15px;
-        margin: 18px 0 0 135px;
-      }
-      .from_img_wrap_upLiadImg {
-        margin: -15px 0 0 45px;
-      }
-    }
+    // .from_img_wrap {
+    //   width: 515px;
+    //   height: 100%;
+    //   .from_img_wrap_image {
+    //     font-size: 15px;
+    //     margin: 18px 0 0 135px;
+    //   }
+    //   .from_img_wrap_upLiadImg {
+    //     margin: -15px 0 0 45px;
+    //   }
+    // }
   }
 }
 .el-upload__tip {
@@ -392,6 +393,9 @@ export default {
   right: 540px;
   top: 500px;
   cursor: pointer;
+  &:hover {
+    background: #087cf3;
+  }
 }
 .up_wrap_crktj {
   width: 105px;
@@ -405,5 +409,25 @@ export default {
   right: 340px;
   top: 500px;
   cursor: pointer;
+  &:hover {
+    background: #db1616;
+  }
+}
+.crkpic_item {
+  float: right;
+  margin: -230px -440px 0 0;
+  .el-input {
+    margin: 0 !important;
+    line-height: 1;
+    .el-input__inner {
+      height: 100%;
+    }
+  }
+  .el-form-item__error {
+    margin: -53px 0 0 0;
+  }
+  .el-upload__tip{
+    margin: 0;
+  }
 }
 </style>

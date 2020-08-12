@@ -46,8 +46,9 @@
               <div v-if="fwxxList.ldh == '' || fwxxList.ldh == 'null'">
                 <el-input placeholder :disabled="true"></el-input>
               </div>
-              <div v-else>
+              <div class="ldh_input_title_wrap" v-else>
                 <el-input :placeholder="fwxxList.ldh" :disabled="true"></el-input>
+                <div class="ldh_input_title">栋</div>
               </div>
             </div>
             <!-- 单元号 -->
@@ -56,6 +57,7 @@
               <el-form-item prop="dyh">
                 <el-input v-model="from.dyh"></el-input>
               </el-form-item>
+              <div class="dyh_input_title">单元</div>
             </div>
             <!-- 楼层号 -->
             <div class="lch_input">
@@ -63,8 +65,9 @@
               <div v-if="fwxxList.lch == '' || fwxxList.lch == 'null'">
                 <el-input placeholder :disabled="true"></el-input>
               </div>
-              <div v-else>
+              <div class="lch_input_title_wrap" v-else>
                 <el-input :placeholder="fwxxList.lch" :disabled="true"></el-input>
+                <div class="lch_input_title">层</div>
               </div>
             </div>
             <!-- 门牌号 -->
@@ -73,8 +76,9 @@
               <div v-if="fwxxList.mph == '' || fwxxList.mph == 'null'">
                 <el-input placeholder :disabled="true"></el-input>
               </div>
-              <div v-else>
+              <div class="mph_input_title_wrap" v-else>
                 <el-input :placeholder="fwxxList.mph" :disabled="true"></el-input>
+                <div class="mph_input_title">号</div>
               </div>
             </div>
             <!-- 房屋状态 -->
@@ -125,7 +129,6 @@
               <el-form-item prop="fwmj">
                 <el-input v-model="from.fwmj"></el-input>
               </el-form-item>
-              <!-- </div> -->
               <div class="fwmj_input_text1">平方米</div>
             </div>
             <!-- 备注 -->
@@ -145,7 +148,7 @@
               <div class="fzxm_input_text">房主姓名：</div>
               <el-form-item prop="xm">
                 <el-input
-                  
+                  disabled
                   :placeholder="fwxxList.xm == 'null' || fwxxList.xm == '' ? '读卡获取姓名' :fwxxList.xm"
                   v-model="from.xm"
                 ></el-input>
@@ -156,7 +159,7 @@
               <div class="sfzhm_input_text">身份证号码：</div>
               <el-form-item prop="zjhm">
                 <el-input
-                  
+                  disabled
                   :placeholder="fwxxList.zjhm == 'null' || fwxxList.zjhm == '' ? '读卡获取身份证' :fwxxList.zjhm"
                   v-model="from.zjhm"
                 ></el-input>
@@ -199,7 +202,7 @@
             </div>
           </div>
           <div v-else>
-            <div class="fwxxbj_wrap_content_right_img">
+            <div>
               <img :src="this.from.zjzp" />
             </div>
           </div>
@@ -235,7 +238,7 @@ export default {
     //联系方式的验证规则
     var checkPhone = (rule, value, cb) => {
       const regPhone = /^1(3|4|5|6|7|8|9)\d{9}$/
-      if (regPhone.test(value)) {
+      if (regPhone.test(value) || value.length == 0) {
         return cb()
       }
       cb(new Error('请输入合法的手机号码'))
@@ -262,7 +265,7 @@ export default {
         js: '',
         zk: '',
         zjzp: '',
-        xbdm: '1',
+        xbdm: '',
         dyh: '',
       },
       strry: '',
@@ -296,7 +299,7 @@ export default {
           },
         ],
         sjhm: [
-          { required: true, message: '请输入手机号', trigger: 'blur' },
+          // { required: true, message: '请输入手机号', trigger: 'blur' },
           { validator: checkPhone, trigger: 'blur' },
         ],
         js: [
@@ -326,15 +329,15 @@ export default {
             trigger: 'blur',
           },
         ],
-        fwztdm: [
-          { required: true, message: '请选择房屋状态', trigger: 'blur' },
-        ],
-        fwytdm: [
-          { required: true, message: '请选择房屋用途', trigger: 'blur' },
-        ],
-        cqxzdm: [
-          { required: true, message: '请选择房产性质', trigger: 'blur' },
-        ],
+        // fwztdm: [
+        //   { required: true, message: '请选择房屋状态', trigger: 'blur' },
+        // ],
+        // fwytdm: [
+        //   { required: true, message: '请选择房屋用途', trigger: 'blur' },
+        // ],
+        // cqxzdm: [
+        //   { required: true, message: '请选择房产性质', trigger: 'blur' },
+        // ],
       },
     }
   },
@@ -380,7 +383,7 @@ export default {
     async handleFWXXBM() {
       let res = await this.$http.get(`/fw/cxfwxx.do?fwbm=${this.from.fwbm}`)
       // let res = await this.$http.get(`/fw/cxfwxx.do?fwbm=888999`)
-      console.log(res.data)
+      // console.log(res.data)
       this.fwxxList = res.data.data
       this.from.zjzp = res.data.data.ryZp
       this.from.xqbm = res.data.data.xqbm
@@ -639,7 +642,7 @@ export default {
       .xqbm_input {
         height: 34px;
         display: flex;
-        margin: 12px 0 0 0;
+        margin: 22px 0 0 0;
         .xqbm_input_text {
           height: 34px;
           text-align: right;
@@ -659,13 +662,21 @@ export default {
       .ldh_input {
         height: 34px;
         display: flex;
-        margin: 12px 0 0 0;
+        margin: 22px 0 0 0;
         .ldh_input_text {
           text-align: right;
           height: 34px;
           width: 110px;
           font-size: 14px;
           line-height: 34px;
+        }
+        .ldh_input_title_wrap {
+          display: flex;
+        }
+        .ldh_input_title {
+          line-height: 34px;
+          margin: 0 0 0 5px;
+          font-size: 14px;
         }
         .el-input {
           width: 91px;
@@ -679,13 +690,18 @@ export default {
       .dyh_input {
         height: 34px;
         display: flex;
-        margin: 12px 0 0 0;
+        margin: 22px 0 0 0;
         .dyh_input_text {
           height: 34px;
           width: 110px;
           font-size: 14px;
           line-height: 34px;
           text-align: right;
+        }
+        .dyh_input_title {
+          line-height: 34px;
+          margin: 0 0 0 5px;
+          font-size: 14px;
         }
         .el-input {
           width: 91px;
@@ -707,6 +723,14 @@ export default {
           line-height: 34px;
           text-align: right;
         }
+        .lch_input_title_wrap {
+          display: flex;
+        }
+        .lch_input_title {
+          line-height: 34px;
+          margin: 0 0 0 5px;
+          font-size: 14px;
+        }
         .el-input {
           width: 91px;
           height: 34px;
@@ -719,13 +743,21 @@ export default {
       .mph_input {
         height: 34px;
         display: flex;
-        margin: 12px 0 0 0;
+        margin: 22px 0 0 0;
         .mph_input_text {
           height: 34px;
           width: 110px;
           font-size: 14px;
           line-height: 34px;
           text-align: right;
+        }
+        .mph_input_title_wrap {
+          display: flex;
+        }
+        .mph_input_title {
+          line-height: 34px;
+          margin: 0 0 0 5px;
+          font-size: 14px;
         }
         .el-input {
           width: 91px;
@@ -739,7 +771,7 @@ export default {
       .fwzt_input {
         height: 34px;
         display: flex;
-        margin: 12px 0 0 0;
+        margin: 22px 0 0 0;
         .fwzt_input_text {
           height: 34px;
           width: 110px;
@@ -973,6 +1005,10 @@ export default {
       height: 355px;
       margin: 0 0 0 35px;
       text-align: center;
+      img {
+        width: auto;
+        height: auto;
+      }
       .fwxxbj_wrap_content_right_title {
         font-size: 14px;
         margin: 21px 0 9px 0;
@@ -981,6 +1017,10 @@ export default {
         width: 175px;
         height: 271px;
         margin: 0 auto;
+        img {
+          width: 100%;
+          height: 100%;
+        }
       }
       .fwxxbj_wrap_content_right_but {
         .reading {
@@ -994,6 +1034,9 @@ export default {
           font-size: 15px;
           border-radius: 5px;
           margin: 15px 0 0 95px;
+          &:hover {
+            background: #087cf3;
+          }
         }
       }
     }
@@ -1011,6 +1054,9 @@ export default {
   right: 500px;
   border-radius: 10px;
   cursor: pointer;
+  &:hover {
+    background: #087cf3;
+  }
 }
 .up_xx_fwbj {
   width: 190px;
@@ -1024,6 +1070,9 @@ export default {
   right: 250px;
   border-radius: 10px;
   cursor: pointer;
+  &:hover {
+    background: #db1616;
+  }
 }
 .text1 {
   color: #f30a05;

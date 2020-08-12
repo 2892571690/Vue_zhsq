@@ -125,7 +125,7 @@
                 </el-form-item>
                 <!-- 警员编号 -->
                 <el-form-item label="警员编号:" prop="jybh">
-                  <el-input placeholder="123456" v-model="ruleForm.jybh"></el-input>
+                  <el-input maxlength="6" placeholder="123456" v-model="ruleForm.jybh"></el-input>
                 </el-form-item>
                 <!-- 警员姓名 -->
                 <el-form-item label="警员姓名:" prop="jyxm">
@@ -133,7 +133,7 @@
                 </el-form-item>
                 <!-- 警员联系方式 -->
                 <el-form-item label="警员联系方式:" prop="jylxfs">
-                  <el-input maxlength='11' placeholder="请填入手机号" v-model="ruleForm.jylxfs"></el-input>
+                  <el-input maxlength="11" placeholder="请填入手机号" v-model="ruleForm.jylxfs"></el-input>
                 </el-form-item>
               </div>
               <div class="From_text">
@@ -149,21 +149,28 @@
                   <el-input placeholder="单位/平方米" v-model="ruleForm.jzmj"></el-input>
                 </el-form-item>
               </div>
-              <div class="From_img">
-                <div class="From_img_text">小区图片:</div>
-                <div class="upLiadImg">
-                  <el-upload
-                    class="avatar-uploader"
-                    action="/admin/xq/xztp.do"
-                    :on-change="getFile"
-                    :limit="1"
-                  >
-                    <input v-model="imgname" class="imgInput" placeholder="点击右边选择一张图片" />
-                    <div class="upImg">选择图片</div>
-                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb,一次只能传一次</div>
-                  </el-upload>
+              <!-- 小区照片 -->
+              <el-form-item class="pic_item" prop="imgname">
+                <div class="From_img">
+                  <div class="From_img_text">小区图片:</div>
+                  <div class="upLiadImg">
+                    <el-upload
+                      class="avatar-uploader"
+                      action="/admin/xq/xztp.do"
+                      :on-change="getFile"
+                      :limit="1"
+                    >
+                      <el-input
+                        v-model="ruleForm.imgname"
+                        class="imgInput"
+                        placeholder="点击右边选择一张图片"
+                      ></el-input>
+                      <div class="upImg">选择图片</div>
+                      <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb,一次只能传一次</div>
+                    </el-upload>
+                  </div>
                 </div>
-              </div>
+              </el-form-item>
               <div @click="handleBlackTo" class="blackto">返回</div>
               <div @click="handleUpTo" class="upto">提交</div>
             </el-form>
@@ -200,7 +207,7 @@ export default {
     }
     //地图坐标的验证规则
     var checkMap = (rule, value, cb) => {
-      const regMap = /^[\d\.\,+-]*$/g
+      const regMap = /^[\d\.\,+-;]*$/g
       if (regMap.test(value)) {
         return cb()
       }
@@ -208,7 +215,7 @@ export default {
     }
     //警员编号的验证规则
     var checkPolice = (rule, value, cb) => {
-      const regPolice = /^[0-9]{1,100}$/g
+      const regPolice = /^[0-9]{1,6}$/g
       if (regPolice.test(value)) {
         return cb()
       }
@@ -244,7 +251,6 @@ export default {
       // 面包屑
       breadcrumb: [],
       //   需要验证的字段
-      imgname: '',
       ruleForm: {
         xqbm: '',
         xqmc: '',
@@ -262,6 +268,7 @@ export default {
         zdmj: '',
         jzmj: '',
         tp: '', //上传图片
+        imgname: '',
       },
       rules: {
         xqbm: [
@@ -352,6 +359,7 @@ export default {
         ],
         zdmj: [{ validator: checkzd, trigger: 'blur' }],
         jzmj: [{ validator: checkjz, trigger: 'blur' }],
+        imgname: [{ required: true, message: '请选择照片', trigger: 'blur' }],
       },
       // 省市区行政区划编码数据
       ssqxzqhbmList: [],
@@ -464,8 +472,9 @@ export default {
     // 点击现在文件
     getFile(file, fileList) {
       //上传图片
-      this.imgname = file.name
+      this.ruleForm.imgname = file.name
       this.getBase64(file.raw)
+      // this.$refs.RuleForm.validateField('xztp');
     },
     // 点击提交
     handleUpTo() {
@@ -638,9 +647,9 @@ export default {
   //   表单的样式
   .demo_ruleForm {
     & ::placeholder {
-        color: rgb(134, 130, 130);
-        font-size: 12px;
-      }
+      color: rgb(134, 130, 130);
+      font-size: 12px;
+    }
     .el-form-item__label {
       width: 182px;
       padding: 0;
@@ -648,14 +657,12 @@ export default {
       font-size: 14px;
       line-height: 34px;
       margin: 30px 0 0 0;
-      
     }
     .el-input__inner {
       float: left;
       width: 434px;
       height: 32px;
       line-height: 32px;
-      
     }
     .el-form-item__content {
       width: 693px;
@@ -715,9 +722,9 @@ export default {
           margin: 0 0 30px 0;
         }
         .From_img {
-          position: absolute;
-          top: 293px;
-          right: 326px;
+          // position: absolute;
+          // top: -1010px;
+          // right: -415px;
           width: 430px;
           height: 169px;
           .From_img_text {
@@ -731,20 +738,27 @@ export default {
 }
 .upImg {
   width: 104px;
-  height: 40px;
+  height: 32px !important;
   background: #3579b6;
   color: #fff;
   text-align: center;
-  line-height: 40px;
+  line-height: 32px !important;
   float: left;
-  margin: 69px 0 0 0;
+  margin: 1px 0 0 0 !important;
+  &:hover {
+    background: #087cf3;
+  }
 }
 .imgInput {
   width: 184px !important;
   height: 34px;
   float: left;
-  margin: 69px 0 0 100px;
+  margin: 1px 0 0 100px !important;
+  .el-input__inner {
+    width: 184px !important;
+  }
 }
+
 .blackto {
   height: 34px;
   width: 107px;
@@ -753,10 +767,13 @@ export default {
   text-align: center;
   color: #fff;
   position: absolute;
-  top: 500px;
+  top: 460px;
   right: 538px;
   border-radius: 10px;
   cursor: pointer;
+  &:hover {
+    background: #087cf3;
+  }
 }
 .upto {
   height: 34px;
@@ -766,15 +783,34 @@ export default {
   text-align: center;
   color: #fff;
   position: absolute;
-  top: 500px;
+  top: 460px;
   right: 358px;
   border-radius: 10px;
   cursor: pointer;
+  &:hover {
+    background: #db1616;
+  }
 }
 .el-upload__tip {
   margin: 10px 0 0 100px;
 }
 .el-upload-list__item-name {
   margin: 0 0 0 100px;
+}
+.pic_item {
+  float: right;
+  width: 410px;
+  margin: -1035px 70px 0 0 !important;
+}
+.upLiadImg {
+  .avatar-uploader {
+    height: 100%;
+    .el-upload {
+      height: 100%;
+    }
+    .el-upload__tip {
+      margin-top: 5px;
+    }
+  }
 }
 </style>

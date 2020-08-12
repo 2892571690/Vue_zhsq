@@ -28,7 +28,7 @@
           <div class="bitianFrom">
             <!-- 小区名称 -->
             <el-form-item label="小区:" prop="xqbm">
-              <el-select v-model="ruleForm.xqbm" placeholder="请选择小区名称">
+              <el-select v-model="ruleForm.xqbm" placeholder="请选择小区">
                 <el-option
                   v-for="item in xqmcList"
                   :key="item.xq_id"
@@ -166,9 +166,15 @@ export default {
       let res = await this.$http.get('/xq/selXQ.do')
       // console.log(res.data)
       this.xqmcList = res.data
+      // this.ruleForm.xqbm = res.data[0].xqmc
     },
     // 点击提交
     handleUpTo() {
+      // console.log(this.ruleForm.xqbm)
+      // if(this.ruleForm.xqbm == this.xqmcList[0].xqmc){
+      //   this.ruleForm.xqbm = this.xqmcList[0].xqbm
+      // }
+      // console.log(this.ruleForm.xqbm)
       let self = this
       self.$refs.RuleForm.validate(async (valid) => {
         if (valid) {
@@ -331,6 +337,9 @@ export default {
   right: 1200px;
   border-radius: 10px;
   cursor: pointer;
+  &:hover {
+    background: #087cf3;
+  }
 }
 .uptoldtj {
   height: 34px;
@@ -344,5 +353,8 @@ export default {
   right: 940px;
   border-radius: 10px;
   cursor: pointer;
+  &:hover {
+    background: #db1616;
+  }
 }
 </style>

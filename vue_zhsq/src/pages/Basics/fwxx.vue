@@ -193,25 +193,42 @@ export default {
     // 点击搜索
     async handleFWXX() {
       //   console.log(this.form.ldh)
-      let index = this.ldxxList.findIndex(
-        (v) => Number(v.ldh) == Number(this.form.ldh)
-      )
-      //   console.log(index)
-      this.isActive = index
-      this.mrldbm = this.ldxxList[index].ldbm
-      this.$router.push({
-        path: 'mphList',
-        query: {
-          bm: [
-            this.form.xqbm,
-            this.mrldbm,
-            this.form.ldh,
-            this.form.mph,
-            this.form.isupload,
-            this.form.order,
-          ],
-        },
-      })
+      if (this.form.ldh == '') {
+        this.$router.push({
+          path: 'mphList',
+          query: {
+            bm: [
+              this.form.xqbm,
+              this.mrldbm,
+              this.form.ldh,
+              this.form.mph,
+              this.form.isupload,
+              this.form.order,
+            ],
+          },
+        })
+      } else {
+        // console.log(this.ldxxList)
+        let index = this.ldxxList.findIndex(
+          (v) => Number(v.ldh) == Number(this.form.ldh)
+        )
+        // console.log(index)
+        this.isActive = index
+        this.mrldbm = this.ldxxList[index].ldbm
+        this.$router.push({
+          path: 'mphList',
+          query: {
+            bm: [
+              this.form.xqbm,
+              this.mrldbm,
+              this.form.ldh,
+              this.form.mph,
+              this.form.isupload,
+              this.form.order,
+            ],
+          },
+        })
+      }
     },
     // 点击楼栋
     handleLDdj(ldbm) {
@@ -407,6 +424,9 @@ export default {
       text-align: center;
       line-height: 36px;
       border-radius: 5px;
+      &:hover {
+        background: #087cf3;
+      }
     }
   }
   .fwxx_title_content {

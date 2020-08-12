@@ -11,8 +11,8 @@
       <div class="cha" @click="handleGoIndex">x</div>
     </div>
     <div class="tou" style="width:91%"></div>
-    <div @click="handleAddFrom" class="addFrom_wrap_top">添加表单</div>
-    <div @click="handleDelteFrom" class="deleteFrom_wrap_top">删除表单</div>
+    <div @click="handleAddFrom" class="addFrom_wrap_top">+</div>
+    <div @click="handleDelteFrom" class="deleteFrom_wrap_top">-</div>
     <!-- 添加楼栋信息 -->
     <div class="tjldplxx_wrap">
       <div class="tjldxx_wrap_title">
@@ -58,10 +58,7 @@
                 :rules="[{required: true, message: '请选择楼栋号', trigger: 'blur'}]"
               >
                 <!-- <el-input placeholder="请填写楼栋号,示范001" v-model="ruleForm.ldinfo[index].ldh"></el-input> -->
-                <el-select
-                  v-model="ruleForm.ldinfo[index].ldh"
-                  placeholder="请选择楼栋号"
-                >
+                <el-select v-model="ruleForm.ldinfo[index].ldh" placeholder="请选择楼栋号">
                   <el-option
                     v-for="(item,index) in 100"
                     :key="index"
@@ -218,11 +215,11 @@ export default {
         if (valid) {
           let res = await self.$http.post('/ld/insLouDongList.do', ldinfo)
           // console.log(res)
-          if(res.data.msg == 200){
+          if (res.data.msg == 200) {
             this.$message.success('添加成功')
-          }else if(res.data.msg == 202){
+          } else if (res.data.msg == 202) {
             this.$message.warning('添加失败,楼栋信息重复')
-          }else{
+          } else {
             this.$message.error('添加失败')
           }
           self.$router.go(-1)
@@ -259,7 +256,7 @@ export default {
       } else {
         this.ruleForm.ldinfo.pop()
       }
-    }
+    },
   },
 }
 </script>
@@ -401,6 +398,9 @@ export default {
   right: 1000px;
   border-radius: 10px;
   cursor: pointer;
+  &:hover {
+    background: #087cf3;
+  }
 }
 .uptoldpltj {
   height: 34px;
@@ -414,6 +414,9 @@ export default {
   right: 800px;
   border-radius: 10px;
   cursor: pointer;
+  &:hover {
+    background: #db1616;
+  }
 }
 .form_wrap_box {
   width: 220px;
@@ -425,34 +428,42 @@ export default {
 }
 .addFrom_wrap_top {
   cursor: pointer;
-  width: 90px;
+  width: 62px;
   height: 30px;
-  background: rgb(17, 226, 69);
+  background: #3ac75d;
   text-align: center;
-  line-height: 30px;
+  line-height: 27px;
   color: #fff;
   border-radius: 10px;
   position: absolute;
   top: 231px;
   right: 480px;
+  font-size: 28px;
+  &:hover {
+    background: #12ce7f;
+  }
 }
 .deleteFrom_wrap_top {
   cursor: pointer;
-  width: 90px;
+  width: 62px;
   height: 30px;
-  background: #9e0f0a;
+  background: #ca4743;
   text-align: center;
-  line-height: 30px;
+  line-height: 25px;
   color: #fff;
   border-radius: 10px;
   position: absolute;
   top: 231px;
   right: 350px;
+  font-size: 40px;
+  &:hover {
+    background: #db1616;
+  }
 }
 .lcs_wrap_box {
   width: 270px;
   .el-select {
-    width: 110px;
+    width: 123px;
     .el-input {
       width: 100%;
       .el-input__inner {
@@ -464,7 +475,7 @@ export default {
 .lcs_wrap_box1 {
   width: 270px;
   .el-select {
-    width: 110px;
+    width: 123px;
     .el-input {
       width: 100%;
       .el-input__inner {

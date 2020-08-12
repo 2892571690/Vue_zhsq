@@ -35,7 +35,6 @@
           <div class="left_button_wrap">
             <div class="increase_but el-icon-plus" type="primary" @click="handleAddxqxx">增加</div>
             <div class="uploadXQ">上传楼栋</div>
-            <div class="uploadXQ">上传房屋</div>
             <div class="delent_but" @click="handleDelete">删除楼栋</div>
             <div class="uploadXQ" @click="handleplzj">批量增加</div>
           </div>
@@ -86,7 +85,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="queryInfo.pagenum"
-          :page-sizes="[5, 10, 50]"
+          :page-sizes="[10, 20, 50]"
           :page-size="100"
           layout="total, sizes, prev, pager, next, jumper"
           :total="tatal"
@@ -120,7 +119,7 @@ export default {
         // 当前的页数
         currPage: 1,
         // 当前每页显示多少条数据
-        pageSize: 5,
+        pageSize: 10,
       },
       tatal: 0,
       // 控制搜索框的显示与隐藏
@@ -217,21 +216,26 @@ export default {
     },
     // 删除按钮
     async handleDelete() {
-      let ldidList = []
-      for (var i = 0; i < this.tableNum.length; i++) {
-        ldidList.push(this.tableNum[i].ldbm)
-      }
-      // console.log(ldidList)
-      Qs.stringify({ ldidList: ldidList }, { arrayFormat: 'repeat' })
-      let res = await this.$http.post('/ld/delLouDong.do', ldidList)
-      console.log(res)
-      if (res.data.mes == 200) {
-        this.$message.success('删除成功')
-      } else if (res.data.mes == 202) {
-        this.$message.warning('楼栋有住户,删除失败')
+      if (this.tableNum.length == 0) {
+        this.$message.warning('至少选择一个楼栋')
       } else {
-        this.$message.error('删除失败')
+        let ldidList = []
+        for (var i = 0; i < this.tableNum.length; i++) {
+          ldidList.push(this.tableNum[i].ldbm)
+        }
+        // console.log(ldidList)
+        Qs.stringify({ ldidList: ldidList }, { arrayFormat: 'repeat' })
+        let res = await this.$http.post('/ld/delLouDong.do', ldidList)
+        console.log(res)
       }
+
+      // if (res.data.mes == 200) {
+      //   this.$message.success('删除成功')
+      // } else if (res.data.mes == 202) {
+      //   this.$message.warning('楼栋有住户,删除失败')
+      // } else {
+      //   this.$message.error('删除失败')
+      // }
       this.handleTableList()
     },
     // 点击添加按钮
@@ -345,6 +349,9 @@ export default {
           box-sizing: border-box;
           text-align: center;
           color: #fff;
+          // &:hover {
+          //   background: #087cf3;
+          // }
         }
         .uploadXQ {
           width: 98px;

@@ -84,7 +84,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="queryInfo.pagenum"
-          :page-sizes="[5, 10, 50]"
+          :page-sizes="[10, 20, 50]"
           :page-size="100"
           layout="total, sizes, prev, pager, next, jumper"
           :total="tatal"
@@ -117,7 +117,7 @@ export default {
         // 当前的页数
         pagenum: 1,
         // 当前每页显示多少条数据
-        pagesize: 5,
+        pagesize: 10,
       },
       tatal: 0,
       // 控制搜索框的显示与隐藏
@@ -209,39 +209,50 @@ export default {
     },
     // 删除按钮
     async handleDelete() {
-      let Arrid = []
-      for (var i = 0; i < this.tableNum.length; i++) {
-        Arrid.push(this.tableNum[i].xqbm)
-      }
-      Arrid = Arrid + ''
-      let res = await this.$http.post(`/xq/scxq.do?Arrid=${Arrid}`)
-      // console.log(res)
-      let self = this
-      if (res.data.data.length > 1) {
-        for (var i = 0; i < res.data.data.length; i++) {
-          let index = this.tableNum.findIndex(
-            (v) => v.xqbm == res.data.data[i].xqbm
-          )
-          if (res.data.data[i].msg == '该小区还存在楼栋,不可删除') {
-            await this.$message.warning(
-              `${self.tableNum[index].xqmc}：小区楼栋内有住户导致删除失败`
-            )
-          } else {
-            await this.$message.success(
-              `${self.tableNum[index].xqmc}：删除成功`
-            )
-          }
-        }
+      if (this.tableNum.length == 0) {
+        this.$message.warning('至少选择一个小区')
       } else {
-        let index = this.tableNum.findIndex((v) => v.xqbm == res.data.data.xqbm)
-        if (res.data.data.msg == '该小区还存在楼栋,不可删除') {
-          await this.$message.warning(
-            `${self.tableNum[index].xqmc}：小区楼栋内有住户导致删除失败`
-          )
+        let Arrid = []
+        for (var i = 0; i < this.tableNum.length; i++) {
+          Arrid.push(this.tableNum[i].xqbm)
+        }
+        Arrid = Arrid + ''
+        let res = await this.$http.post(`/xq/scxq.do?Arrid=${Arrid}`)
+        // console.log(res)
+        if (res.data.data.status == 200) {
+          this.$message.success('删除成功')
+        } else if (res.data.data.status == 201) {
+          this.$message.warning('小区有住户,删除失败')
         } else {
-          await this.$message.success( `${self.tableNum[index].xqmc}：删除成功`)
+          this.$message.error('删除失败')
         }
       }
+
+      // if (res.data.data.length > 1) {
+      //   for (var i = 0; i < res.data.data.length; i++) {
+      //     let index = this.tableNum.findIndex(
+      //       (v) => v.xqbm == res.data.data[i].xqbm
+      //     )
+      //     if (res.data.data[i].msg == '该小区还存在楼栋,不可删除') {
+      //       await this.$message.warning(
+      //         `${self.tableNum[index].xqmc}：小区楼栋内有住户导致删除失败`
+      //       )
+      //     } else {
+      //       await this.$message.success(
+      //         `${self.tableNum[index].xqmc}：删除成功`
+      //       )
+      //     }
+      //   }
+      // } else {
+      //   let index = this.tableNum.findIndex((v) => v.xqbm == res.data.data.xqbm)
+      //   if (res.data.data.msg == '该小区还存在楼栋,不可删除') {
+      //     await this.$message.warning(
+      //       `${self.tableNum[index].xqmc}：小区楼栋内有住户导致删除失败`
+      //     )
+      //   } else {
+      //     await this.$message.success( `${self.tableNum[index].xqmc}：删除成功`)
+      //   }
+      // }
       this.handleTableList()
     },
     // 点击添加按钮
@@ -329,6 +340,9 @@ export default {
         background: #409efe;
         color: #fff;
         border-radius: 5px;
+        &:hover {
+          background: #087cf3;
+        }
       }
     }
     .left_button {
@@ -352,6 +366,9 @@ export default {
           box-sizing: border-box;
           text-align: center;
           color: #fff;
+          &:hover {
+            background: #087cf3;
+          }
         }
         .uploadXQ {
           cursor: pointer;
@@ -363,6 +380,9 @@ export default {
           border-radius: 10px;
           box-sizing: border-box;
           text-align: center;
+          &:hover {
+            background: #f1f2f3;
+          }
         }
         .delent_but {
           cursor: pointer;
@@ -373,6 +393,9 @@ export default {
           border-radius: 10px;
           box-sizing: border-box;
           text-align: center;
+          &:hover {
+            background: #f1f2f3;
+          }
         }
       }
       .center_text {
@@ -394,6 +417,9 @@ export default {
           align-items: center;
           justify-content: center;
           float: left;
+          &:hover {
+            background: #f1f2f3;
+          }
           &:nth-child(1) {
             border-radius: 10px 0 0 10px;
           }

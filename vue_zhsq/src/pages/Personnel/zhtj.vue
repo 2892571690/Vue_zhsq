@@ -30,11 +30,11 @@
             <div class="zhbjxx_ruleForm_topLeft">
               <!-- 姓名 -->
               <el-form-item label="姓名：" prop="xm">
-                <el-input  placeholder="请先读取身份信息" v-model="ruleForm.xm"></el-input>
+                <el-input disabled placeholder="请先读取身份信息" v-model="ruleForm.xm"></el-input>
               </el-form-item>
               <!-- 户籍所在地： -->
               <el-form-item label="户籍所在地：" prop="hjdxz">
-                <el-input  placeholder="请先读取身份信息" v-model="ruleForm.hjdxz"></el-input>
+                <el-input disabled placeholder="请先读取身份信息" v-model="ruleForm.hjdxz"></el-input>
               </el-form-item>
               <!-- 小区 -->
               <el-form-item label="小区：" prop="xqbm">
@@ -88,11 +88,11 @@
             <div class="zhbjxx_ruleForm_topRight">
               <!-- 身份证号码 -->
               <el-form-item label="身份证号码：" prop="zjhm">
-                <el-input  placeholder="请先读取身份信息" v-model="ruleForm.zjhm"></el-input>
+                <el-input disabled placeholder="请先读取身份信息" v-model="ruleForm.zjhm"></el-input>
               </el-form-item>
               <!-- 性别 -->
               <el-form-item label="性别：" prop="xbdm">
-                <el-input  placeholder="请先读取身份信息" v-model="xb"></el-input>
+                <el-input disabled placeholder="请先读取身份信息" v-model="xb"></el-input>
               </el-form-item>
               <!-- 楼栋号 -->
               <el-form-item label="楼栋号：" prop="ldh">
@@ -243,13 +243,11 @@
         <!-- 读卡 -->
         <div class="zhbjxx_img">
           <div class="zhbjxx_img_text">身份照片</div>
-          <div class="zhbjxx_img_pic">
-            <div v-if="ruleForm.zjzp == ''">
-              <img src="../../assets/zjzp.png" />
-            </div>
-            <div v-else>
-              <img :src="ruleForm.zjzp" />
-            </div>
+          <div class="zhbjxx_img_pic" v-if="ruleForm.zjzp == ''">
+            <img src="../../assets/zjzp.png" />
+          </div>
+          <div v-else>
+            <img :src="ruleForm.zjzp" />
           </div>
           <div class="zhbjxx_img_but" @click="ReadCard">读卡</div>
         </div>
@@ -303,7 +301,7 @@ export default {
         rklxdm: '',
         zzmmdm: '',
         zjhm: '',
-        xbdm: '1',
+        xbdm: '',
         ldh: '',
         mph: '',
         zjlxdm: '',
@@ -316,7 +314,7 @@ export default {
         mzdm: '',
         whcddm: '',
         byzkdm: '',
-        zjzp:'',
+        zjzp: '',
       },
       // 小区编码
       XQBMStr: '',
@@ -519,9 +517,9 @@ export default {
           if (res.data.message.status == '200') {
             this.$message.success('入住成功')
             this.$router.go(-1)
-          } else if(res.data.message.status == '201'){
+          } else if (res.data.message.status == '201') {
             this.$message.warning('房主已经存在,请更换与房主关系')
-          }else{
+          } else {
             this.$message.error('入住失败')
           }
         }
@@ -908,6 +906,11 @@ export default {
   position: absolute;
   right: 370px;
   top: 260px;
+  text-align: center;
+  img{
+    width: auto;
+    height: auto;
+  }
   .zhbjxx_img_text {
     font-size: 15px;
     text-align: center;
@@ -917,7 +920,7 @@ export default {
   .zhbjxx_img_pic {
     width: 175px;
     height: 270px;
-    div {
+    img {
       width: 100%;
       height: 100%;
     }
@@ -932,6 +935,9 @@ export default {
     margin: 5px auto;
     border-radius: 10px;
     cursor: pointer;
+    &:hover {
+      background: #087cf3;
+    }
   }
 }
 .zhxxbj_wrap_but {
@@ -947,6 +953,9 @@ export default {
     border-radius: 10px;
     margin: 0 150px 0 310px;
     cursor: pointer;
+    &:hover {
+      background: #087cf3;
+    }
   }
   .zhxxzj_up {
     width: 190px;
@@ -957,6 +966,9 @@ export default {
     line-height: 34px;
     border-radius: 10px;
     cursor: pointer;
+    &:hover {
+      background: #db1616;
+    }
   }
 }
 .zhxxbj_wrap_titleText {

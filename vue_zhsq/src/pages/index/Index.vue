@@ -34,13 +34,14 @@
     <el-card class="box-card">
       <div class="leftNews">
         <div class="newAray" v-for="item in leftNewList" :key="item.id">
-          <div class="text_title_wrap" @click="handleNewsList(item.id)">
+          <div class="text_title_wrap">
             <div class="text_square"></div>
-            <div class="Hot" v-if="item.ishot == 1">
-              <img :src="item.pic" />
-            </div>
+            <img v-if="item.ishot == 1" :src="item.pic" />
             <div v-else></div>
-            <div class="newAray_title">{{item.title}}</div>
+            <div class="title" :style="{color:item.color}">
+              <div class="newAray_title" @click="handleNewsList(item.id)">{{item.title}}</div>
+            </div>
+            <div class="newData" :style="{color:item.color}">【{{item.addTime}}】</div>
           </div>
         </div>
       </div>
@@ -149,6 +150,8 @@ export default {
       rightNewsList: [],
       // 快捷操作列表
       QuickList: [],
+      // 新闻列表颜色
+      // newColor:[]
     }
   },
   created() {
@@ -270,12 +273,6 @@ export default {
     width: 660px;
     .newAray {
       color: #292929;
-      &:nth-child(4) {
-        color: #e75a2e;
-      }
-      &:nth-child(6) {
-        color: #d31050;
-      }
       .text_title_wrap {
         display: flex;
         align-items: center;
@@ -285,28 +282,34 @@ export default {
           background-color: #292929;
           margin-right: 6px;
         }
-        .newAray_title {
-          font-size: 14px;
-          line-height: 37px;
-          width: 660px;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          overflow: hidden;
-          word-break: break-all;
-          cursor: pointer;
-          &:hover {
-            text-decoration: underline;
+        img {
+          width: 25px;
+          height: 11px;
+          display: block;
+          margin: 0 9px 0 0;
+        }
+        .title {
+          width: auto;
+          max-width: 540px;
+          .newAray_title {
+            font-size: 15px;
+            line-height: 37px;
+            width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            word-break: break-all;
+            cursor: pointer;
+            &:hover {
+              text-decoration: underline;
+            }
           }
         }
-        .Hot {
-          width: 22px;
-          height: 11px;
-          margin-right: 9px;
-          img {
-            width: 100%;
-            height: 100%;
-            display: block;
-          }
+
+        .newData {
+          width: 450px;
+          line-height: 37px;
+          font-size: 15px;
         }
       }
     }
@@ -358,7 +361,6 @@ export default {
   width: 1690px;
 }
 .quick_edition_wrap {
-  cursor: pointer;
   float: left;
   width: 1250px;
   margin-top: 21px;
@@ -394,12 +396,13 @@ export default {
     .quick_content_wrap {
       .quick_content_box {
         float: left;
-        width: 104px;
-        height: 99px;
-        margin-right: 28px;
+        // width: 104px;
+        // height: 99px;
+        margin-right: 45px;
         margin-bottom: 2px;
         box-sizing: border-box;
         padding: 5px;
+        cursor: pointer;
         .quick_content_box_img {
           width: 100%;
           height: 75px;
@@ -424,7 +427,6 @@ export default {
   }
 }
 .edition_box {
-  cursor: pointer;
   float: left;
   width: 406px;
   margin: 21px 0 3px 15px;
@@ -466,6 +468,7 @@ export default {
         font-size: 14px;
         color: #3b9efc;
         margin-right: 22px;
+        cursor: pointer;
       }
     }
     .banben_wrap {
@@ -480,6 +483,7 @@ export default {
       }
 
       .oldbanben {
+        cursor: pointer;
       }
 
       .zuixin_wrap {
@@ -500,6 +504,7 @@ export default {
       }
 
       .newbanben_wrap {
+        cursor: pointer;
       }
     }
     .Official_website {
@@ -510,6 +515,7 @@ export default {
       justify-content: center;
       margin: 11px 0 11px 0;
       border-radius: 10px;
+      cursor: pointer;
       .Official_website_wrap {
         display: flex;
         height: 100%;

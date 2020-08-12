@@ -169,7 +169,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="form.currPageNo"
-            :page-sizes="[5, 10, 50]"
+            :page-sizes="[10, 20, 50]"
             :page-size="100"
             layout="total, sizes, prev, pager, next, jumper"
             :total="tatal"
@@ -242,7 +242,7 @@ export default {
         yyzt: '',
         sqzt: '',
         currPageNo: 1,
-        pageSize: 5,
+        pageSize: 10,
         yyqssj: '',
         yyjzsj: '',
       },
@@ -700,6 +700,9 @@ export default {
         cursor: pointer;
         font-size: 14px;
         margin: 0 0 0 15px;
+        &:hover {
+          background: #087cf3;
+        }
       }
     }
   }
@@ -735,6 +738,9 @@ export default {
             margin: 25px 15px 10px 25px;
             cursor: pointer;
             color: #fff;
+            &:hover {
+              background: #087cf3;
+            }
           }
           .deleteBut {
             width: 93px;
@@ -746,6 +752,9 @@ export default {
             margin: 25px 15px 10px 0;
             cursor: pointer;
             color: #fff;
+            &:hover {
+              background: #db1616;
+            }
           }
           .zhuceBut {
             width: 120px;
@@ -756,6 +765,9 @@ export default {
             border-radius: 5px;
             margin: 25px 15px 10px 0;
             cursor: pointer;
+            &:hover {
+              background: #f1f2f3;
+            }
           }
           .putBut {
             width: 120px;
@@ -766,6 +778,9 @@ export default {
             border-radius: 5px;
             margin: 25px 15px 10px 0;
             cursor: pointer;
+            &:hover {
+              background: #f1f2f3;
+            }
           }
           .jihuoBut {
             width: 150px;
@@ -776,6 +791,9 @@ export default {
             border-radius: 5px;
             margin: 25px 15px 10px 0;
             cursor: pointer;
+            &:hover {
+              background: #f1f2f3;
+            }
           }
           .txBut {
             width: 100px;
@@ -786,6 +804,9 @@ export default {
             border-radius: 5px;
             margin: 25px 15px 10px 0;
             cursor: pointer;
+            &:hover {
+              background: #f1f2f3;
+            }
           }
           .xz_wrap {
             line-height: 40px;
@@ -804,6 +825,9 @@ export default {
             justify-content: center;
             float: left;
             margin: 25px 0 0 0;
+            &:hover {
+              background: #f1f2f3;
+            }
             &:nth-child(1) {
               border-radius: 10px 0 0 10px;
             }
@@ -840,6 +864,9 @@ export default {
   background: #53b3dd;
   border-radius: 10px;
   cursor: pointer;
+  &:hover {
+    background: #087cf3;
+  }
 }
 .fklszl_Dialog {
   .el-dialog {

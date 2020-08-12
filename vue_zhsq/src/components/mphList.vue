@@ -219,6 +219,9 @@ export default {
         color: #e7360a;
         font-size: 12px;
         margin: 0 13px 0 0;
+        &:hover {
+          color: #f56e4c;
+        }
       }
 
       .mph_wrap_gn_bj {
@@ -226,6 +229,9 @@ export default {
         color: #e7360a;
         font-size: 12px;
         margin: 0 13px 0 0;
+        &:hover {
+          color: #f56e4c;
+        }
       }
 
       .mph_wrap_gn_zt {

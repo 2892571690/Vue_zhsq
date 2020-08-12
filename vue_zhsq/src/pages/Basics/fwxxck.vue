@@ -36,28 +36,28 @@
             <div class="ldh_wrap_title">楼栋号:</div>
             <div v-if="yzxx.ldh == 'null' || yzxx.ldh == ''"></div>
             <div v-else>
-              <div class="ldh_wrap_text">{{yzxx.ldh}}</div>
+              <div class="ldh_wrap_text">{{yzxx.ldh}}栋</div>
             </div>
           </div>
           <div class="dyh_wrap">
             <div class="dyh_wrap_title">单元号:</div>
             <div v-if="yzxx.dyh == 'null' || yzxx.dyh == ''"></div>
             <div v-else>
-              <div class="dyh_wrap_text">{{yzxx.dyh}}</div>
+              <div class="dyh_wrap_text">{{yzxx.dyh}}单元</div>
             </div>
           </div>
           <div class="lch_wrap">
             <div class="lch_wrap_title">楼层号:</div>
             <div v-if="yzxx.lch == 'null' || yzxx.lch == ''"></div>
             <div v-else>
-              <div class="lch_wrap_text">{{yzxx.lch}}</div>
+              <div class="lch_wrap_text">{{yzxx.lch}}层</div>
             </div>
           </div>
           <div class="mph_wrap">
             <div class="mph_wrap_title">门牌号:</div>
             <div v-if="yzxx.mph == 'null' || yzxx.mph == ''"></div>
             <div v-else>
-              <div class="mph_wrap_text">{{yzxx.mph}}</div>
+              <div class="mph_wrap_text">{{yzxx.mph}}号</div>
             </div>
           </div>
           <div class="fwzt_wrap">
@@ -653,5 +653,8 @@ export default {
   left: 955px;
   bottom: 35px;
   border-radius: 10px;
+  &:hover {
+    background: #087cf3;
+  }
 }
 </style>

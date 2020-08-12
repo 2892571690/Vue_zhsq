@@ -54,7 +54,7 @@
               <div class="el-icon-delete deleteBut" @click="handleDeleteZH">删除</div>
               <div class="zhuceBut" @click="handleAddPic">注册照片或重新授权</div>
               <div class="putBut">上传人员</div>
-              <div class="jihuoBut" @click="handleJHZH">激活/注销人员</div>
+              <div class="jihuoBut" @click="handleJHZH">锁定/正常人员</div>
               <div class="txBut" @click="handleTXZH">提醒/正常</div>
               <div class="xz_wrap">{{zhxxList.length}}个中{{tableNum.length}}个被选</div>
             </div>
@@ -155,7 +155,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="form.pagenum"
-            :page-sizes="[5, 10, 50]"
+            :page-sizes="[10, 20, 50]"
             :page-size="100"
             layout="total, sizes, prev, pager, next, jumper"
             :total="tatal"
@@ -248,14 +248,14 @@
             <div class="Personal_span_zjlx_title">证件类型：</div>
             <div
               class="Personal_span_zjlx_text"
-            >{{PersonalObj.zjlxbm == '' || PersonalObj.zjlxbm == 'null' ? '' : PersonalObj.zjlxbm}}</div>
+            >{{PersonalObj.zjlxdm == '' || PersonalObj.zjlxdm == 'null' ? '' : PersonalObj.zjlxdm}}</div>
           </div>
           <!-- 人口类型 -->
           <div class="Personal_span_rklx_wrap">
             <div class="Personal_span_rklx_title">人口类型：</div>
             <div
               class="Personal_span_rklx_text"
-            >{{PersonalObj.rklxbm == '' || PersonalObj.rklxbm == 'null' ? '' : PersonalObj.rklxbm}}</div>
+            >{{PersonalObj.rklxdm == '' || PersonalObj.rklxdm == 'null' ? '' : PersonalObj.rklxdm}}</div>
           </div>
           <!-- 出生日期 -->
           <div class="Personal_span_csrq_wrap">
@@ -419,7 +419,7 @@ export default {
         xm: '',
         sjhm: '',
         pagenum: 1,
-        pagesize: 5,
+        pagesize: 10,
       },
       // 控制搜索框的显示与隐藏
       searchBlock: false,
@@ -775,6 +775,9 @@ export default {
     background: #409efe;
     color: #fff;
     border-radius: 5px;
+    &:hover {
+      background: #087cf3;
+    }
   }
   .zhxx_content {
     width: 100%;
@@ -813,6 +816,9 @@ export default {
             margin: 25px 15px 10px 25px;
             cursor: pointer;
             color: #fff;
+            &:hover {
+              background: #087cf3;
+            }
           }
           .deleteBut {
             width: 93px;
@@ -824,6 +830,9 @@ export default {
             margin: 25px 15px 10px 0;
             cursor: pointer;
             color: #fff;
+            &:hover {
+              background: #db1616;
+            }
           }
           .zhuceBut {
             width: 200px;
@@ -834,6 +843,9 @@ export default {
             border-radius: 5px;
             margin: 25px 15px 10px 0;
             cursor: pointer;
+            &:hover {
+              background: #f1f2f3;
+            }
           }
           .putBut {
             width: 120px;
@@ -844,6 +856,9 @@ export default {
             border-radius: 5px;
             margin: 25px 15px 10px 0;
             cursor: pointer;
+            &:hover {
+              background: #f1f2f3;
+            }
           }
           .jihuoBut {
             width: 150px;
@@ -854,6 +869,9 @@ export default {
             border-radius: 5px;
             margin: 25px 15px 10px 0;
             cursor: pointer;
+            &:hover {
+              background: #f1f2f3;
+            }
           }
           .txBut {
             width: 100px;
@@ -864,6 +882,9 @@ export default {
             border-radius: 5px;
             margin: 25px 15px 10px 0;
             cursor: pointer;
+            &:hover {
+              background: #f1f2f3;
+            }
           }
           .xz_wrap {
             line-height: 40px;
@@ -873,6 +894,9 @@ export default {
         .right_button {
           margin-left: 380px;
           .right_but {
+            &:hover {
+              background: #f1f2f3;
+            }
             width: 54px;
             height: 38px;
             box-sizing: border-box;
@@ -914,6 +938,9 @@ export default {
   background: #53b3dd;
   border-radius: 10px;
   cursor: pointer;
+  &:hover {
+    background: #087cf3;
+  }
 }
 .Pic_diao {
   .el-dialog {

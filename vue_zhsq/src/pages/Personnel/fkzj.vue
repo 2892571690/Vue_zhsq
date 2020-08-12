@@ -162,13 +162,11 @@
         </div>
         <div class="fxzj_wrap_zjz">
           <div class="fxzj_wrap_zjz_text">身份证照片：</div>
-          <div class="fxzj_wrap_zjz_img">
-            <div v-if="ruleForm.sfzzp == ''">
-              <img src="../../assets/zjzp.png" />
-            </div>
-            <div v-else>
-              <img :src="ruleForm.sfzzp" />
-            </div>
+          <div class="fxzj_wrap_zjz_img" v-if="ruleForm.sfzzp == ''">
+            <img src="../../assets/zjzp.png" />
+          </div>
+          <div v-else>
+            <img :src="ruleForm.sfzzp" />
           </div>
           <div class="fxzj_wrap_zjz_but" @click="ReadCard">读卡</div>
         </div>
@@ -920,6 +918,9 @@ export default {
   border-radius: 10px;
   margin: 0 150px 0 310px;
   cursor: pointer;
+  &:hover {
+    background: #087cf3;
+  }
 }
 .fxzj_wrap_up {
   width: 190px;
@@ -930,6 +931,9 @@ export default {
   line-height: 34px;
   border-radius: 10px;
   cursor: pointer;
+  &:hover {
+    background: #db1616;
+  }
 }
 .zhxxbj_wrap_titleText {
   font-size: 14px;
@@ -950,6 +954,11 @@ export default {
   position: absolute;
   top: 30px;
   right: 80px;
+  text-align: center;
+  img{
+    width: auto;
+    height: auto;
+  }
   .fxzj_wrap_zjz_text {
     font-size: 15px;
     text-align: center;
@@ -959,7 +968,7 @@ export default {
   .fxzj_wrap_zjz_img {
     width: 175px;
     height: 270px;
-    div {
+    img {
       width: 100%;
       height: 100%;
     }
@@ -974,6 +983,9 @@ export default {
     margin: 5px auto;
     border-radius: 10px;
     cursor: pointer;
+    &:hover {
+      background: #087cf3;
+    }
   }
 }
 </style>
