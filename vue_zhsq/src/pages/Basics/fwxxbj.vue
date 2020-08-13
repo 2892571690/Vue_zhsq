@@ -267,6 +267,7 @@ export default {
         zjzp: '',
         xbdm: '',
         dyh: '',
+        id:''
       },
       strry: '',
       // 房屋状态列表
@@ -349,7 +350,9 @@ export default {
     let breadcrumb7 = breadcrumb.split(',')[7]
     let breadcrumb8 = [breadcrumb5, breadcrumb6, breadcrumb7]
     this.breadcrumb = [breadcrumb8]
-    this.from.fwbm = this.$route.query.fwbm
+    // console.log(this.$route.query.fwbm)
+    this.from.fwbm = this.$route.query.fwbm[0]
+    this.from.id = this.$route.query.fwbm[1]
     this.handleFWXXBM()
     // 获取房屋状态
     this.handleFWZT()
@@ -505,6 +508,7 @@ export default {
         zk: this.from.zk,
         zjzp: this.from.zjzp,
         dyh: this.from.dyh,
+        id:  this.from.id
       }
       data = Qs.stringify(data)
       self.$refs.ruleForm.validate(async (valid) => {

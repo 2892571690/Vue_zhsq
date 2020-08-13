@@ -736,6 +736,7 @@ export default {
   margin: 57px 280px 0 258px;
   border-radius: 10px;
   border: 1px solid #d1dfdf;
+  position: relative;
   .zhbjxx_wrap_title {
     width: 100%;
     height: 40px;
@@ -904,8 +905,8 @@ export default {
   width: 175px;
   height: 335px;
   position: absolute;
-  right: 370px;
-  top: 260px;
+  right: 80px;
+  top: 60px;
   text-align: center;
   img{
     width: auto;

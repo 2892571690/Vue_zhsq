@@ -10,7 +10,7 @@
       <div class="breadcrumb_text">{{breadcrumb[0][0]}}</div>
       <div class="cha" @click="handleGoIndex">x</div>
     </div>
-    <div class="tou" style="width:91%"></div>
+    <div class="tous" style="width:91%"></div>
     <!-- 访客增加 -->
     <div class="fxzj_wrap">
       <div class="fxzj_wrap_title">
@@ -120,6 +120,10 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
+              <!-- 备注 -->
+              <el-form-item class="fxzj_ruleForm_bz" label="备注：" prop="bz">
+                <el-input type="textarea" :rows="2" v-model="ruleForm.bz"></el-input>
+              </el-form-item>
             </div>
           </div>
           <!-- 预约时间 -->
@@ -199,9 +203,9 @@ export default {
       xqList: [],
       // 表单
       ruleForm: {
-        xm: '吴品龙',
+        xm: '',
         xb: '',
-        sfzhm: '331023200006215132',
+        sfzhm: '',
         sjhm: '',
         xqbm: '',
         ldh: '',
@@ -210,7 +214,8 @@ export default {
         zhxm: [],
         qssj: '',
         jzsj: '',
-        sfzzp: '',
+        sfzzp:'',
+        bz: '',
       },
       // 表单验证
       rules: {
@@ -318,7 +323,17 @@ export default {
     },
     // 点击提交
     handleUp() {
-      console.log(this.ruleForm)
+      // console.log(this.ruleForm)
+      let zhxm = ''
+      for (var i = 0; i < this.ruleForm.zhxm.length; i++) {
+        // console.log(this.ruleForm.zhxm[i])
+        if (i == this.ruleForm.zhxm.length - 1) {
+          zhxm += this.ruleForm.zhxm[i]
+        } else {
+          zhxm += this.ruleForm.zhxm[i] + ','
+        }
+      }
+      // console.log(zhxm)
       let self = this
       let data = {
         xm: this.ruleForm.xm,
@@ -328,25 +343,24 @@ export default {
         xqbm: this.ruleForm.xqbm,
         ldh: this.ruleForm.ldh,
         mph: this.ruleForm.mph,
-        zhxm: this.ruleForm.zhxm,
+        bfrzjhm:zhxm ,
         qssj: this.ruleForm.qssj,
         jzsj: this.ruleForm.jzsj,
         sfzzp: this.ruleForm.sfzzp,
         dyh: this.ruleForm.dyh,
+        bz: this.ruleForm.bz,
       }
-      data = Qs.stringify(data)
+      Qs.stringify({ data: data }, { arrayFormat: 'repeat' })
       self.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
-          // let res = await self.$http.post('ryxx/xzryxx.do', data)
-          // // console.log(res)
-          // if (res.data.message.status == '200') {
-          //   this.$message.success('入住成功')
-          //   this.$router.go(-1)
-          // } else if(res.data.message.status == '201'){
-          //   this.$message.warning('房主已经存在,请更换与房主关系')
-          // }else{
-          //   this.$message.error('入住失败')
-          // }
+          let res = await self.$http.post('/fk/insFangKe.do', [data])
+          // console.log(res)
+          if (res.data.msg == '200') {
+            this.$message.success('提交成功')
+            this.$router.go(-1)
+          } else {
+            this.$message.error('提交失败')
+          }
         }
       })
     },
@@ -479,11 +493,11 @@ export default {
     font-size: 13px;
   }
 }
-.tou {
+.tous {
   height: 39px;
   background: #f6f7fb;
   float: left;
-  width: 81%;
+  width: 91% !important;
   box-sizing: border-box;
   border: 1px solid #e4e7ec;
   border-right: 0;
@@ -786,7 +800,7 @@ export default {
         }
         .fxzj_wrap_content_FromCenter_bottom {
           width: 780px;
-          display: flex;
+          // display: flex;
           margin: 25px 0 35px 0;
           .fxzj_ruleForm_zhxm {
             width: 520px;
@@ -822,6 +836,21 @@ export default {
               }
             }
           }
+          .fxzj_ruleForm_bz {
+            width: 500px;
+            height: 55px;
+            display: flex;
+            margin: 25px 0 0 0;
+            .el-form-item__label {
+              width: 165px;
+              padding: 0;
+              line-height: 34px;
+            }
+            .el-form-item__content {
+              margin: 0 0 0 39px;
+              width: 200px;
+            }
+          }
         }
       }
       .fxzj_yysj_wrap {
@@ -847,7 +876,7 @@ export default {
         height: 100px;
         display: flex;
         .fxzj_ruleForm_qssj {
-          width: 398px;
+          width: 670px;
           height: 34px;
           display: flex;
           margin: 20px 0 0 0;
@@ -859,7 +888,7 @@ export default {
           }
           .el-form-item__content {
             margin: 0 0 0 35px;
-            width: 193px;
+            width: 265px;
             height: 100%;
             line-height: 1;
             .el-date-editor {
@@ -876,7 +905,7 @@ export default {
           }
         }
         .fxzj_ruleForm_jzsj {
-          width: 398px;
+          width: 670px;
           height: 34px;
           display: flex;
           margin: 20px 0 0 0;
@@ -888,7 +917,7 @@ export default {
           }
           .el-form-item__content {
             margin: 0 0 0 35px;
-            width: 193px;
+            width: 265px;
             height: 100%;
             line-height: 1;
             .el-date-editor {
@@ -955,7 +984,7 @@ export default {
   top: 30px;
   right: 80px;
   text-align: center;
-  img{
+  img {
     width: auto;
     height: auto;
   }

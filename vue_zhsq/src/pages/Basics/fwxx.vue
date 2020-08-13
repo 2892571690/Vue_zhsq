@@ -60,6 +60,12 @@
               </el-select>
             </el-form-item>
           </div>
+          <!-- 姓名 -->
+          <div class="fwxx_box_wrap">
+            <el-form-item class="xm_Fromitem">
+              <el-input placeholder="请输入业主姓名" v-model="form.xm"></el-input>
+            </el-form-item>
+          </div>
         </el-form>
         <div class="search_fwxx" @click="handleFWXX">搜索</div>
       </div>
@@ -116,6 +122,7 @@ export default {
         mph: '',
         isupload: '',
         order: '',
+        xm:''
       },
     }
   },
@@ -204,6 +211,7 @@ export default {
               this.form.mph,
               this.form.isupload,
               this.form.order,
+              this.form.xm
             ],
           },
         })
@@ -409,6 +417,24 @@ export default {
                   width: 100%;
                   height: 100%;
                 }
+              }
+            }
+          }
+        }
+        .xm_Fromitem {
+          width: 130px;
+          height: 36px;
+          margin: 0 10px 0 0;
+          .el-form-item__content {
+            width: 100%;
+            height: 100%;
+            line-height: 1;
+            .el-input {
+              width: 100%;
+              height: 100%;
+              .el-input__inner {
+                width: 100%;
+                height: 100%;
               }
             }
           }

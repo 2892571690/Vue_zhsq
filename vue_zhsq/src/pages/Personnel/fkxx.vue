@@ -46,10 +46,6 @@
               </el-select>
             </el-form-item>
             <!-- 预约起始时间 -->
-            <!-- <el-date-picker v-model="form.yyqssj" type="date" placeholder="选择预约起始时间"></el-date-picker> -->
-            <!-- 预约截止时间 -->
-            <!-- <el-date-picker class="jzData" v-model="form.yyjzsj" type="date" placeholder="选择预约截止时间"></el-date-picker> -->
-            <!-- {{form.yyqssj}} -->
             <el-date-picker
               format="yyyy 年 MM 月 dd 日"
               value-format="yyyy-MM-dd"
@@ -72,9 +68,9 @@
             <div class="but_wrap">
               <div class="el-icon-plus addBut" @click="handleAddZH">增加</div>
               <div class="el-icon-delete deleteBut" @click="handleDeleteZH">删除</div>
-              <div class="zhuceBut" @click="handleAddPic">授权/取消</div>
+              <div class="zhuceBut" @click="handleAddPic">预约/取消</div>
               <div class="putBut">上传人员</div>
-              <div class="jihuoBut" @click="handleJHZH">取消预约来访</div>
+              <div class="jihuoBut" @click="handleJHZH">放行/取消</div>
               <div class="xz_wrap">{{tableList.length}}个中{{tableNum.length}}个被选</div>
             </div>
             <div class="right_button">
@@ -143,7 +139,7 @@
                 <div v-else>未上传</div>
               </template>
             </el-table-column>
-            <el-table-column label="预约/授权状态" width="150px">
+            <el-table-column label="预约/放行状态" width="150px">
               <template slot-scope="scope">
                 <div style="display:flex;">
                   <div>
@@ -207,7 +203,7 @@
             <div class="yyr_wrap_title">预约时间：</div>
             <div
               class="yyr_wrap_text"
-            >{{lszlDataFrom(item.yylfqssj.time)}}到{{lszlDataFrom(item.yylfqssj.time)}}</div>
+            >{{qssjDataFrom(item.yylfqssj.time)}}到{{qssjDataFrom(item.yylfjzsj.time)}}</div>
           </div>
         </div>
       </span>
@@ -313,47 +309,6 @@ export default {
     },
     // 点击搜索
     handleFKXXsearch() {
-      // console.log(typeof this.form.yyqssj == 'number')
-      // console.log(this.form.yyjzsj)
-      // if (
-      //   (this.form.yyqssj == '' || this.form.yyqssj == null) &&
-      //   (this.form.yyjzsj == null || this.form.yyjzsj == '')
-      // ) {
-      // } else {
-      //   if (
-      //     (this.form.yyqssj == '' || this.form.yyqssj == null) &&
-      //     (this.form.yyjzsj !== '' || this.form.yyjzsj !== null)
-      //   ) {
-      //     console.log('有截止时间---没有起始时间')
-      //     if (typeof this.form.yyjzsj !== 'number') {
-      //       this.form.yyjzsj = this.form.yyjzsj.getTime()
-      //     } else {
-      //     }
-      //   } else if (
-      //     (this.form.yyjzsj == '' || this.form.yyjzsj == null) &&
-      //     (this.form.yyqssj !== '' || this.form.yyqssj !== null)
-      //   ) {
-      //     if (typeof this.form.yyqssj !== 'number') {
-      //       this.form.yyqssj = this.form.yyqssj.getTime()
-      //     } else {
-      //     }
-      //   } else if (
-      //     (this.form.yyjzsj !== '' || this.form.yyjzsj !== null) &&
-      //     (this.form.yyqssj !== '' || this.form.yyqssj !== null)
-      //   ) {
-      //     if (
-      //       typeof this.form.yyjzsj == 'object' &&
-      //       typeof this.form.yyqssj == 'object'
-      //     ) {
-      //       this.form.yyjzsj = this.form.yyjzsj.getTime()
-      //       this.form.yyqssj = this.form.yyqssj.getTime()
-      //     } else if (
-      //       typeof this.form.yyjzsj == 'number' &&
-      //       typeof this.form.yyqssj == 'number'
-      //     ) {
-      //     }
-      //   }
-      // }
       this.form.yyqssj = this.yyData[0]
       this.form.yyjzsj = this.yyData[1]
       this.form.yyzt = this.zt.split('|')[0]
@@ -420,7 +375,8 @@ export default {
           fkidList.push(this.tableNum[i].fkId)
         }
         Qs.stringify({ fkidList: fkidList }, { arrayFormat: 'repeat' })
-        let res = await this.$http.post('/fk/updAuthorize.do', fkidList)
+        let res = await this.$http.post('/fk/updReservation.do', fkidList)
+        // console.log(res)
         if (res.data.msg == 200) {
           this.$message.success('修改成功')
         } else {
@@ -440,11 +396,12 @@ export default {
           fkidList.push(this.tableNum[i].fkId)
         }
         Qs.stringify({ fkidList: fkidList }, { arrayFormat: 'repeat' })
-        let res = await this.$http.post('/fk/updReservation.do', fkidList)
+        let res = await this.$http.post('/fk/updAuthorize.do', fkidList)
+        // console.log(res)
         if (res.data.msg == 200) {
           this.$message.success('修改成功')
         } else {
-          this.$message.error('修改失败')
+          this.$message.error('未启用无法修改状态')
         }
         this.handleFKList()
       }
@@ -469,11 +426,11 @@ export default {
           : date.getHours() + ':'
       let m =
         date.getMinutes() < 10
-          ? '0' + date.getMinutes() + ':'
+          ? '0' + date.getMinutes()
           : date.getMinutes()
       return Y + M + D + h + m
     },
-    lszlDataFrom(time) {
+    qssjDataFrom(time) {
       let datas = new Date(time)
       let y = datas.getFullYear()
       let MM = datas.getMonth() + 1
@@ -492,7 +449,7 @@ export default {
       let res = await this.$http.get(
         `/fk/selFangKeHistory.do?fksfzhm=${fksfzhm}`
       )
-      console.log(res)
+      // console.log(res)
       this.fklsxx = res.data
       this.FXLSZLDialogVisible = true
     },
@@ -630,7 +587,7 @@ export default {
         }
       }
       .zhxx_sjh_wrap {
-        width: 110px;
+        width: 120px;
         height: 36px;
         margin: 0 0 0 12px;
         .el-form-item__content {
@@ -783,7 +740,7 @@ export default {
             }
           }
           .jihuoBut {
-            width: 150px;
+            width: 120px;
             height: 40px;
             text-align: center;
             line-height: 40px;

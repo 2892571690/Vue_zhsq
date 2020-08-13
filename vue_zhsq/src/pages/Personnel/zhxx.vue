@@ -730,7 +730,7 @@ export default {
         }
       }
       .zhxx_xm_wrap {
-        width: 110px;
+        width: 120px;
         height: 36px;
         margin: 0 0 0 13px;
         .el-form-item__content {
@@ -748,7 +748,7 @@ export default {
         }
       }
       .zhxx_sjhm_wrap {
-        width: 110px;
+        width: 130px;
         height: 36px;
         margin: 0 0 0 13px;
         .el-form-item__content {

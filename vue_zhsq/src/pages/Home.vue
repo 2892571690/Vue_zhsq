@@ -23,7 +23,11 @@
             router
             :default-active="activePath"
           >
-            <div class="index_wrap" :style="{background:activeIndex?'#192438':''}" @click="handleIndex(indexList[0])">
+            <div
+              class="index_wrap"
+              :style="{background:activeIndex?'#192438':''}"
+              @click="handleIndex(indexList[0])"
+            >
               <div class="index_img">
                 <img :src="indexList[0].pidimg" />
               </div>
@@ -79,7 +83,7 @@ export default {
       // 面包屑
       breadcrumb: [],
       indexList: {},
-      activeIndex:null
+      activeIndex: null,
     }
   },
   created() {
@@ -94,8 +98,8 @@ export default {
       self.$refs.mian.$el.style.background = val[1]
       self.$refs.index.style.color = val[2]
     })
-    if(this.$route.path == '/index'){
-      this.activeIndex=true
+    if (this.$route.path == '/index') {
+      this.activeIndex = true
     }
   },
   methods: {
@@ -126,8 +130,8 @@ export default {
       window.sessionStorage.setItem('breadcrumb', this.breadcrumb)
       eventBus.$emit('breadcrumb', this.breadcrumb)
       let ly = window.sessionStorage.getItem('activePath')
-      if(`/${activePath[1].pathUrl}` == '/fwxx'){
-        location.reload();
+      if (`/${activePath[1].pathUrl}` == '/fwxx') {
+        location.reload()
       }
     },
     handleIndex(index) {
@@ -138,7 +142,7 @@ export default {
       eventBus.$emit('breadcrumb', breadcrumb)
       window.sessionStorage.setItem('activePath', `/index`)
       this.$router.push({ path: 'index' })
-      location.reload();
+      location.reload()
     },
   },
   beforeDestroy() {
@@ -148,10 +152,10 @@ export default {
 </script>
 <style lang="less" scoped>
 .home_container {
-  height: 100%;
+  height: 103.1%;
   .el-header {
     background-color: #192438;
-    height: 94px !important;
+    height: 80px !important;
     display: flex;
     align-items: center;
     padding: 0;
@@ -174,7 +178,8 @@ export default {
     width: 210px !important;
     background-color: #243352;
     font-size: 14px;
-    height: 103.4%;
+    height: auto;
+    // min-height: 840px;
     .home_hander_index_img {
       width: 22px;
       height: 21px;
@@ -197,7 +202,7 @@ export default {
     }
   }
   .home_hander_main {
-    height: 103.4%;
+    // height: 100%;
     background-color: #fff;
     padding: 0;
   }
@@ -210,7 +215,7 @@ export default {
   img {
     width: 100%;
     height: 100%;
-    vertical-align: baseline !important;
+    vertical-align: inherit !important;
   }
 }
 .menu_items_img {
@@ -221,7 +226,7 @@ export default {
   img {
     width: 100%;
     height: 100%;
-    vertical-align: baseline !important;
+    vertical-align: inherit !important;
   }
 }
 .menu_item_text {
@@ -233,7 +238,7 @@ export default {
 .el-menu {
   border-right: none;
   margin-top: 61px;
-  cursor:pointer;
+  cursor: pointer;
 }
 .index_wrap {
   &:hover {
@@ -252,7 +257,7 @@ export default {
     img {
       width: 100%;
       height: 100%;
-      vertical-align: baseline !important;
+      vertical-align: text-top !important;
     }
   }
   .index_text {

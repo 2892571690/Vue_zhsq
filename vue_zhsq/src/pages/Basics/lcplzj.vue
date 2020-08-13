@@ -11,12 +11,13 @@
       <div class="cha" @click="handleGoIndex">x</div>
     </div>
     <div class="tou" style="width:91%"></div>
-    <div @click="handleAddFrom" class="addFrom_wrap_top">+</div>
-    <div @click="handleDelteFrom" class="deleteFrom_wrap_top">-</div>
+
     <!-- 添加楼栋信息 -->
     <div class="tjldplxx_wrap">
       <div class="tjldxx_wrap_title">
         <div class="tjldxx_wrap_title_text">楼栋信息</div>
+        <div @click="handleAddFrom" class="addFrom_wrap_top el-icon-plus"></div>
+        <div @click="handleDelteFrom" class="deleteFrom_wrap_top el-icon-minus"></div>
       </div>
       <div class="ldpltj_wrap_conent">
         <!-- 表单 -->
@@ -321,6 +322,7 @@ export default {
     background: #dfecf4;
     color: #30738d;
     line-height: 40px;
+    position: relative;
     .tjldxx_wrap_title_text {
       font-size: 14px;
       margin: 0 0 0 15px;
@@ -431,14 +433,16 @@ export default {
   width: 62px;
   height: 30px;
   background: #3ac75d;
-  text-align: center;
-  line-height: 27px;
+  line-height: 1;
   color: #fff;
   border-radius: 10px;
   position: absolute;
-  top: 231px;
-  right: 480px;
-  font-size: 28px;
+  top: 5px;
+  right: 260px;
+  font-size: 19px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
   &:hover {
     background: #12ce7f;
   }
@@ -448,14 +452,16 @@ export default {
   width: 62px;
   height: 30px;
   background: #ca4743;
-  text-align: center;
-  line-height: 25px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
   color: #fff;
   border-radius: 10px;
   position: absolute;
-  top: 231px;
-  right: 350px;
-  font-size: 40px;
+  top: 5px;
+  right: 150px;
+  font-size: 19px;
+  font-weight: 700;
   &:hover {
     background: #db1616;
   }

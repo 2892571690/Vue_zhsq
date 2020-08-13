@@ -12,9 +12,6 @@
         <div class="cha" @click="handleGoIndex">x</div>
       </div>
       <div class="tou"></div>
-      <div class="tou_img">
-        <img src="../../assets/tou.png" />
-      </div>
     </div>
     <div v-else>
       <div class="breadcrumb_wrap">
@@ -25,9 +22,6 @@
         <div class="cha" @click="handleGoIndex">x</div>
       </div>
       <div class="tou"></div>
-      <div class="tou_img">
-        <img src="../../assets/tou.png" />
-      </div>
     </div>
     <!-- 新闻内容 -->
     <div class="newList_wrap">
@@ -139,7 +133,7 @@ export default {
   height: 39px;
   background: #f6f7fb;
   float: left;
-  width: 81%;
+  width: 91%;
   box-sizing: border-box;
   border: 1px solid #e4e7ec;
   border-right: 0;

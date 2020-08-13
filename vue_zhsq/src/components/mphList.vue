@@ -28,8 +28,8 @@
           <div class="mph_wrap_xz_zk">租客:{{item.zkNum}}人</div>
         </div>
         <div class="mph_wrap_gn">
-          <div class="mph_wrap_gn_ck" @click="handleGofwxxck(item.fwbm)">查看</div>
-          <div class="mph_wrap_gn_bj" @click="handleGofwxxbj(item.fwbm)">编辑</div>
+          <div class="mph_wrap_gn_ck" @click="handleGofwxxck([item.fwbm,item.fwId])">查看</div>
+          <div class="mph_wrap_gn_bj" @click="handleGofwxxbj([item.fwbm,item.fwId])">编辑</div>
           <div v-if="item.isupload == 1">
             <div class="mph_wrap_gn_zt">已上传</div>
           </div>
@@ -52,6 +52,7 @@ export default {
         mph: '',
         isupload: '',
         order: '',
+        xm:''
       },
       // 门牌号
       mphList: [],
@@ -78,7 +79,8 @@ export default {
         from.query.bm[2] !== to.query.bm[2] ||
         from.query.bm[3] !== to.query.bm[3] ||
         from.query.bm[4] !== to.query.bm[4] ||
-        from.query.bm[5] !== to.query.bm[5]
+        from.query.bm[5] !== to.query.bm[5] ||
+        from.query.bm[6] !== to.query.bm[6]
       ) {
         if (to.query.bm.length == 2) {
           this.bm = {
@@ -94,6 +96,7 @@ export default {
             mph: to.query.bm[3],
             isupload: to.query.bm[4],
             order: to.query.bm[5],
+            xm: to.query.bm[6],
           }
           this.handleMPHList()
         }

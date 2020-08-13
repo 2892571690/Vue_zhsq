@@ -29,7 +29,7 @@
         <img src="../../assets/tou.png" />
       </div>
     </div>
-
+    <!-- 导航栏区域截止 -->
     <!-- 新闻卡片区域 -->
     <el-card class="box-card">
       <div class="leftNews">
@@ -213,6 +213,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+// 导航栏区域
 .breadcrumb_wrap {
   cursor: pointer;
   width: 9%;
@@ -262,6 +263,7 @@ export default {
   border-left: 0;
   cursor: pointer;
 }
+// 导航栏区域截止
 .box-card {
   width: 1680px;
   height: 350px;
@@ -399,7 +401,7 @@ export default {
         // width: 104px;
         // height: 99px;
         margin-right: 45px;
-        margin-bottom: 2px;
+        margin-bottom: -2px;
         box-sizing: border-box;
         padding: 5px;
         cursor: pointer;

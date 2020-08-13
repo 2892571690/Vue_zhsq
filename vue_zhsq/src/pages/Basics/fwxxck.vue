@@ -281,7 +281,7 @@ export default {
     let breadcrumb8 = [breadcrumb5, breadcrumb6, breadcrumb7]
     this.breadcrumb = [breadcrumb8]
     // console.log(this.$route.query.fwbm)
-    this.fwbm = this.$route.query.fwbm
+    this.fwbm = this.$route.query.fwbm[0]
     // 查看业主的信息
     this.handleckfwxx()
   },
